@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Definitions for loading/saving camera config.
+
+We target the 'tt' schema so we can have lazy config files without explicit namespacing.
+There's probably something deeply wrong with doing this, but it works for now.
+-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tt="http://www.onvif.org/ver10/schema" targetNamespace="http://www.onvif.org/ver10/schema" elementFormDefault="qualified">
+	<complexType name="MediaServiceProperties">
+		<sequence>
+			<element name="VideoSource" type="tt:VideoSource" minOccurs="1" maxOccurs="unbounded" />
+			<element name="VideoSourceConfigurationOptions" type="tt:VideoSourceConfigurationOptions" />
+			<element name="VideoEncoderConfigurationOptions" type="tt:VideoEncoderConfigurationOptions" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ImagingVideoSourceOptions">
+		<sequence>
+			<element name="VideoSourceToken" type="tt:ReferenceToken" />
+			<element name="ImagingOptions" type="tt:ImagingOptions" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ImagingServiceProperties">
+		<sequence>
+			<element name="ImagingVideoSourceOptions" type="tt:ImagingVideoSourceOptions" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="DeviceInformation">
+		<sequence>
+			<element name="Manufacturer" type="string" />
+			<element name="Model" type="string" />
+			<element name="FirmwareVersion" type="string" />
+			<element name="SerialNumber" type="string" />
+			<element name="HardwareId" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="DeviceManagementServiceProperties">
+		<sequence>
+			<element name="DeviceInformation" type="tt:DeviceInformation" />
+		</sequence>
+	</complexType>
+
+	<simpleType name="RTSPServerType">
+		<restriction base="string">
+			<enumeration value="ingenic"/>
+			<enumeration value="v4l2rtspserver"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="RTSPStream">
+		<sequence>
+			<element name="Path" type="string" />
+			<element name="Port" type="integer" />
+			<element name="ExecutablePath" type="string" />
+			<element name="Type" type="tt:RTSPServerType" />
+		</sequence>
+	</complexType>
+
+	<!-- These are our mostly fixed settings, and do not change at runtime. -->
+	<element name="CameraProperties">
+		<complexType>
+			<sequence>
+				<element name="DeviceManagementService" type="tt:DeviceManagementServiceProperties" />
+				<element name="RTSPStream" type="tt:RTSPStream" />
+				<element name="MediaService" type="tt:MediaServiceProperties" />
+				<element name="ImagingService" type="tt:ImagingServiceProperties" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="MinimumProfile">
+		<!-- The real profile has all the stuff inside it rather than just the tokens,
+		     and this would lead to potentially duplicated data (multiple profiles
+			 having the same encoderconfiguration or sourceconfiguration). -->
+		<sequence>
+			<element name="Name" type="tt:Name" />
+			<element name="ProfileToken" type="tt:ReferenceToken" />
+			<element name="VideoEncoderConfigurationToken" type="tt:ReferenceToken" minOccurs="0" />
+			<element name="VideoSourceConfigurationToken" type="tt:ReferenceToken" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ImagingVideoSource">
+		<sequence>
+			<element name="VideoSourceToken" type="tt:ReferenceToken" />
+			<element name="ImagingSettings" type="tt:ImagingSettings" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ImagingServiceConfiguration">
+		<sequence>
+			<element name="ImagingVideoSource" type="tt:ImagingVideoSource" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="MediaServiceConfiguration">
+		<sequence>
+			<element name="VideoSourceConfiguration" type="tt:VideoSourceConfiguration" minOccurs="0" maxOccurs="unbounded" />
+			<element name="VideoEncoderConfiguration" type="tt:VideoEncoderConfiguration" minOccurs="0" maxOccurs="unbounded" />
+			<element name="Profile" type="tt:MinimumProfile" minOccurs="0" maxOccurs="unbounded" />
+			<element name="CurrentProfile" type="tt:ReferenceToken" />
+		</sequence>
+	</complexType>
+
+	<!-- Settings that can change at runtime. -->
+	<element name="CameraConfiguration">
+		<complexType>
+			<sequence>
+				<element name="MediaService" type="tt:MediaServiceConfiguration" />
+				<element name="ImagingService" type="tt:ImagingServiceConfiguration" />
+			</sequence>
+		</complexType>
+	</element>
+</schema>
