@@ -25,17 +25,22 @@ CUSTOM_XSDS = onvif-config.xsd
 LIBRARY_SOURCEFILES = stdsoap2.cpp stdsoap2.h # dom.cpp
 #PLUGIN_SOURCEFILES = smdevp.c mecevp.c wsaapi.c wsseapi.c wsddapi.c threads.c \
 #                     smdevp.h mecevp.h wsaapi.h wsseapi.h wsddapi.h threads.h
-PLUGIN_SOURCEFILES = wsaapi.c wsaapi.h
-CUSTOM_SOURCEFILES = struct_timeval.c struct_timeval.h
-ONVIF_SOURCEFILES = soapServer.cpp soapH.h soapStub.h \
-                    soap.nsmap \
+PLUGIN_SOURCEFILES = wsaapi.c wsaapi.h wsddapi.c wsddapi.h threads.c threads.h
+# CUSTOM_SOURCEFILES = struct_timeval.c struct_timeval.h
+ONVIF_SOURCEFILES = soapServer.cpp soapClient.cpp \
+                    soapH.h soapStub.h \
                     soapC_001.cpp \
                     soapC_002.cpp \
                     soapC_003.cpp \
                     soapC_004.cpp \
                     soapC_005.cpp \
                     soapC_006.cpp \
-                    soapC_007.cpp
+                    soapC_007.cpp \
+					soaplib/DeviceBinding.nsmap \
+					soaplib/ImagingBinding.nsmap \
+					soaplib/MediaBinding.nsmap \
+					soaplib/RemoteDiscoveryBinding.nsmap
+
 
 GENERATED_SOURCEFILES = $(ONVIF_SOURCEFILES) $(PLUGIN_SOURCEFILES) $(CUSTOM_SOURCEFILES) $(LIBRARY_SOURCEFILES)
 
@@ -51,15 +56,14 @@ onvif.h: $(CUSTOM_XSDS)
 	wsdl2h -O3 -c++17 -t $(GSOAP_DIR)/typemap.dat -x -o onvif.h $(WSDLS) $(CUSTOM_XSDS)
 	# Stupid hacks suggested by:
 	# https://www.genivia.com/examples/onvif/index.html#ONVIF_Client_Application_in_C++_to_Retrieve_Image_Snapshots
-	# Check if these are necessary when I actually do WSD. May need to add RemoteDiscovery?
 	sed -i -e '/^#import "wsdd10.h"/c\#import "wsdd5.h"' -e '/^#import "wsa.h"/d' onvif.h
-	echo '#import "wsse.h"' >> onvif.h
+	# echo '#import "wsse.h"' >> onvif.h
 
 # If only we had Make 4.3 (then we could use &:)
 $(ONVIF_SOURCEFILES): .sentinel ;
 
 .sentinel: onvif.h
-	soapcpp2 -I$(GSOAP_DIR):$(GSOAP_DIR)/import -c++17 -f400 -x -n -s -S -L onvif.h
+	soapcpp2 -I$(GSOAP_DIR):$(GSOAP_DIR)/import -c++17 -f400 -x -s -L onvif.h
 	@touch $@
 
 .PHONY: clean
