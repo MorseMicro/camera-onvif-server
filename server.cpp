@@ -10,7 +10,7 @@ void start_server(void *soap_user)
 	struct soap *soap = soap_new();
 	soap_set_namespaces(soap, soap_namespaces);
 
-	soap->user = (void*)soap_user;
+	soap->user = soap_user;
 	soap->bind_flags |= SO_REUSEADDR;
 
 	if (!soap_valid_socket(soap_bind(soap, NULL, 8080, 100)))

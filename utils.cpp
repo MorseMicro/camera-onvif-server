@@ -18,6 +18,7 @@ pid_t start_child_process(std::string path, std::vector<std::string> arguments) 
 	std::vector<const char *> argv;
 	std::transform(arguments.begin(), arguments.end(), std::back_inserter(argv),
 		[] (std::string &arg) { return arg.c_str(); });
+	argv.push_back(NULL);
 
 	pid_t parent_pid = getpid();
 	pid_t pid = fork();
