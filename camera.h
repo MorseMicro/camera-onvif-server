@@ -1,3 +1,5 @@
+#pragma once
+
 #include "soaplib/soapH.h"
 
 #include <iostream>

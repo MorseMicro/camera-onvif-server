@@ -20,7 +20,7 @@ void start_server(void *soap_user)
 {
 	struct soap *soap = soap_new();
 
-	soap->user = (void*)soap_user;
+	soap->user = soap_user;
 	soap->bind_flags |= SO_REUSEADDR;
 
 	soap->fignore = fignore;
