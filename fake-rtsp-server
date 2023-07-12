@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "Welcome to a fake rtsp server. My arguments were:"
+echo "$0" "$@"
+
+
+sleep 10
+echo 'hello'
+

@@ -1,0 +1,76 @@
+# Automate https://www.genivia.com/examples/onvif/index.html#ONVIF_Client_Application_in_C++_to_Retrieve_Image_Snapshots
+# Idea is that this slurps everything down, but then the stuff we actually use is checked in.
+
+# You probably need to set this to wherever you extracted gsoap-2.8
+GSOAP_DIR = $(HOME)/builds/gsoap-2.8/gsoap
+
+ALL_WSDLS =   http://www.onvif.org/onvif/ver10/device/wsdl/devicemgmt.wsdl \
+  http://www.onvif.org/onvif/ver10/events/wsdl/event.wsdl \
+  http://www.onvif.org/onvif/ver10/deviceio.wsdl \
+  http://www.onvif.org/onvif/ver20/imaging/wsdl/imaging.wsdl \
+  http://www.onvif.org/onvif/ver10/media/wsdl/media.wsdl \
+  http://www.onvif.org/onvif/ver20/ptz/wsdl/ptz.wsdl \
+  http://www.onvif.org/onvif/ver10/network/wsdl/remotediscovery.wsdl \
+  http://www.onvif.org/ver10/advancedsecurity/wsdl/advancedsecurity.wsdl
+
+# These are the WSDLS I need at the moment.
+WSDLS =   http://www.onvif.org/onvif/ver10/device/wsdl/devicemgmt.wsdl \
+  http://www.onvif.org/onvif/ver20/imaging/wsdl/imaging.wsdl \
+  http://www.onvif.org/onvif/ver10/media/wsdl/media.wsdl \
+  http://www.onvif.org/onvif/ver10/network/wsdl/remotediscovery.wsdl
+
+# Any addition stuff.
+CUSTOM_XSDS = onvif-config.xsd
+
+LIBRARY_SOURCEFILES = stdsoap2.cpp stdsoap2.h # dom.cpp
+#PLUGIN_SOURCEFILES = smdevp.c mecevp.c wsaapi.c wsseapi.c wsddapi.c threads.c \
+#                     smdevp.h mecevp.h wsaapi.h wsseapi.h wsddapi.h threads.h
+PLUGIN_SOURCEFILES = wsaapi.c wsaapi.h
+CUSTOM_SOURCEFILES = struct_timeval.c struct_timeval.h
+ONVIF_SOURCEFILES = soapServer.cpp soapH.h soapStub.h \
+                    soap.nsmap \
+                    soapC_001.cpp \
+                    soapC_002.cpp \
+                    soapC_003.cpp \
+                    soapC_004.cpp \
+                    soapC_005.cpp \
+                    soapC_006.cpp \
+                    soapC_007.cpp
+
+GENERATED_SOURCEFILES = $(ONVIF_SOURCEFILES) $(PLUGIN_SOURCEFILES) $(CUSTOM_SOURCEFILES) $(LIBRARY_SOURCEFILES)
+
+.DELETE_ON_ERROR:
+.NO_PARALLEL:
+
+# Note that the objects are built/requested by the Makefile up a level, not here.
+# This is purely for setting up the source files appropriately.
+generated: $(GENERATED_SOURCEFILES)
+.PHONY: generated
+
+onvif.h: $(CUSTOM_XSDS)
+	wsdl2h -O3 -c++17 -t $(GSOAP_DIR)/typemap.dat -x -o onvif.h $(WSDLS) $(CUSTOM_XSDS)
+	# Stupid hacks suggested by:
+	# https://www.genivia.com/examples/onvif/index.html#ONVIF_Client_Application_in_C++_to_Retrieve_Image_Snapshots
+	# Check if these are necessary when I actually do WSD. May need to add RemoteDiscovery?
+	sed -i -e '/^#import "wsdd10.h"/c\#import "wsdd5.h"' -e '/^#import "wsa.h"/d' onvif.h
+	echo '#import "wsse.h"' >> onvif.h
+
+# If only we had Make 4.3 (then we could use &:)
+$(ONVIF_SOURCEFILES): .sentinel ;
+
+.sentinel: onvif.h
+	soapcpp2 -I$(GSOAP_DIR):$(GSOAP_DIR)/import -c++17 -f400 -x -n -s -S -L onvif.h
+	@touch $@
+
+.PHONY: clean
+clean:
+	rm -f $(GENERATED_SOURCEFILES) onvif.h typemap.dat
+
+$(PLUGIN_SOURCEFILES):
+	cp $(GSOAP_DIR)/plugin/$@ .
+
+$(LIBRARY_SOURCEFILES):
+	cp $(GSOAP_DIR)/$@ .
+
+$(CUSTOM_SOURCEFILES):
+	cp $(GSOAP_DIR)/custom/$@ .
