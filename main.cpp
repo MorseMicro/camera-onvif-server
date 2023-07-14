@@ -1,4 +1,5 @@
 #include <getopt.h>
+#include <arpa/inet.h>
 
 #include <iostream>
 #include <exception>
@@ -59,10 +60,18 @@ int main(int argc, char * const argv[])
 
 	if (argc == optind) {
 		std::cerr << "Must provide exactly one positional argument: host ip to serve from" << std::endl;
+		usage(argv[0]);
 		exit(1);
 	}
 
 	const char *ip = argv[optind];
+	unsigned char tmpbuf[sizeof(struct in_addr)];
+	if (inet_pton(AF_INET, ip, tmpbuf) <= 0) {
+		std::cerr << "Must provide valid IPv4 address, not: " << ip << std::endl;
+		usage(argv[0]);
+		exit(1);
+	}
+
 	std::string onvif_url = std::string("http://") + ip + ":" + port;
 	std::string rtsp_url = std::string("rtsp://") + ip + ":8554"; // TODO
 

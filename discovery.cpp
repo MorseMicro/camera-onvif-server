@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <string.h>
 
+#include <sstream>
+
 #include "soaplib/wsddapi.h"
 
 
@@ -15,8 +17,8 @@ const char *MULTICAST_IP = "239.255.255.250";
 const int MULTICAST_PORT = 3702;
 
 struct WsddConfig {
-	const char *endpoint_uuid;
-	const char *service_url;
+	std::string endpoint_uuid;
+	std::string service_url;
 };
 
 
@@ -33,9 +35,11 @@ static void start_wsdd_server(const char *listen_ip, const char *service_url) {
 	soap->ipv4_multicast_ttl = 1;
 
 	std::cout << "Broadcasting hello via WS-Discovery..." << std::endl;
+	std::stringstream uri;
+	uri << "soap.udp://" << MULTICAST_IP << ":" << MULTICAST_PORT;
 	// Best effort, ignore failure here.
-	soap_wsdd_Hello(soap, SOAP_WSDD_ADHOC, "soap.udp://239.255.255.250:3702",
-					soap_wsa_rand_uuid(soap), NULL, wsdd_conf.endpoint_uuid,
+	soap_wsdd_Hello(soap, SOAP_WSDD_ADHOC, uri.str().c_str(),
+					soap_wsa_rand_uuid(soap), NULL, wsdd_conf.endpoint_uuid.c_str(),
 					TYPES, SCOPES, NULL, service_url, 1);
 
 	if (!soap_valid_socket(soap_bind(soap, NULL, MULTICAST_PORT, 1000))) {
@@ -53,7 +57,7 @@ static void start_wsdd_server(const char *listen_ip, const char *service_url) {
 	mcast.imr_multiaddr.s_addr = multicast_addr;
 	mcast.imr_interface.s_addr = inet_addr(listen_ip);
 	if (setsockopt(soap->master, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mcast, sizeof(mcast)) != 0) {
-		std::cerr << "Unable to become member of 239.255.255.250: " << strerror(errno) << std::endl;
+		std::cerr << "Unable to become member of " << MULTICAST_IP << ": " << strerror(errno) << std::endl;
 	}
 
 	std::cout << "Starting WS-Discovery listener..." << std::endl;
@@ -62,7 +66,7 @@ static void start_wsdd_server(const char *listen_ip, const char *service_url) {
 			// It's not clear to me how to distinguish here between terminal and non-terminal
 			// issues... cf start_server, where if soap_accept fails we abort.
 			// Here, we simply busy-loop :(
-			// The code is wsdd_listen looks particularly strange as it returns
+			// The code in wsdd_listen looks particularly strange as it returns
 			// both on starture AND on a request failure (but then returns
 			// the status of whether we managed to close the socket at the end
 			// of transmitting the failure back to the client (?)).
@@ -72,6 +76,9 @@ static void start_wsdd_server(const char *listen_ip, const char *service_url) {
 			soap_end(soap);
 		}
 	}
+
+	// NB: Ideally we would send a 'Bye' (soap_wsdd_Bye) on exit, but we'd need to add
+	// signal handling for this...
 }
 
 pid_t spawn_wsdd_server(const char *listen_ip, const char *service_url) {
@@ -101,8 +108,8 @@ soap_wsdd_mode wsdd_event_Probe(struct soap *soap, const char *MessageID, const 
 	auto *wsdd_conf = static_cast<WsddConfig *>(soap->user);
 	soap_wsdd_init_ProbeMatches(soap, ProbeMatches);
 	soap_wsdd_add_ProbeMatch(
-		soap, ProbeMatches, wsdd_conf->endpoint_uuid,
-		TYPES, SCOPES, NULL, wsdd_conf->service_url, 1);
+		soap, ProbeMatches, wsdd_conf->endpoint_uuid.c_str(),
+		TYPES, SCOPES, NULL, wsdd_conf->service_url.c_str(), 1);
 	soap_wsdd_ProbeMatches(soap, NULL, soap_wsa_rand_uuid(soap) , MessageID, ReplyTo, ProbeMatches);
 	return SOAP_WSDD_ADHOC;
 }
