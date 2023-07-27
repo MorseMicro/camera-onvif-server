@@ -53,7 +53,7 @@ generated: $(GENERATED_SOURCEFILES)
 .PHONY: generated
 
 onvif.h: $(CUSTOM_XSDS)
-	wsdl2h -O3 -c++17 -t $(GSOAP_DIR)/typemap.dat -x -o onvif.h $(WSDLS) $(CUSTOM_XSDS)
+	wsdl2h -O3 -c++14 -t $(GSOAP_DIR)/typemap.dat -x -o onvif.h $(WSDLS) $(CUSTOM_XSDS)
 	# Stupid hacks suggested by:
 	# https://www.genivia.com/examples/onvif/index.html#ONVIF_Client_Application_in_C++_to_Retrieve_Image_Snapshots
 	sed -i -e '/^#import "wsdd10.h"/c\#import "wsdd5.h"' -e '/^#import "wsa.h"/d' onvif.h
@@ -63,7 +63,7 @@ onvif.h: $(CUSTOM_XSDS)
 $(ONVIF_SOURCEFILES): .sentinel ;
 
 .sentinel: onvif.h
-	soapcpp2 -I$(GSOAP_DIR):$(GSOAP_DIR)/import -c++17 -f400 -x -s -L onvif.h
+	soapcpp2 -I$(GSOAP_DIR):$(GSOAP_DIR)/import -c++14 -f400 -x -s -L onvif.h
 	@touch $@
 
 .PHONY: clean

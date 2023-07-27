@@ -73,12 +73,11 @@ int main(int argc, char * const argv[])
 	}
 
 	std::string onvif_url = std::string("http://") + ip + ":" + port;
-	std::string rtsp_url = std::string("rtsp://") + ip + ":8554"; // TODO
 
 	try {
 		std::cout << "Loading camera configuration..." << std::endl;
-		Camera camera(properties, config);
-		std::cout << "Starting RTSP server: " << rtsp_url << std::endl;
+		Camera camera(onvif_url, ip, properties, config);
+		std::cout << "Starting RTSP server: " << camera.getStreamUri() << std::endl;
 		camera.startRtspServer();
 		std::cout << "Starting WS-Discovery server: " << ip << ":3702" << std::endl;
 		spawn_wsdd_server(ip, onvif_url.c_str());

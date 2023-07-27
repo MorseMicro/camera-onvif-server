@@ -17,7 +17,7 @@ There's probably something deeply wrong with doing this, but it works for now.
 	<complexType name="ImagingVideoSourceOptions">
 		<sequence>
 			<element name="VideoSourceToken" type="tt:ReferenceToken" />
-			<element name="ImagingOptions" type="tt:ImagingOptions" />
+			<element name="ImagingOptions" type="tt:ImagingOptions20" />
 		</sequence>
 	</complexType>
 
@@ -86,7 +86,7 @@ There's probably something deeply wrong with doing this, but it works for now.
 	<complexType name="ImagingVideoSource">
 		<sequence>
 			<element name="VideoSourceToken" type="tt:ReferenceToken" />
-			<element name="ImagingSettings" type="tt:ImagingSettings" />
+			<element name="ImagingSettings" type="tt:ImagingSettings20" />
 		</sequence>
 	</complexType>
 

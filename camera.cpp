@@ -1,8 +1,12 @@
+// Hack to let us use to_string (some weird gcc 5.x issue; thanks Ingenic).
+#define _GLIBCXX_USE_C99 1
+
 #include "soaplib/soapH.h"
 
 #include "utils.h"
 #include "camera.h"
 
+#include <string>
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -36,16 +40,16 @@ static const struct Namespace datafile_namespaces[] = {
 };
 
 
-Camera::Camera(_tt__CameraProperties *properties, _tt__CameraConfiguration *config)
-		: properties(properties), config(config), config_filename("camera_configuration.xml"),
+Camera::Camera(std::string onvif_url, std::string ip, _tt__CameraProperties *properties, _tt__CameraConfiguration *config)
+		: onvif_url(onvif_url), ip(ip), properties(properties), config(config), config_filename("camera_configuration.xml"),
 		  rtsp_server_pid(0)
 {
 	soap = soap_new1(SOAP_XML_DEFAULTNS | SOAP_XML_STRICT | SOAP_XML_INDENT);
 	soap_set_namespaces(soap, datafile_namespaces);
 }
 
-Camera::Camera(std::string properties_filename, std::string config_filename)
-		: config_filename(config_filename), rtsp_server_pid(0)
+Camera::Camera(std::string onvif_url, std::string ip, std::string properties_filename, std::string config_filename)
+		: onvif_url(onvif_url), ip(ip), config_filename(config_filename), rtsp_server_pid(0)
 {
 	soap = soap_new1(SOAP_XML_DEFAULTNS | SOAP_XML_STRICT);
 	soap_set_namespaces(soap, datafile_namespaces);
@@ -88,24 +92,8 @@ void Camera::stopRtspServerIfRunning() {
 	stop_child_process(rtsp_server_pid);
 }
 
-tt__VideoEncoderConfiguration *Camera::getCurrentVideoEncoderConfiguration() {
-	std::string profile_token = config->MediaService->CurrentProfile;
-	auto profile_it = std::find_if(
-		config->MediaService->Profile.begin(), config->MediaService->Profile.end(),
-		[profile_token] (tt__MinimumProfile *p) { return p->ProfileToken == profile_token; });
-	if (profile_it == config->MediaService->Profile.end()) {
-		return nullptr;
-	}
-
-	const auto vec_token = (*profile_it)->VideoEncoderConfigurationToken;
-	auto vec_it = std::find_if(
-		config->MediaService->VideoEncoderConfiguration.begin(), config->MediaService->VideoEncoderConfiguration.end(),
-		[vec_token] (tt__VideoEncoderConfiguration *vec) { return vec->token == *vec_token; });
-	return vec_it == config->MediaService->VideoEncoderConfiguration.end() ? nullptr : *vec_it;
-}
-
 std::string Camera::getStreamUri() {
-	return "rtsp://localhost:" + properties->RTSPStream->Port + "/" + properties->RTSPStream->Path;
+	return "rtsp://" + ip + ":" + properties->RTSPStream->Port + "/" + properties->RTSPStream->Path;
 }
 
 std::vector<std::string> Camera::buildRtspServerArguments() {

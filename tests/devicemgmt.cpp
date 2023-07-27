@@ -1,11 +1,10 @@
-#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
 #include "../camera.h"
 #include "../soaplib/soapStub.h"
 
 
 TEST_CASE( "GetDeviceInformation returns correct info", "[devicemgmt]" ) {
-	Camera c("tests/camera_properties.xml", "tests/camera_configuration.xml");
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -25,7 +24,10 @@ TEST_CASE( "GetDeviceInformation returns correct info", "[devicemgmt]" ) {
 }
 
 TEST_CASE( "GetServices returns correct info", "[devicemgmt]" ) {
+	Camera c("http://localhost:8080", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
+	soap->user = &c;
 	auto *req = soap_new__tds__GetServices(soap);
 	auto *resp = soap_new__tds__GetServicesResponse(soap);
 

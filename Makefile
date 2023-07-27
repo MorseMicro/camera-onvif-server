@@ -1,4 +1,4 @@
-CC = g++
+CC = $(CXX)
 SOAPOBJS = soaplib/stdsoap2.o \
            soaplib/soapClient.o \
            soaplib/soapServer.o \
@@ -13,33 +13,33 @@ SOAPOBJS = soaplib/stdsoap2.o \
            soaplib/soapC_006.o
 # soaplib/wsseapi.o soaplib/mecevp.o soaplib/smdevp.o soaplib/struct_timeval.o \
 
-CPPFLAGS += -DWITH_NOIDREF
-CFLAGS += -Os
-CXXFLAGS += -Os
-CXXFLAGS_LENIENT := $(CXXFLAGS)
-CLAGS_LENIENT := $(CFLAGS)
-CFLAGS += -MMD -Wall -Werror
-CXXFLAGS += -MMD -Wall -Werror
+DEBUG_FLAGS = -DDEBUG -g -O1 -fsanitize=address,undefined,leak -fno-omit-frame-pointer
+CPPFLAGS += -DWITH_NOIDREF -I.
+CXXFLAGS_LENIENT := $(CXXFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
+CFLAGS_LENIENT := $(CFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
+CFLAGS = $(CFLAGS_LENIENT) -MMD -Wall -Werror
+CXXFLAGS = $(CXXFLAGS_LENIENT) -MMD -Wall -Werror
+LDFLAGS += -Wl,--gc-sections
 LDLIBS += -lpthread
 
 MAINOBJ = main.o
-MYOBJS = utils.o camera.o server.o stubs.o devicemgmt.o discovery.o
+MYOBJS = discovery.o server.o utils.o camera.o stubs.o devicemgmt.o media.o imaging.o
 OBJECTS = $(MYOBJS) $(SOAPOBJS)
-TESTOBJS = tests/tests.o
+TESTOBJS = tests/main.o tests/devicemgmt.o tests/media.o tests/imaging.o
 ALL_OBJECTS = $(MAINOBJ) $(OBJECTS) $(TESTOBJS)
 ALL_MY_OBJECTS = $(TESTOBJS) $(MAINOBJ) $(MYOBJS)
 
 camera-onvif-server: $(MAINOBJ) $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -Wall -Werror $^ -o $@ $(LDLIBS)
 
-test-runner: CXXFLAGS += -DDEBUG -g -O0
-test-runner: CFLAGS += -DDEBUG -g -O0
+test-runner: CXXFLAGS_LENIENT += $(DEBUG_FLAGS)
+test-runner: CFLAGS_LENIENT += $(DEBUG_FLAGS)
 test-runner: $(TESTOBJS) $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -Wall -Werror $^ -o $@ $(LDLIBS)
 
 .PHONY: debug
-debug: CXXFLAGS += -DDEBUG -g -O0
-debug: CFLAGS += -DDEBUG -g -O0
+debug: CXXFLAGS_LENIENT += $(DEBUG_FLAGS)
+debug: CFLAGS_LENIENT += $(DEBUG_FLAGS)
 debug: camera-onvif-server
 
 .PHONY: check
@@ -66,5 +66,5 @@ soaplib/%.o: soaplib/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS_LENIENT) -c $^ -o $@
 
 soaplib/%.o: soaplib/%.c
-	$(CXX) $(CPPFLAGS) $(CFLAGS_LENIENT) -c $^ -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS_LENIENT) -c $^ -o $@
 

@@ -5,9 +5,6 @@
 
 #include "camera.h"
 
-// Err, TODO...
-const char *XADDR = "http://localhost:8080";
-
 
 int __tds__GetDeviceInformation(struct soap *soap, _tds__GetDeviceInformation *request, _tds__GetDeviceInformationResponse &response) {
 	auto *device_info = static_cast<Camera *>(soap->user)->getDeviceInformation();
@@ -22,10 +19,11 @@ int __tds__GetDeviceInformation(struct soap *soap, _tds__GetDeviceInformation *r
 
 int __tds__GetServices(struct soap *soap, _tds__GetServices *request, _tds__GetServicesResponse &response) {
 	// TODO Should be able to extract the versions from the WSDL files...
+	auto *camera = static_cast<Camera *>(soap->user);
 
 	auto device_service = soap_new_tds__Service(soap);
 	device_service->Namespace = SOAP_NAMESPACE_OF_tds;
-	device_service->XAddr = XADDR;
+	device_service->XAddr = camera->getOnvifURL();
 	device_service->Version = soap_new_tt__OnvifVersion(soap);
 	device_service->Version->Major = 23;
 	device_service->Version->Minor = 06;
@@ -33,7 +31,7 @@ int __tds__GetServices(struct soap *soap, _tds__GetServices *request, _tds__GetS
 
 	auto media_service = soap_new_tds__Service(soap);
 	media_service->Namespace = SOAP_NAMESPACE_OF_trt;
-	media_service->XAddr = XADDR;
+	media_service->XAddr = camera->getOnvifURL();
 	media_service->Version = soap_new_tt__OnvifVersion(soap);
 	media_service->Version->Major = 21;
 	media_service->Version->Minor = 6;
@@ -41,7 +39,7 @@ int __tds__GetServices(struct soap *soap, _tds__GetServices *request, _tds__GetS
 
 	auto imaging_service = soap_new_tds__Service(soap);
 	imaging_service->Namespace = SOAP_NAMESPACE_OF_timg;
-	imaging_service->XAddr = XADDR;
+	imaging_service->XAddr = camera->getOnvifURL();
 	imaging_service->Version = soap_new_tt__OnvifVersion(soap);
 	imaging_service->Version->Major = 19;
 	imaging_service->Version->Minor = 6;
@@ -58,5 +56,22 @@ int __tds__GetHostname(struct soap *soap, _tds__GetHostname *request, _tds__GetH
 	char hostname[HOST_NAME_MAX];
 	gethostname(hostname, HOST_NAME_MAX);
 	*(response.HostnameInformation->Name) = hostname;
+	return SOAP_OK;
+}
+
+// This is supposedly replaced by 'GetServices', but some Python onvif client I found likes to use it to
+// discover the URLs and explodes if it can't.
+int __tds__GetCapabilities(struct soap *soap, _tds__GetCapabilities *request, _tds__GetCapabilitiesResponse &response) {
+	auto *camera = static_cast<Camera *>(soap->user);
+
+	response.Capabilities = soap_new_tt__Capabilities(soap);
+	response.Capabilities->Device = soap_new_tt__DeviceCapabilities(soap);
+	response.Capabilities->Device->XAddr = camera->getOnvifURL();
+	response.Capabilities->Imaging = soap_new_tt__ImagingCapabilities(soap);
+	response.Capabilities->Imaging->XAddr = camera->getOnvifURL();
+	response.Capabilities->Media = soap_new_tt__MediaCapabilities(soap);
+	response.Capabilities->Media->XAddr = camera->getOnvifURL();
+	response.Capabilities->Media->StreamingCapabilities = soap_new_tt__RealTimeStreamingCapabilities(soap);
+
 	return SOAP_OK;
 }

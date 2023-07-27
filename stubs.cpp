@@ -193,11 +193,6 @@ SOAP_FMAC5 int SOAP_FMAC6 __tds__SetAuthFailureWarningConfiguration(struct soap*
 	return SOAP_OK;
 }
 
-/** Web service operation '__tds__GetCapabilities' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __tds__GetCapabilities(struct soap*, _tds__GetCapabilities *tds__GetCapabilities, _tds__GetCapabilitiesResponse &tds__GetCapabilitiesResponse) {
-	return SOAP_OK;
-}
-
 /** Web service operation '__tds__SetDPAddresses' implementation, should return SOAP_OK or error code */
 SOAP_FMAC5 int SOAP_FMAC6 __tds__SetDPAddresses(struct soap*, _tds__SetDPAddresses *tds__SetDPAddresses, _tds__SetDPAddressesResponse &tds__SetDPAddressesResponse) {
 	return SOAP_OK;
@@ -503,18 +498,8 @@ SOAP_FMAC5 int SOAP_FMAC6 __timg__GetServiceCapabilities(struct soap*, _timg__Ge
 	return SOAP_OK;
 }
 
-/** Web service operation '__timg__GetImagingSettings' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __timg__GetImagingSettings(struct soap*, _timg__GetImagingSettings *timg__GetImagingSettings, _timg__GetImagingSettingsResponse &timg__GetImagingSettingsResponse) {
-	return SOAP_OK;
-}
-
 /** Web service operation '__timg__SetImagingSettings' implementation, should return SOAP_OK or error code */
 SOAP_FMAC5 int SOAP_FMAC6 __timg__SetImagingSettings(struct soap*, _timg__SetImagingSettings *timg__SetImagingSettings, _timg__SetImagingSettingsResponse &timg__SetImagingSettingsResponse) {
-	return SOAP_OK;
-}
-
-/** Web service operation '__timg__GetOptions' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __timg__GetOptions(struct soap*, _timg__GetOptions *timg__GetOptions, _timg__GetOptionsResponse &timg__GetOptionsResponse) {
 	return SOAP_OK;
 }
 
@@ -558,11 +543,6 @@ SOAP_FMAC5 int SOAP_FMAC6 __trt__GetServiceCapabilities(struct soap*, _trt__GetS
 	return SOAP_OK;
 }
 
-/** Web service operation '__trt__GetVideoSources' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __trt__GetVideoSources(struct soap*, _trt__GetVideoSources *trt__GetVideoSources, _trt__GetVideoSourcesResponse &trt__GetVideoSourcesResponse) {
-	return SOAP_OK;
-}
-
 /** Web service operation '__trt__GetAudioSources' implementation, should return SOAP_OK or error code */
 SOAP_FMAC5 int SOAP_FMAC6 __trt__GetAudioSources(struct soap*, _trt__GetAudioSources *trt__GetAudioSources, _trt__GetAudioSourcesResponse &trt__GetAudioSourcesResponse) {
 	return SOAP_OK;
@@ -580,11 +560,6 @@ SOAP_FMAC5 int SOAP_FMAC6 __trt__CreateProfile(struct soap*, _trt__CreateProfile
 
 /** Web service operation '__trt__GetProfile' implementation, should return SOAP_OK or error code */
 SOAP_FMAC5 int SOAP_FMAC6 __trt__GetProfile(struct soap*, _trt__GetProfile *trt__GetProfile, _trt__GetProfileResponse &trt__GetProfileResponse) {
-	return SOAP_OK;
-}
-
-/** Web service operation '__trt__GetProfiles' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __trt__GetProfiles(struct soap*, _trt__GetProfiles *trt__GetProfiles, _trt__GetProfilesResponse &trt__GetProfilesResponse) {
 	return SOAP_OK;
 }
 
@@ -683,16 +658,6 @@ SOAP_FMAC5 int SOAP_FMAC6 __trt__DeleteProfile(struct soap*, _trt__DeleteProfile
 	return SOAP_OK;
 }
 
-/** Web service operation '__trt__GetVideoSourceConfigurations' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __trt__GetVideoSourceConfigurations(struct soap*, _trt__GetVideoSourceConfigurations *trt__GetVideoSourceConfigurations, _trt__GetVideoSourceConfigurationsResponse &trt__GetVideoSourceConfigurationsResponse) {
-	return SOAP_OK;
-}
-
-/** Web service operation '__trt__GetVideoEncoderConfigurations' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __trt__GetVideoEncoderConfigurations(struct soap*, _trt__GetVideoEncoderConfigurations *trt__GetVideoEncoderConfigurations, _trt__GetVideoEncoderConfigurationsResponse &trt__GetVideoEncoderConfigurationsResponse) {
-	return SOAP_OK;
-}
-
 /** Web service operation '__trt__GetAudioSourceConfigurations' implementation, should return SOAP_OK or error code */
 SOAP_FMAC5 int SOAP_FMAC6 __trt__GetAudioSourceConfigurations(struct soap*, _trt__GetAudioSourceConfigurations *trt__GetAudioSourceConfigurations, _trt__GetAudioSourceConfigurationsResponse &trt__GetAudioSourceConfigurationsResponse) {
 	return SOAP_OK;
@@ -725,11 +690,6 @@ SOAP_FMAC5 int SOAP_FMAC6 __trt__GetAudioDecoderConfigurations(struct soap*, _tr
 
 /** Web service operation '__trt__GetVideoSourceConfiguration' implementation, should return SOAP_OK or error code */
 SOAP_FMAC5 int SOAP_FMAC6 __trt__GetVideoSourceConfiguration(struct soap*, _trt__GetVideoSourceConfiguration *trt__GetVideoSourceConfiguration, _trt__GetVideoSourceConfigurationResponse &trt__GetVideoSourceConfigurationResponse) {
-	return SOAP_OK;
-}
-
-/** Web service operation '__trt__GetVideoEncoderConfiguration' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __trt__GetVideoEncoderConfiguration(struct soap*, _trt__GetVideoEncoderConfiguration *trt__GetVideoEncoderConfiguration, _trt__GetVideoEncoderConfigurationResponse &trt__GetVideoEncoderConfigurationResponse) {
 	return SOAP_OK;
 }
 
@@ -848,11 +808,6 @@ SOAP_FMAC5 int SOAP_FMAC6 __trt__GetVideoSourceConfigurationOptions(struct soap*
 	return SOAP_OK;
 }
 
-/** Web service operation '__trt__GetVideoEncoderConfigurationOptions' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __trt__GetVideoEncoderConfigurationOptions(struct soap*, _trt__GetVideoEncoderConfigurationOptions *trt__GetVideoEncoderConfigurationOptions, _trt__GetVideoEncoderConfigurationOptionsResponse &trt__GetVideoEncoderConfigurationOptionsResponse) {
-	return SOAP_OK;
-}
-
 /** Web service operation '__trt__GetAudioSourceConfigurationOptions' implementation, should return SOAP_OK or error code */
 SOAP_FMAC5 int SOAP_FMAC6 __trt__GetAudioSourceConfigurationOptions(struct soap*, _trt__GetAudioSourceConfigurationOptions *trt__GetAudioSourceConfigurationOptions, _trt__GetAudioSourceConfigurationOptionsResponse &trt__GetAudioSourceConfigurationOptionsResponse) {
 	return SOAP_OK;
@@ -880,11 +835,6 @@ SOAP_FMAC5 int SOAP_FMAC6 __trt__GetAudioDecoderConfigurationOptions(struct soap
 
 /** Web service operation '__trt__GetGuaranteedNumberOfVideoEncoderInstances' implementation, should return SOAP_OK or error code */
 SOAP_FMAC5 int SOAP_FMAC6 __trt__GetGuaranteedNumberOfVideoEncoderInstances(struct soap*, _trt__GetGuaranteedNumberOfVideoEncoderInstances *trt__GetGuaranteedNumberOfVideoEncoderInstances, _trt__GetGuaranteedNumberOfVideoEncoderInstancesResponse &trt__GetGuaranteedNumberOfVideoEncoderInstancesResponse) {
-	return SOAP_OK;
-}
-
-/** Web service operation '__trt__GetStreamUri' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __trt__GetStreamUri(struct soap*, _trt__GetStreamUri *trt__GetStreamUri, _trt__GetStreamUriResponse &trt__GetStreamUriResponse) {
 	return SOAP_OK;
 }
 
