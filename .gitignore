@@ -1,6 +1,7 @@
 .vscode
 compile_commands.json
 *.o
+*.d
 camera-onvif-server
 test-runner
 soaplib/.sentinel
@@ -9,7 +10,6 @@ soaplib/.sentinel
 # But eventually, these should be checked into the repo
 # (once things have settled...)
 soaplib/onvif.h
-soaplib/soap.nsmap
 soaplib/soapC_001.cpp
 soaplib/soapC_002.cpp
 soaplib/soapC_003.cpp
@@ -26,3 +26,13 @@ soaplib/struct_timeval.c
 soaplib/struct_timeval.h
 soaplib/wsaapi.c
 soaplib/wsaapi.h
+soaplib/DeviceBinding.nsmap
+soaplib/ImagingBinding.nsmap
+soaplib/MediaBinding.nsmap
+soaplib/RemoteDiscoveryBinding.nsmap
+soaplib/soapClient.cpp
+soaplib/threads.c
+soaplib/threads.h
+soaplib/wsdd.nsmap
+soaplib/wsddapi.c
+soaplib/wsddapi.h

@@ -1,30 +1,33 @@
 CC = g++
 SOAPOBJS = soaplib/stdsoap2.o \
-           soaplib/wsaapi.o \
+           soaplib/soapClient.o \
            soaplib/soapServer.o \
-           soaplib/struct_timeval.o \
+           soaplib/wsaapi.o \
+           soaplib/wsddapi.o \
+           soaplib/threads.o \
            soaplib/soapC_001.o \
            soaplib/soapC_002.o \
            soaplib/soapC_003.o \
            soaplib/soapC_004.o \
            soaplib/soapC_005.o \
-           soaplib/soapC_006.o \
-           soaplib/soapC_007.o
+           soaplib/soapC_006.o
 # soaplib/wsseapi.o soaplib/mecevp.o soaplib/smdevp.o soaplib/struct_timeval.o \
-# soaplib/wsddapi.o \
 
-CPPFLAGS += -DWITH_NONAMESPACES -DWITH_NOIDREF
+CPPFLAGS += -DWITH_NOIDREF
 CFLAGS += -Os
 CXXFLAGS += -Os
 CXXFLAGS_LENIENT := $(CXXFLAGS)
 CLAGS_LENIENT := $(CFLAGS)
-CFLAGS += -Wall -Werror
-CXXFLAGS += -Wall -Werror
+CFLAGS += -MMD -Wall -Werror
+CXXFLAGS += -MMD -Wall -Werror
+LDLIBS += -lpthread
 
 MAINOBJ = main.o
-OBJECTS = utils.o camera.o server.o stubs.o devicemgmt.o $(SOAPOBJS)
+MYOBJS = utils.o camera.o server.o stubs.o devicemgmt.o discovery.o
+OBJECTS = $(MYOBJS) $(SOAPOBJS)
 TESTOBJS = tests/tests.o
 ALL_OBJECTS = $(MAINOBJ) $(OBJECTS) $(TESTOBJS)
+ALL_MY_OBJECTS = $(TESTOBJS) $(MAINOBJ) $(MYOBJS)
 
 camera-onvif-server: $(MAINOBJ) $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -Wall -Werror $^ -o $@ $(LDLIBS)
@@ -54,6 +57,8 @@ test: test-runner
 clean:
 	# Don't nuke the generated files; we most likely just care about the objects
 	rm -f camera-onvif-server $(ALL_OBJECTS)
+
+-include $(ALL_MY_OBJECTS:%.o=%.d)
 
 # Don't annoy people about generated files.
 
