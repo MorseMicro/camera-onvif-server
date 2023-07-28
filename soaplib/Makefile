@@ -63,7 +63,7 @@ onvif.h: $(CUSTOM_XSDS)
 $(ONVIF_SOURCEFILES): .sentinel ;
 
 .sentinel: onvif.h
-	soapcpp2 -I$(GSOAP_DIR):$(GSOAP_DIR)/import -c++14 -f400 -x -s -L onvif.h
+	soapcpp2 -I$(GSOAP_DIR):$(GSOAP_DIR)/import -Ed -Ec -c++14 -f400 -x -s -L onvif.h
 	@touch $@
 
 .PHONY: clean

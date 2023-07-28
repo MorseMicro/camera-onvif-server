@@ -23,6 +23,11 @@ int __trt__GetVideoEncoderConfiguration(struct soap *soap, _trt__GetVideoEncoder
 	}
 }
 
+int __trt__SetVideoEncoderConfiguration(struct soap *soap, _trt__SetVideoEncoderConfiguration *request, _trt__SetVideoEncoderConfigurationResponse &response) {
+	Camera *camera = static_cast<Camera *>(soap->user);
+	return camera->setVideoEncoderConfiguration(request->Configuration) ? SOAP_OK : SOAP_ERR;
+}
+
 int __trt__GetVideoEncoderConfigurationOptions(struct soap *soap, _trt__GetVideoEncoderConfigurationOptions *request, _trt__GetVideoEncoderConfigurationOptionsResponse &response) {
 	Camera *camera = static_cast<Camera *>(soap->user);
 	response.Options = camera->getVideoEncoderConfigurationOptions();

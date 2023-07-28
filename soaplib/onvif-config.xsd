@@ -46,6 +46,7 @@ There's probably something deeply wrong with doing this, but it works for now.
 	<simpleType name="RTSPServerType">
 		<restriction base="string">
 			<enumeration value="ingenic"/>
+			<enumeration value="dummy"/>
 			<enumeration value="v4l2rtspserver"/>
 		</restriction>
 	</simpleType>
