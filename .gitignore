@@ -5,34 +5,3 @@ compile_commands.json
 camera-onvif-server
 test-runner
 soaplib/.sentinel
-
-# For now, we ignore these files so PRs don't get noisy.
-# But eventually, these should be checked into the repo
-# (once things have settled...)
-soaplib/onvif.h
-soaplib/soapC_001.cpp
-soaplib/soapC_002.cpp
-soaplib/soapC_003.cpp
-soaplib/soapC_004.cpp
-soaplib/soapC_005.cpp
-soaplib/soapC_006.cpp
-soaplib/soapC_007.cpp
-soaplib/soapH.h
-soaplib/soapServer.cpp
-soaplib/soapStub.h
-soaplib/stdsoap2.cpp
-soaplib/stdsoap2.h
-soaplib/struct_timeval.c
-soaplib/struct_timeval.h
-soaplib/wsaapi.c
-soaplib/wsaapi.h
-soaplib/DeviceBinding.nsmap
-soaplib/ImagingBinding.nsmap
-soaplib/MediaBinding.nsmap
-soaplib/RemoteDiscoveryBinding.nsmap
-soaplib/soapClient.cpp
-soaplib/threads.c
-soaplib/threads.h
-soaplib/wsdd.nsmap
-soaplib/wsddapi.c
-soaplib/wsddapi.h
