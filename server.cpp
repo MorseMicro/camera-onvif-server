@@ -38,9 +38,9 @@ void start_server(void *soap_user)
 		if (soap_serve(soap) != SOAP_OK) {
 			soap_print_fault(soap, stderr);
 			soap_print_fault_location(soap, stderr);
-			soap_destroy(soap);
-			soap_end(soap);
 		}
+		soap_destroy(soap);
+		soap_end(soap);
 	}
 
 	soap_print_fault(soap, stderr);
