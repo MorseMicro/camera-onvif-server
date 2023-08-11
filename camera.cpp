@@ -120,8 +120,6 @@ static const std::map<tt__H264Profile, std::string> ingenicServerProfileMap = {
 };
 
 std::vector<std::string> Camera::buildRtspServerArguments() {
-	struct soap *soap = soap_new1(SOAP_XML_DEFAULTNS | SOAP_XML_STRICT);
-	soap_set_namespaces(soap, datafile_namespaces);
 	auto *vce = getCurrentVideoEncoderConfiguration();
 
 	switch (properties->RTSPStream->Type) {
@@ -146,12 +144,11 @@ std::vector<std::string> Camera::buildRtspServerArguments() {
 		case tt__RTSPServerType::dummy:
 			return {properties->RTSPStream->ExecutablePath};
 		default:
-			throw new std::runtime_error(std::string("No support for rtsp server type ") + soap_tt__RTSPServerType2s(soap, properties->RTSPStream->Type));
-	}
+			// It would be nice to do this here, but loading an entire new soap context seems excessive.
+			// std::string type = soap_tt__RTSPServerType2s(soap, properties->RTSPStream->Type);
+			throw new std::runtime_error(std::string("No support for rtsp server type ") + properties->RTSPStream->Type);
 
-	soap_destroy(soap);
-	soap_end(soap);
-	soap_free(soap);
+	}
 }
 
 void Camera::startRtspServer() {

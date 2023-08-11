@@ -13,8 +13,8 @@ SOAPOBJS = soaplib/stdsoap2.o \
            soaplib/soapC_006.o
 # soaplib/wsseapi.o soaplib/mecevp.o soaplib/smdevp.o soaplib/struct_timeval.o \
 
-DEBUG_FLAGS = -DDEBUG -g -O1 -fsanitize=address,undefined,leak -fno-omit-frame-pointer
-CPPFLAGS += -DWITH_NOIDREF -I.
+DEBUG_FLAGS = -DDEBUG -g -O1 -fno-omit-frame-pointer # -fsanitize=address,undefined,leak
+CPPFLAGS += -DWITH_NOIDREF -DWITH_SOCKET_CLOSE_ON_EXIT -I.
 CXXFLAGS_LENIENT := $(CXXFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
 CFLAGS_LENIENT := $(CFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
 CFLAGS = $(CFLAGS_LENIENT) -MMD -Wall -Werror
@@ -40,6 +40,7 @@ test-runner: $(TESTOBJS) $(OBJECTS)
 .PHONY: debug
 debug: CXXFLAGS_LENIENT += $(DEBUG_FLAGS)
 debug: CFLAGS_LENIENT += $(DEBUG_FLAGS)
+debug: LDFLAGS =
 debug: camera-onvif-server
 
 .PHONY: check

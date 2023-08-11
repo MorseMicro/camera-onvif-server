@@ -66,15 +66,11 @@ static void start_wsdd_server(const char *listen_ip, const char *service_url) {
 			// It's not clear to me how to distinguish here between terminal and non-terminal
 			// issues... cf start_server, where if soap_accept fails we abort.
 			// Here, we simply busy-loop :(
-			// The code in wsdd_listen looks particularly strange as it returns
-			// both on starture AND on a request failure (but then returns
-			// the status of whether we managed to close the socket at the end
-			// of transmitting the failure back to the client (?)).
 			std::cerr << "Error when listening for discovery messages: " << std::endl;
 			soap_print_fault(soap, stderr);
-			soap_destroy(soap);
-			soap_end(soap);
 		}
+		soap_destroy(soap);
+		soap_end(soap);
 	}
 
 	// NB: Ideally we would send a 'Bye' (soap_wsdd_Bye) on exit, but we'd need to add
