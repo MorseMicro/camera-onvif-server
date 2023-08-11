@@ -12,10 +12,10 @@
 #include "soaplib/DeviceBinding.nsmap"
 
 
-const char *OPTSTRING = "hr:c:";
+const char *OPTSTRING = "hp:r:c:";
 const option LONGOPTS[] = {
 	{"port", required_argument, nullptr, 'p'},
-	{"properties", required_argument, nullptr, 'p'},
+	{"properties", required_argument, nullptr, 'r'},
 	{"config", required_argument, nullptr, 'c'},
 	{"help", no_argument, nullptr, 'h'},
 	{nullptr, no_argument, nullptr, 0},

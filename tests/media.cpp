@@ -154,3 +154,36 @@ TEST_CASE( "GetStreamUri returns correct info", "[media]" ) {
 	soap_end(soap);
 	soap_free(soap);
 }
+
+TEST_CASE( "SetVideoEncoderConfiguration correctly mutates config", "[media]" ) {
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+
+	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
+	soap->user = &c;
+	auto *req = soap_new__trt__SetVideoEncoderConfiguration(soap);
+	auto *resp = soap_new__trt__SetVideoEncoderConfigurationResponse(soap);
+	auto *vce = c.getVideoEncoderConfiguration("video_encoder_configuration_token")->soap_dup();
+
+	SECTION( "can mutate video encoder config" ) {
+		req->Configuration = vce;
+		vce->Resolution->Height = 999;
+		REQUIRE(__trt__SetVideoEncoderConfiguration(soap, req, *resp) == SOAP_OK);
+		auto *new_vce = c.getVideoEncoderConfiguration("video_encoder_configuration_token");
+		REQUIRE(new_vce->Resolution->Height == 999);
+		REQUIRE(new_vce->Resolution->Width == vce->Resolution->Width);
+	}
+
+	SECTION( "fails if token doesn't exist" ) {
+		req->Configuration = vce;
+		vce->token = "foo";
+		vce->Resolution->Height = 999;
+		REQUIRE(__trt__SetVideoEncoderConfiguration(soap, req, *resp) == SOAP_ERR);
+		auto *new_vce = c.getVideoEncoderConfiguration("video_encoder_configuration_token");
+		REQUIRE(new_vce->Resolution->Height != 999);
+	}
+
+	vce->soap_del();
+	soap_destroy(soap);
+	soap_end(soap);
+	soap_free(soap);
+}

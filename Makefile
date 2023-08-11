@@ -19,7 +19,7 @@ CXXFLAGS_LENIENT := $(CXXFLAGS) --std=c++17 -Os -fdata-sections -ffunction-secti
 CFLAGS_LENIENT := $(CFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
 CFLAGS = $(CFLAGS_LENIENT) -MMD -Wall -Werror
 CXXFLAGS = $(CXXFLAGS_LENIENT) -MMD -Wall -Werror
-LDFLAGS += -Wl,--gc-sections
+LDFLAGS += -s -Wl,--gc-sections
 LDLIBS += -lpthread
 
 MAINOBJ = main.o

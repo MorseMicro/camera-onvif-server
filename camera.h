@@ -14,7 +14,6 @@ class Camera {
 		_tt__CameraProperties *properties;
 		_tt__CameraConfiguration *config;
 		std::string config_filename;
-		struct soap *soap;
 		pid_t rtsp_server_pid;
 
 		std::vector<std::string> buildRtspServerArguments();
@@ -77,6 +76,20 @@ class Camera {
 			auto vec_it = std::find_if(vecs.begin(), vecs.end(),
 				[vec_token] (tt__VideoEncoderConfiguration *vec) { return vec->token == vec_token; });
 			return vec_it == vecs.end() ? nullptr : *vec_it;
+		}
+
+		inline bool setVideoEncoderConfiguration(tt__VideoEncoderConfiguration *new_vec) {
+			auto &vecs = config->MediaService->VideoEncoderConfiguration;
+			auto vec_it = std::find_if(vecs.begin(), vecs.end(),
+				[new_vec] (tt__VideoEncoderConfiguration *vec) { return vec->token == new_vec->token; });
+			if (vec_it == vecs.end()) {
+				return false;
+			}
+			(*vec_it)->soap_del();
+			*vec_it = new_vec->soap_dup();
+			saveConfiguration();
+			startRtspServer();
+			return true;
 		}
 
 		inline const tt__VideoEncoderConfiguration *getCurrentVideoEncoderConfiguration() {

@@ -4,7 +4,7 @@
     <Path>stream</Path>
     <Port>8554</Port>
     <ExecutablePath>./fake-rtsp-server</ExecutablePath>
-    <Type>ingenic</Type>
+    <Type>dummy</Type>
   </RTSPStream>
   <DeviceManagementService>
     <DeviceInformation>
