@@ -155,7 +155,7 @@ std::vector<std::string> Camera::buildRtspServerArguments() {
 			//  <Audio type>   : 0(PCM), 1(AAC), 2(ULAW), 2(ALAW) 
 
 			int bitrate_kbps = vce->RateControl != nullptr ? vce->RateControl->BitrateLimit : 1000;
-			int bitrate_mbps = round(fmin(1, static_cast<float>(bitrate_kbps) / 1000));
+			int bitrate_mbps = round(fmax(1, static_cast<float>(bitrate_kbps) / 1000));
 
 			return {
 				properties->RTSPStream->ExecutablePath,
