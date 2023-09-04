@@ -4,7 +4,7 @@
     <Path>stream</Path>
     <Port>8554</Port>
     <ExecutablePath>./fake-rtsp-server</ExecutablePath>
-    <Type>ingenic</Type>
+    <Type>nvrtspd</Type>
   </RTSPStream>
   <DeviceManagementService>
     <DeviceInformation>
@@ -75,6 +75,12 @@
     <ImagingVideoSourceOptions>
       <VideoSourceToken>video_source_token</VideoSourceToken>
       <ImagingOptions/>
+      <ImagingOptions>
+        <Brightness>
+          <Min>0</Min>
+          <Max>0</Max>
+        </Brightness>
+      </ImagingOptions>
     </ImagingVideoSourceOptions>
   </ImagingService>
 </CameraProperties>

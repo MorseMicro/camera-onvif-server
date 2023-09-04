@@ -112,7 +112,7 @@ std::string Camera::getStreamUri() {
 	return "rtsp://" + ip + ":" + properties->RTSPStream->Port + "/" + properties->RTSPStream->Path;
 }
 
-static const std::map<tt__H264Profile, std::string> ingenicServerProfileMap = {
+static const std::map<tt__H264Profile, std::string> t31rtspdProfileMap = {
 	{tt__H264Profile::Baseline, "baseline"},
 	{tt__H264Profile::Main, "main"},
 	{tt__H264Profile::Extended, "main"},
@@ -123,13 +123,13 @@ std::vector<std::string> Camera::buildRtspServerArguments() {
 	auto *vce = getCurrentVideoEncoderConfiguration();
 
 	switch (properties->RTSPStream->Type) {
-		case tt__RTSPServerType::ingenic:
+		case tt__RTSPServerType::t31rtspd:
 			// Currently, only H264, so we ignore encoding for now.
 			return {
 				properties->RTSPStream->ExecutablePath,
 				"-p", properties->RTSPStream->Port,
 				"-n", properties->RTSPStream->Path,
-				"--profile", vce->H264 != nullptr ? ingenicServerProfileMap.at(vce->H264->H264Profile) : "main",
+				"--profile", vce->H264 != nullptr ? t31rtspdProfileMap.at(vce->H264->H264Profile) : "main",
 				// Usually quality would be something saner (e.g. we could be setting fixqp),
 				// but as with rpos (raspberry pi onvif server) the most useful thing to do
 				// here is to choose between CBR and VBR (since there's no proper ONVIF
@@ -141,12 +141,39 @@ std::vector<std::string> Camera::buildRtspServerArguments() {
 				"-b", vce->RateControl != nullptr ? std::to_string(vce->RateControl->BitrateLimit) : "1000",
 				"-g", vce->H264 != nullptr ? std::to_string(vce->H264->GovLength) : "60",
 			};
+		case tt__RTSPServerType::nvtrtspd: {
+			// nvtrtspd doesn't support much at all that's useful to us...
+			//
+			// Usage: <3DNR> <shdr_mode> <enc_type> <enc_bitrate> <data_mode> <data2_mode>.
+			// Help:
+			//  <3DNR>        : 0(disable), 1(enable)
+			//  <shdr_mode>   : 0(disable), 1(enable)
+			//  <enc_type>    : 0(H265), 1(H264)
+			//  <enc_bitrate> : Mbps
+			//  <data_mode>   : 0(D2D), 1(Direct)
+			//  <data2_mode>   : 0(D2D), 1(LowLatency)
+			//  <Audio type>   : 0(PCM), 1(AAC), 2(ULAW), 2(ALAW) 
+
+			int bitrate_kbps = vce->RateControl != nullptr ? vce->RateControl->BitrateLimit : 1000;
+			int bitrate_mbps = round(fmax(1, static_cast<float>(bitrate_kbps) / 1000));
+
+			return {
+				properties->RTSPStream->ExecutablePath,
+				"1", // 3DNR
+				"0", // shdr
+				"1", // H264
+				std::to_string(bitrate_mbps), // Mbps
+				"0", // data_mode
+				"0", // data_mode
+				"1", // Audio type
+			};
+		};
 		case tt__RTSPServerType::dummy:
 			return {properties->RTSPStream->ExecutablePath};
 		default:
 			// It would be nice to do this here, but loading an entire new soap context seems excessive.
 			// std::string type = soap_tt__RTSPServerType2s(soap, properties->RTSPStream->Type);
-			throw new std::runtime_error(std::string("No support for rtsp server type ") + properties->RTSPStream->Type);
+			throw new std::runtime_error(std::string("No support for rtsp server type ") + std::to_string(static_cast<int>(properties->RTSPStream->Type)));
 
 	}
 }

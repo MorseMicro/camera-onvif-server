@@ -18,7 +18,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-07-28 01:06:13 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-09-04 00:14:47 GMT")
 
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_trt__GetStreamUri(struct soap *soap, _trt__GetStreamUri *const*a)
