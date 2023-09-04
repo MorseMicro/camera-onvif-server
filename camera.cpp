@@ -141,8 +141,8 @@ std::vector<std::string> Camera::buildRtspServerArguments() {
 				"-b", vce->RateControl != nullptr ? std::to_string(vce->RateControl->BitrateLimit) : "1000",
 				"-g", vce->H264 != nullptr ? std::to_string(vce->H264->GovLength) : "60",
 			};
-		case tt__RTSPServerType::nvrtspd: {
-			// nvrtspd doesn't support much at all that's useful to us...
+		case tt__RTSPServerType::nvtrtspd: {
+			// nvtrtspd doesn't support much at all that's useful to us...
 			//
 			// Usage: <3DNR> <shdr_mode> <enc_type> <enc_bitrate> <data_mode> <data2_mode>.
 			// Help:
