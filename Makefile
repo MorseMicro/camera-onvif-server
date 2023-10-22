@@ -5,6 +5,9 @@ SOAPOBJS = soaplib/stdsoap2.o \
            soaplib/wsaapi.o \
            soaplib/wsddapi.o \
            soaplib/threads.o \
+           soaplib/xml-rpc.o \
+           soaplib/json.o \
+           soaplib/jsonC.o \
            soaplib/soapC_001.o \
            soaplib/soapC_002.o \
            soaplib/soapC_003.o \
@@ -14,7 +17,7 @@ SOAPOBJS = soaplib/stdsoap2.o \
 # soaplib/wsseapi.o soaplib/mecevp.o soaplib/smdevp.o soaplib/struct_timeval.o \
 
 DEBUG_FLAGS = -DDEBUG -g -O1 -fno-omit-frame-pointer # -fsanitize=address,undefined,leak
-CPPFLAGS += -DWITH_NOIDREF -DWITH_SOCKET_CLOSE_ON_EXIT -I.
+CPPFLAGS += -DJSON_NAMESPACE -DWITH_NOIDREF -DWITH_SOCKET_CLOSE_ON_EXIT -I.
 CXXFLAGS_LENIENT := $(CXXFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
 CFLAGS_LENIENT := $(CFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
 CFLAGS = $(CFLAGS_LENIENT) -MMD -Wall -Werror
@@ -23,7 +26,10 @@ LDFLAGS += -s -Wl,--gc-sections
 LDLIBS += -lpthread
 
 MAINOBJ = main.o
-MYOBJS = discovery.o server.o utils.o camera.o stubs.o devicemgmt.o media.o imaging.o
+MYOBJS = discovery.o \
+	server.o stubs.o devicemgmt.o media.o imaging.o \
+	camera.o rtspserver_process.o rtspserver_mediamtxrpi.o \
+	utils.o
 OBJECTS = $(MYOBJS) $(SOAPOBJS)
 TESTOBJS = tests/main.o tests/devicemgmt.o tests/media.o tests/imaging.o
 ALL_OBJECTS = $(MAINOBJ) $(OBJECTS) $(TESTOBJS)

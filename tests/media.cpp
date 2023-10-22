@@ -1,10 +1,12 @@
 #include "catch.hpp"
+#include "fakeit.hpp"
 #include "../camera.h"
 #include "../soaplib/soapStub.h"
 
 
 TEST_CASE( "GetVideoEncoderConfigurations returns correct info", "[media]" ) {
-	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -25,7 +27,8 @@ TEST_CASE( "GetVideoEncoderConfigurations returns correct info", "[media]" ) {
 }
 
 TEST_CASE( "GetVideoEncoderConfiguration returns correct info", "[media]" ) {
-	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -52,7 +55,8 @@ TEST_CASE( "GetVideoEncoderConfiguration returns correct info", "[media]" ) {
 }
 
 TEST_CASE( "GetVideoEncoderConfigurationOptions returns correct info", "[media]" ) {
-	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -71,7 +75,8 @@ TEST_CASE( "GetVideoEncoderConfigurationOptions returns correct info", "[media]"
 }
 
 TEST_CASE( "GetVideoSources returns correct info", "[media]" ) {
-	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -89,7 +94,8 @@ TEST_CASE( "GetVideoSources returns correct info", "[media]" ) {
 }
 
 TEST_CASE( "GetVideoSourceConfigurations returns correct info", "[media]" ) {
-	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -108,7 +114,8 @@ TEST_CASE( "GetVideoSourceConfigurations returns correct info", "[media]" ) {
 }
 
 TEST_CASE( "GetProfiles returns correct info", "[media]" ) {
-	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -129,7 +136,8 @@ TEST_CASE( "GetProfiles returns correct info", "[media]" ) {
 }
 
 TEST_CASE( "GetStreamUri returns correct info", "[media]" ) {
-	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -156,7 +164,9 @@ TEST_CASE( "GetStreamUri returns correct info", "[media]" ) {
 }
 
 TEST_CASE( "SetVideoEncoderConfiguration correctly mutates config", "[media]" ) {
-	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	fakeit::Fake(Method(rtspServerMock, setVideoEncoderConfiguration));
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -180,6 +190,13 @@ TEST_CASE( "SetVideoEncoderConfiguration correctly mutates config", "[media]" ) 
 		REQUIRE(__trt__SetVideoEncoderConfiguration(soap, req, *resp) == SOAP_ERR);
 		auto *new_vce = c.getVideoEncoderConfiguration("video_encoder_configuration_token");
 		REQUIRE(new_vce->Resolution->Height != 999);
+	}
+
+	SECTION( "calls out to RtspServer" ) {
+		req->Configuration = vce;
+		vce->Resolution->Height = 999;
+		REQUIRE(__trt__SetVideoEncoderConfiguration(soap, req, *resp) == SOAP_OK);
+		fakeit::Verify(Method(rtspServerMock, setVideoEncoderConfiguration).Using(vce)).Once();
 	}
 
 	vce->soap_del();

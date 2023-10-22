@@ -3,7 +3,7 @@
   <RTSPStream>
     <Path>stream</Path>
     <Port>8554</Port>
-    <ExecutablePath>./fake-rtsp-server</ExecutablePath>
+    <Executable><Path>./fake-rtsp-server</Path></Executable>
     <Type>dummy</Type>
   </RTSPStream>
   <DeviceManagementService>

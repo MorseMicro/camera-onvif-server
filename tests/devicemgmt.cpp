@@ -1,10 +1,12 @@
 #include "catch.hpp"
+#include "fakeit.hpp"
 #include "../camera.h"
 #include "../soaplib/soapStub.h"
 
 
 TEST_CASE( "GetDeviceInformation returns correct info", "[devicemgmt]" ) {
-	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("http://localhost:8080", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;
@@ -24,7 +26,8 @@ TEST_CASE( "GetDeviceInformation returns correct info", "[devicemgmt]" ) {
 }
 
 TEST_CASE( "GetServices returns correct info", "[devicemgmt]" ) {
-	Camera c("http://localhost:8080", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml");
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("http://localhost:8080", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
 
 	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
 	soap->user = &c;

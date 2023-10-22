@@ -45,6 +45,7 @@ There's probably something deeply wrong with doing this, but it works for now.
 
 	<simpleType name="RTSPServerType">
 		<restriction base="string">
+			<enumeration value="mediaMtxRpi"/>
 			<enumeration value="t31rtspd"/> <!-- Ingenic T31 -->
 			<enumeration value="nvtrtspd"/> <!-- Novatek -->
 			<enumeration value="dummy"/>
@@ -52,12 +53,25 @@ There's probably something deeply wrong with doing this, but it works for now.
 		</restriction>
 	</simpleType>
 
-	<complexType name="RTSPStream">
+	<complexType name="RTSPServerExecutable">
 		<sequence>
 			<element name="Path" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="RTSPServerAPI">
+		<sequence>
 			<element name="Port" type="integer" />
-			<element name="ExecutablePath" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="RTSPStream">
+		<sequence>
 			<element name="Type" type="tt:RTSPServerType" />
+			<element name="Path" type="string" />
+			<element name="Port" type="integer" />
+			<element name="Executable" type="tt:RTSPServerExecutable" minOccurs=0 />
+			<element name="API" type="tt:RTSPServerAPI" minOccurs=0 />
 		</sequence>
 	</complexType>
 

@@ -3,8 +3,12 @@
   <RTSPStream>
     <Path>stream</Path>
     <Port>8554</Port>
-    <ExecutablePath>./fake-rtsp-server</ExecutablePath>
-    <Type>nvrtspd</Type>
+	<!--
+    <Type>nvtrtspd</Type>
+    <Executable><Path>./fake-rtsp-server</Path></Executable>
+	-->
+	<Type>mediaMtxRpi</Type>
+	<API><Port>8001</Port></API>
   </RTSPStream>
   <DeviceManagementService>
     <DeviceInformation>

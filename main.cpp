@@ -77,8 +77,8 @@ int main(int argc, char * const argv[])
 	try {
 		std::cout << "Loading camera configuration..." << std::endl;
 		Camera camera(onvif_url, ip, properties, config);
-		std::cout << "Starting RTSP server: " << camera.getStreamUri() << std::endl;
-		camera.startRtspServer();
+		std::cout << "Initialising RTSP stream: " << camera.getStreamUri() << std::endl;
+		camera.initialiseRtspServer();
 		std::cout << "Starting WS-Discovery server: " << ip << ":3702" << std::endl;
 		spawn_wsdd_server(ip, onvif_url.c_str());
 		std::cout << "Starting ONVIF server: " << onvif_url << std::endl;

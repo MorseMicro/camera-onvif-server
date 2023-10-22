@@ -1,0 +1,21 @@
+#include "soaplib/soapH.h"
+
+#include "rtspserver.h"
+
+#include <string>
+
+
+class RtspServerMediaMtxRpi : public RtspServer {
+	private:
+		std::string url;
+		std::string streamPath;
+
+	public:
+		explicit RtspServerMediaMtxRpi(std::string url, std::string streamPath)
+			: url(url), streamPath(streamPath) {}
+
+		/* Make sure the stream exists at the appropriate path. */
+		virtual void initialise(const tt__VideoEncoderConfiguration *);
+
+		virtual void setVideoEncoderConfiguration(const tt__VideoEncoderConfiguration *);
+};
