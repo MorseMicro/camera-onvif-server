@@ -18,8 +18,456 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-09-04 00:14:47 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-10-20 00:49:00 GMT")
 
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(struct soap *soap, std::vector<wsnt__NotificationMessageHolderType *> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(struct soap *soap, const std::vector<wsnt__NotificationMessageHolderType *> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<wsnt__NotificationMessageHolderType *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTowsnt__NotificationMessageHolderType(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(struct soap *soap, const char *tag, int id, const std::vector<wsnt__NotificationMessageHolderType *> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<wsnt__NotificationMessageHolderType *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTowsnt__NotificationMessageHolderType(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<wsnt__NotificationMessageHolderType *> * SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(struct soap *soap, const char *tag, std::vector<wsnt__NotificationMessageHolderType *> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(soap)))
+			return NULL;
+		a->emplace_back();
+		wsnt__NotificationMessageHolderType * *n = &a->back();
+		*n = NULL;
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size() - 1, SOAP_TYPE_wsnt__NotificationMessageHolderType, SOAP_TYPE_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType, sizeof(wsnt__NotificationMessageHolderType), 1, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_PointerTowsnt__NotificationMessageHolderType(soap, tag, NULL, "wsnt:NotificationMessageHolderType"))
+				break;
+		}
+		else
+		{	if (!soap_in_PointerTowsnt__NotificationMessageHolderType(soap, tag, n, "wsnt:NotificationMessageHolderType"))
+			{	a->pop_back();
+				break;
+			}
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<wsnt__NotificationMessageHolderType *>  * SOAP_FMAC2 soap_dup_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(struct soap *soap, std::vector<wsnt__NotificationMessageHolderType *>  *d, std::vector<wsnt__NotificationMessageHolderType *> const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = soap_new_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(soap)))
+		return NULL; /* ERROR */
+	d->resize(a->size());
+	std::vector<wsnt__NotificationMessageHolderType *> ::iterator j = d->begin();
+	for (std::vector<wsnt__NotificationMessageHolderType *> ::const_iterator i = a->begin(); i != a->end(); ++i, ++j)
+	{	soap_dup_PointerTowsnt__NotificationMessageHolderType(soap, &*j, &*i);
+	}
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(std::vector<wsnt__NotificationMessageHolderType *> const*a)
+{
+	if (!a)
+		return;
+	for (std::vector<wsnt__NotificationMessageHolderType *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_del_PointerTowsnt__NotificationMessageHolderType(&*i);
+}
+
+SOAP_FMAC1 std::vector<wsnt__NotificationMessageHolderType *>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<wsnt__NotificationMessageHolderType *> *p;
+	size_t k = sizeof(std::vector<wsnt__NotificationMessageHolderType *> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<wsnt__NotificationMessageHolderType *> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<wsnt__NotificationMessageHolderType *> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<wsnt__NotificationMessageHolderType *>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(struct soap *soap, std::vector<wsnt__TopicExpressionType *> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(struct soap *soap, const std::vector<wsnt__TopicExpressionType *> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<wsnt__TopicExpressionType *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTowsnt__TopicExpressionType(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(struct soap *soap, const char *tag, int id, const std::vector<wsnt__TopicExpressionType *> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<wsnt__TopicExpressionType *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTowsnt__TopicExpressionType(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<wsnt__TopicExpressionType *> * SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(struct soap *soap, const char *tag, std::vector<wsnt__TopicExpressionType *> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(soap)))
+			return NULL;
+		a->emplace_back();
+		wsnt__TopicExpressionType * *n = &a->back();
+		*n = NULL;
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size() - 1, SOAP_TYPE_wsnt__TopicExpressionType, SOAP_TYPE_std__vectorTemplateOfPointerTowsnt__TopicExpressionType, sizeof(wsnt__TopicExpressionType), 1, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_PointerTowsnt__TopicExpressionType(soap, tag, NULL, "wsnt:TopicExpressionType"))
+				break;
+		}
+		else
+		{	if (!soap_in_PointerTowsnt__TopicExpressionType(soap, tag, n, "wsnt:TopicExpressionType"))
+			{	a->pop_back();
+				break;
+			}
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<wsnt__TopicExpressionType *>  * SOAP_FMAC2 soap_dup_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(struct soap *soap, std::vector<wsnt__TopicExpressionType *>  *d, std::vector<wsnt__TopicExpressionType *> const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = soap_new_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(soap)))
+		return NULL; /* ERROR */
+	d->resize(a->size());
+	std::vector<wsnt__TopicExpressionType *> ::iterator j = d->begin();
+	for (std::vector<wsnt__TopicExpressionType *> ::const_iterator i = a->begin(); i != a->end(); ++i, ++j)
+	{	soap_dup_PointerTowsnt__TopicExpressionType(soap, &*j, &*i);
+	}
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(std::vector<wsnt__TopicExpressionType *> const*a)
+{
+	if (!a)
+		return;
+	for (std::vector<wsnt__TopicExpressionType *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_del_PointerTowsnt__TopicExpressionType(&*i);
+}
+
+SOAP_FMAC1 std::vector<wsnt__TopicExpressionType *>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTowsnt__TopicExpressionType(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<wsnt__TopicExpressionType *> *p;
+	size_t k = sizeof(std::vector<wsnt__TopicExpressionType *> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfPointerTowsnt__TopicExpressionType, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<wsnt__TopicExpressionType *> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<wsnt__TopicExpressionType *> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<wsnt__TopicExpressionType *>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTott__MinimumProfile(struct soap *soap, std::vector<tt__MinimumProfile *> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTott__MinimumProfile(struct soap *soap, const std::vector<tt__MinimumProfile *> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<tt__MinimumProfile *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTott__MinimumProfile(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTott__MinimumProfile(struct soap *soap, const char *tag, int id, const std::vector<tt__MinimumProfile *> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<tt__MinimumProfile *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTott__MinimumProfile(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<tt__MinimumProfile *> * SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTott__MinimumProfile(struct soap *soap, const char *tag, std::vector<tt__MinimumProfile *> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfPointerTott__MinimumProfile(soap)))
+			return NULL;
+		a->emplace_back();
+		tt__MinimumProfile * *n = &a->back();
+		*n = NULL;
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size() - 1, SOAP_TYPE_tt__MinimumProfile, SOAP_TYPE_std__vectorTemplateOfPointerTott__MinimumProfile, sizeof(tt__MinimumProfile), 1, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_PointerTott__MinimumProfile(soap, tag, NULL, "tt:MinimumProfile"))
+				break;
+		}
+		else
+		{	if (!soap_in_PointerTott__MinimumProfile(soap, tag, n, "tt:MinimumProfile"))
+			{	a->pop_back();
+				break;
+			}
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<tt__MinimumProfile *>  * SOAP_FMAC2 soap_dup_std__vectorTemplateOfPointerTott__MinimumProfile(struct soap *soap, std::vector<tt__MinimumProfile *>  *d, std::vector<tt__MinimumProfile *> const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = soap_new_std__vectorTemplateOfPointerTott__MinimumProfile(soap)))
+		return NULL; /* ERROR */
+	d->resize(a->size());
+	std::vector<tt__MinimumProfile *> ::iterator j = d->begin();
+	for (std::vector<tt__MinimumProfile *> ::const_iterator i = a->begin(); i != a->end(); ++i, ++j)
+	{	soap_dup_PointerTott__MinimumProfile(soap, &*j, &*i);
+	}
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_std__vectorTemplateOfPointerTott__MinimumProfile(std::vector<tt__MinimumProfile *> const*a)
+{
+	if (!a)
+		return;
+	for (std::vector<tt__MinimumProfile *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_del_PointerTott__MinimumProfile(&*i);
+}
+
+SOAP_FMAC1 std::vector<tt__MinimumProfile *>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPointerTott__MinimumProfile(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTott__MinimumProfile(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<tt__MinimumProfile *> *p;
+	size_t k = sizeof(std::vector<tt__MinimumProfile *> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfPointerTott__MinimumProfile, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<tt__MinimumProfile *> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<tt__MinimumProfile *> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<tt__MinimumProfile *>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(struct soap *soap, std::vector<tt__VideoEncoderConfiguration *> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(struct soap *soap, const std::vector<tt__VideoEncoderConfiguration *> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<tt__VideoEncoderConfiguration *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTott__VideoEncoderConfiguration(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(struct soap *soap, const char *tag, int id, const std::vector<tt__VideoEncoderConfiguration *> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<tt__VideoEncoderConfiguration *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTott__VideoEncoderConfiguration(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<tt__VideoEncoderConfiguration *> * SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(struct soap *soap, const char *tag, std::vector<tt__VideoEncoderConfiguration *> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(soap)))
+			return NULL;
+		a->emplace_back();
+		tt__VideoEncoderConfiguration * *n = &a->back();
+		*n = NULL;
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size() - 1, SOAP_TYPE_tt__VideoEncoderConfiguration, SOAP_TYPE_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration, sizeof(tt__VideoEncoderConfiguration), 1, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_PointerTott__VideoEncoderConfiguration(soap, tag, NULL, "tt:VideoEncoderConfiguration"))
+				break;
+		}
+		else
+		{	if (!soap_in_PointerTott__VideoEncoderConfiguration(soap, tag, n, "tt:VideoEncoderConfiguration"))
+			{	a->pop_back();
+				break;
+			}
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<tt__VideoEncoderConfiguration *>  * SOAP_FMAC2 soap_dup_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(struct soap *soap, std::vector<tt__VideoEncoderConfiguration *>  *d, std::vector<tt__VideoEncoderConfiguration *> const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = soap_new_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(soap)))
+		return NULL; /* ERROR */
+	d->resize(a->size());
+	std::vector<tt__VideoEncoderConfiguration *> ::iterator j = d->begin();
+	for (std::vector<tt__VideoEncoderConfiguration *> ::const_iterator i = a->begin(); i != a->end(); ++i, ++j)
+	{	soap_dup_PointerTott__VideoEncoderConfiguration(soap, &*j, &*i);
+	}
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(std::vector<tt__VideoEncoderConfiguration *> const*a)
+{
+	if (!a)
+		return;
+	for (std::vector<tt__VideoEncoderConfiguration *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_del_PointerTott__VideoEncoderConfiguration(&*i);
+}
+
+SOAP_FMAC1 std::vector<tt__VideoEncoderConfiguration *>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<tt__VideoEncoderConfiguration *> *p;
+	size_t k = sizeof(std::vector<tt__VideoEncoderConfiguration *> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfPointerTott__VideoEncoderConfiguration, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<tt__VideoEncoderConfiguration *> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<tt__VideoEncoderConfiguration *> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<tt__VideoEncoderConfiguration *>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTott__VideoSourceConfiguration(struct soap *soap, std::vector<tt__VideoSourceConfiguration *> *p)
 {
