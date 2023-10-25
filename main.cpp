@@ -31,8 +31,8 @@ void usage(char *cmd) {
 
 int main(int argc, char * const argv[])
 {
-	const char *properties = "settings/camera_properties.xml";
-	const char *config = "settings/camera_configuration.xml";
+	const char *properties = "properties.xml";
+	const char *config = "config.xml";
 	const char *port = "8080";
 	int opt;
 	while (-1 != (opt = getopt_long(argc, argv, OPTSTRING, LONGOPTS, nullptr))) {

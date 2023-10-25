@@ -28,11 +28,14 @@ it turns them into a horrifically large about of code.
 ## Build and run
 
     make
-    ./camera-onvif-server --properties settings/camera-properties.xml --config settings/camera-configuration.xml
+    ./camera-onvif-server :my-ip: --properties settings/dummy/properties.xml --config settings/dummy/config.xml
 
 
-We make a distinction between 'properties' (fixed attributes of the camera)
-and 'configuration' (things that can change via the ONVIF APIs at runtime).
+If you omit --properties/--config, they default to `./properties.xml`
+and `./config.xml`.
+
+We make a distinction between _properties_ (fixed attributes of the camera)
+and _configuration_ (things that can change via the ONVIF APIs at runtime).
 Both of these are loaded from XML files (see settings/*.xml), but the
 configuration XML file is updated based on what the user does
 (e.g. sets new encoder configuration or creates a profile or ...).
@@ -79,3 +82,15 @@ Start with main() in main.cpp. It will kick off three things:
   (which are required to compile - remember, this is all generated...).
   If you want to add a function, move it from stubs.cpp to the appropriate
   other file.
+
+
+## Adding support for a new RTSP server
+
+Any time we initialise a new `Camera`, it's provided with an `RTSPServer` object,
+usually selected by the Type in `properties.xml`.
+
+If you want to add another RTSP server type:
+
+- add a new RtspServerType to soaplib/onvif-config.xsd and run `make` in `soaplib`
+- extend RTSPServer (see rtspserver.h) and implement the necessary abstract methods
+- add your new type to the `switch` statement in camera.cpp

@@ -30,8 +30,6 @@ class Camera {
 		void saveConfiguration();
 		void saveConfiguration(std::ostream &camera_config_output);
 
-		void applyVideoEncoderConfiguration(tt__VideoEncoderConfiguration *);
-
 		std::string getStreamUri();
 
 		// Simple accessors.
@@ -84,7 +82,9 @@ class Camera {
 		bool setVideoEncoderConfiguration(tt__VideoEncoderConfiguration *new_vec);
 
 		const tt__VideoEncoderConfiguration *getCurrentVideoEncoderConfiguration() {
-			return getVideoEncoderConfiguration(*(getCurrentMinimumProfile()->VideoEncoderConfigurationToken));
+			auto *vec = getVideoEncoderConfiguration(*(getCurrentMinimumProfile()->VideoEncoderConfigurationToken));
+			assert(vec != nullptr);
+			return vec;
 		}
 
 		tt__VideoEncoderConfigurationOptions *getVideoEncoderConfigurationOptions() {
@@ -106,17 +106,31 @@ class Camera {
 			return config->MediaService->VideoSourceConfiguration;
 		}
 
-		tt__ImagingSettings20 *getImagingSettings(std::string &vsc_token) {
+		const tt__VideoSourceConfiguration *getCurrentVideoSourceConfiguration() {
+			auto *vsc = getVideoSourceConfiguration(*(getCurrentMinimumProfile()->VideoSourceConfigurationToken));
+			assert(vsc != nullptr);
+			return vsc;
+		}
+
+		tt__ImagingSettings20 *getImagingSettings(const std::string &vs_token) {
 			auto &sources = config->ImagingService->ImagingVideoSource;
 			auto sources_it = std::find_if(sources.begin(), sources.end(),
-				[vsc_token] (tt__ImagingVideoSource *ivs) { return ivs->VideoSourceToken == vsc_token; });
+				[vs_token] (tt__ImagingVideoSource *ivs) { return ivs->VideoSourceToken == vs_token; });
 			return sources_it == sources.end() ? nullptr : (*sources_it)->ImagingSettings;
 		}
 
-		tt__ImagingOptions20 *getImagingOptions(std::string &vsc_token) {
+		tt__ImagingSettings20 *getCurrentImagingSettings() {
+			auto *imaging_settings = getImagingSettings(getCurrentVideoSourceConfiguration()->SourceToken);
+			assert(imaging_settings != nullptr);
+			return imaging_settings;
+		}
+
+		bool setImagingSettings(std::string &vsc_token, tt__ImagingSettings20 *new_imaging_settings);
+
+		tt__ImagingOptions20 *getImagingOptions(std::string &vs_token) {
 			auto &sources = properties->ImagingService->ImagingVideoSourceOptions;
 			auto sources_it = std::find_if(sources.begin(), sources.end(),
-				[vsc_token] (tt__ImagingVideoSourceOptions *ivs) { return ivs->VideoSourceToken == vsc_token; });
+				[vs_token] (tt__ImagingVideoSourceOptions *ivs) { return ivs->VideoSourceToken == vs_token; });
 			return sources_it == sources.end() ? nullptr : (*sources_it)->ImagingOptions;
 		}
 };

@@ -84,11 +84,6 @@ void Camera::saveConfiguration() {
 }
 	
 
-void Camera::applyVideoEncoderConfiguration(tt__VideoEncoderConfiguration *vec) {
-	rtsp_server->setVideoEncoderConfiguration(vec);
-}
-
-
 void Camera::saveConfiguration(std::ostream &camera_config_output) {
 	struct soap *soap = soap_new1(SOAP_XML_DEFAULTNS | SOAP_XML_STRICT | SOAP_XML_INDENT);
 	soap_set_namespaces(soap, datafile_namespaces);
@@ -106,24 +101,45 @@ std::string Camera::getStreamUri() {
 
 
 void Camera::initialiseRtspServer() {
-	rtsp_server->initialise(getCurrentVideoEncoderConfiguration());
+	rtsp_server->initialise(getCurrentVideoEncoderConfiguration(), getCurrentImagingSettings());
 }
 
 
 bool Camera::setVideoEncoderConfiguration(tt__VideoEncoderConfiguration *new_vec) {
 	auto &vecs = config->MediaService->VideoEncoderConfiguration;
-	auto vec_it = std::find_if(vecs.begin(), vecs.end(),
+	auto vecs_it = std::find_if(vecs.begin(), vecs.end(),
 		[new_vec] (tt__VideoEncoderConfiguration *vec) { return vec->token == new_vec->token; });
-	if (vec_it == vecs.end()) {
+	if (vecs_it == vecs.end()) {
 		return false;
 	}
-	(*vec_it)->soap_del();
-	*vec_it = new_vec->soap_dup();
+	(*vecs_it)->soap_del();
+	*vecs_it = new_vec->soap_dup();
 
 	saveConfiguration();
 
 	if (new_vec->token == *(getCurrentMinimumProfile()->VideoEncoderConfigurationToken)) {
-		applyVideoEncoderConfiguration(new_vec);
+		rtsp_server->setVideoEncoderConfiguration(new_vec);
+	}
+	return true;
+}
+
+
+bool Camera::setImagingSettings(std::string &vs_token, tt__ImagingSettings20 *new_imaging_settings) {
+	auto &sources = config->ImagingService->ImagingVideoSource;
+	auto sources_it = std::find_if(sources.begin(), sources.end(),
+		[vs_token] (tt__ImagingVideoSource *ivs) { return ivs->VideoSourceToken == vs_token; });
+	if (sources_it == sources.end()) {
+		return false;
+	}
+	(*sources_it)->ImagingSettings->soap_del();
+	(*sources_it)->ImagingSettings = new_imaging_settings->soap_dup();
+
+	saveConfiguration();
+
+	getVideoSourceConfiguration(*(getCurrentMinimumProfile()->VideoSourceConfigurationToken));
+
+	if (vs_token == getCurrentVideoSourceConfiguration()->SourceToken) {
+		rtsp_server->setImagingSettings(new_imaging_settings);
 	}
 	return true;
 }

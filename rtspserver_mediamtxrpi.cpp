@@ -51,14 +51,34 @@ static void videoEncoderConfigurationToJson(json::value *v, const tt__VideoEncod
 }
 
 
-void RtspServerMediaMtxRpi::initialise(const tt__VideoEncoderConfiguration *vec) {
+static void imagingSettingsToJson(json::value *v, const tt__ImagingSettings20 *imaging_settings) {
+	auto setIfDefined = [v](auto &target, auto *value) {
+		if (value != nullptr) {
+			(*v)[target] = *value;
+		}
+	};
+
+	setIfDefined("rpiCameraBrightness", imaging_settings->Brightness);
+	setIfDefined("rpiCameraContrast", imaging_settings->Contrast);
+	setIfDefined("rpiCameraSaturation", imaging_settings->ColorSaturation);
+	setIfDefined("rpiCameraSharpness", imaging_settings->Sharpness);
+	if (imaging_settings->Focus != nullptr) {
+		(*v)["rpiCameraAfMode"] = imaging_settings->Focus->AutoFocusMode == tt__AutoFocusMode::MANUAL ? "manual" : "auto";
+	}
+}
+
+
+void RtspServerMediaMtxRpi::initialise(const tt__VideoEncoderConfiguration *vec, const tt__ImagingSettings20 *imaging_settings) {
 	// The MediaMTX API is very 'RPC-y', and confusingly use http verbs AND the path to
 	// indicate the actions. There's also nothing even close to an idempotent PUT, so we
-	// have to first add the configuration, and if that fails, PATCH it.
+	// first add the configuration, and if that fails, PATCH it.
 	soap *soap = soap_new1(SOAP_C_UTFSTRING);
 	json::value request(soap);
+
+	// Build the request JSON.
 	request["source"] = "rpiCamera";
 	videoEncoderConfigurationToJson(&request, vec);
+	imagingSettingsToJson(&request, imaging_settings);
 
 	// WARNING: this will fail (400) if the RPI camera is already configured on a different
 	// path, and will end up aborting (see SoapError below).
@@ -67,7 +87,7 @@ void RtspServerMediaMtxRpi::initialise(const tt__VideoEncoderConfiguration *vec)
 	if (json_call_method(soap, endpoint.c_str(), SOAP_POST_FILE, &request, nullptr)) {
 		const std::string patch_endpoint = url + "/v3/config/paths/patch/" + streamPath;
 
-		SoapError::ifNotOk(soap, "Initialising video encoder stream", 
+		SoapError::ifNotOk(soap, "Initialising the stream via MediaMTX", 
 		                   json_call_method(soap, patch_endpoint.c_str(), SOAP_PATCH, &request, nullptr));
 	}
 
@@ -89,7 +109,25 @@ void RtspServerMediaMtxRpi::setVideoEncoderConfiguration(const tt__VideoEncoderC
 		soap_print_fault(soap, stderr);
 	}
 
+	soap_destroy(soap);
 	soap_end(soap);
 	soap_free(soap);
 }
 
+
+void RtspServerMediaMtxRpi::setImagingSettings(const tt__ImagingSettings20 *imaging_settings) {
+	soap *soap = soap_new1(SOAP_C_UTFSTRING);
+	json::value request(soap);
+	imagingSettingsToJson(&request, imaging_settings);
+
+	const std::string endpoint = url + "/v3/config/paths/patch/" + streamPath;
+
+	if (json_call_method(soap, endpoint.c_str(), SOAP_PATCH, &request, nullptr)) {
+		std::cerr << "Error when updating imaging settings configuration via " << endpoint << ":" << std::endl;
+		soap_print_fault(soap, stderr);
+	}
+
+	soap_destroy(soap);
+	soap_end(soap);
+	soap_free(soap);
+}

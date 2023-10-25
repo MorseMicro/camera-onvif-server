@@ -3,28 +3,24 @@
   <RTSPStream>
     <Path>stream</Path>
     <Port>8554</Port>
-	<!--
-    <Type>nvtrtspd</Type>
-    <Executable><Path>./fake-rtsp-server</Path></Executable>
-	-->
 	<Type>mediaMtxRpi</Type>
-	<API><Port>8001</Port></API>
+	<API><Port>9997</Port></API>
   </RTSPStream>
   <DeviceManagementService>
     <DeviceInformation>
-      <Manufacturer>Morse Micro</Manufacturer>
-      <Model>RD02</Model>
+      <Manufacturer>Raspberry Pi</Manufacturer>
+      <Model>Camera</Model>
       <FirmwareVersion>1</FirmwareVersion>
       <SerialNumber>1</SerialNumber>
-      <HardwareId>abcdefgh</HardwareId>
+      <HardwareId>Unknown</HardwareId>
     </DeviceInformation>
   </DeviceManagementService>
   <MediaService>
     <VideoSource token="video_source_token">
       <Framerate>30</Framerate>
       <Resolution>
-        <Width>1280</Width>
-        <Height>720</Height>
+        <Width>1920</Width>
+        <Height>1080</Height>
       </Resolution>
     </VideoSource>
     <VideoSourceConfigurationOptions>
@@ -51,20 +47,28 @@
     </VideoSourceConfigurationOptions>
     <VideoEncoderConfigurationOptions>
       <QualityRange>
-        <Min>0</Min>
+        <Min>1</Min>
         <Max>1</Max>
       </QualityRange>
       <H264>
         <ResolutionsAvailable>
+          <Width>1920</Width>
+          <Height>1080</Height>
+        </ResolutionsAvailable>
+        <ResolutionsAvailable>
           <Width>1280</Width>
           <Height>720</Height>
         </ResolutionsAvailable>
+        <ResolutionsAvailable>
+          <Width>640</Width>
+          <Height>480</Height>
+        </ResolutionsAvailable>
         <GovLengthRange>
-          <Min>60</Min>
-          <Max>60</Max>
+          <Min>1</Min>
+          <Max>120</Max>
         </GovLengthRange>
         <FrameRateRange>
-          <Min>30</Min>
+          <Min>2</Min>
           <Max>30</Max>
         </FrameRateRange>
         <EncodingIntervalRange>
@@ -72,18 +76,36 @@
           <Max>1</Max>
         </EncodingIntervalRange>
         <H264ProfilesSupported>High</H264ProfilesSupported>
+        <H264ProfilesSupported>Main</H264ProfilesSupported>
+        <H264ProfilesSupported>Baseline</H264ProfilesSupported>
+        <H264ProfilesSupported>Extended</H264ProfilesSupported>
       </H264>
     </VideoEncoderConfigurationOptions>
   </MediaService>
   <ImagingService>
     <ImagingVideoSourceOptions>
       <VideoSourceToken>video_source_token</VideoSourceToken>
-      <ImagingOptions/>
       <ImagingOptions>
         <Brightness>
-          <Min>0</Min>
-          <Max>0</Max>
+          <Min>-1</Min>
+          <Max>1</Max>
         </Brightness>
+        <ColorSaturation>
+          <Min>0</Min>
+          <Max>3</Max>
+        </ColorSaturation>
+        <Contrast>
+          <Min>-3</Min>
+          <Max>3</Max>
+        </Contrast>
+        <Sharpness>
+          <Min>-1</Min>
+          <Max>1</Max>
+        </Sharpness>
+        <Focus>
+          <AutoFocusModes>AUTO</AutoFocusModes>
+          <AutoFocusModes>MANUAL</AutoFocusModes>
+		</Focus>
       </ImagingOptions>
     </ImagingVideoSourceOptions>
   </ImagingService>

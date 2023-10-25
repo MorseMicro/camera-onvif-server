@@ -498,11 +498,6 @@ SOAP_FMAC5 int SOAP_FMAC6 __timg__GetServiceCapabilities(struct soap*, _timg__Ge
 	return SOAP_OK;
 }
 
-/** Web service operation '__timg__SetImagingSettings' implementation, should return SOAP_OK or error code */
-SOAP_FMAC5 int SOAP_FMAC6 __timg__SetImagingSettings(struct soap*, _timg__SetImagingSettings *timg__SetImagingSettings, _timg__SetImagingSettingsResponse &timg__SetImagingSettingsResponse) {
-	return SOAP_OK;
-}
-
 /** Web service operation '__timg__Move' implementation, should return SOAP_OK or error code */
 SOAP_FMAC5 int SOAP_FMAC6 __timg__Move(struct soap*, _timg__Move *timg__Move, _timg__MoveResponse &timg__MoveResponse) {
 	return SOAP_OK;

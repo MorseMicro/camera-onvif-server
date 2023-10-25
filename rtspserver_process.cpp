@@ -14,22 +14,39 @@
 #include <algorithm>
 
 
-void RtspServerProcess::setVideoEncoderConfiguration(const tt__VideoEncoderConfiguration *vec) {
+void RtspServerProcess::start() {
 	if (rtsp_server_pid != 0) {
 		std::cout << "Stopping RTSP server (" << rtsp_server_pid << ")" << std::endl;
 		stop_child_process(rtsp_server_pid);
 		rtsp_server_pid = 0;
 	}
-	initialise(vec);
-};
 
-
-void RtspServerProcess::initialise(const tt__VideoEncoderConfiguration *vec) {
-	auto args = buildArguments(vec);
+	auto args = buildArguments();
 	std::ostringstream string_args;
 	std::copy(args.begin(), args.end(), std::ostream_iterator<std::string>(string_args, " "));
 	std::cout << "Starting RTSP server: " << string_args.str() << std::endl;
 	rtsp_server_pid = start_child_process(executable_path, args);
+}
+
+
+void RtspServerProcess::setVideoEncoderConfiguration(const tt__VideoEncoderConfiguration *vec) {
+	this->video_encoder_configuration->soap_del();
+	this->video_encoder_configuration = vec->soap_dup();
+	start();
+}
+
+
+void RtspServerProcess::setImagingSettings(const tt__ImagingSettings20 *imaging_settings) {
+	this->imaging_settings->soap_del();
+	this->imaging_settings = imaging_settings->soap_dup();
+	start();
+}
+
+
+void RtspServerProcess::initialise(const tt__VideoEncoderConfiguration *vec, const tt__ImagingSettings20 *imaging_settings) {
+	this->video_encoder_configuration = vec->soap_dup();
+	this->imaging_settings = imaging_settings->soap_dup();
+	start();
 }
 
 
@@ -41,7 +58,9 @@ static const std::map<tt__H264Profile, std::string> t31rtspdProfileMap = {
 };
 
 
-std::vector<std::string> RtspServerT31rtspd::buildArguments(const tt__VideoEncoderConfiguration *vec) {
+std::vector<std::string> RtspServerT31rtspd::buildArguments() {
+	auto *vec = this->video_encoder_configuration;
+
 	return {
 		executable_path,
 		"-p", port,
@@ -61,7 +80,9 @@ std::vector<std::string> RtspServerT31rtspd::buildArguments(const tt__VideoEncod
 }
 
 
-std::vector<std::string> RtspServerNvtrtspd::buildArguments(const tt__VideoEncoderConfiguration *vec) {
+std::vector<std::string> RtspServerNvtrtspd::buildArguments() {
+	auto *vec = this->video_encoder_configuration;
+
 	// nvtrtspd doesn't support much at all that's useful to us...
 	//
 	// Usage: <3DNR> <shdr_mode> <enc_type> <enc_bitrate> <data_mode> <data2_mode>.
