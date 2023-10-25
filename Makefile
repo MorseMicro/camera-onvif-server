@@ -40,6 +40,7 @@ camera-onvif-server: $(MAINOBJ) $(OBJECTS)
 
 test-runner: CXXFLAGS_LENIENT += $(DEBUG_FLAGS)
 test-runner: CFLAGS_LENIENT += $(DEBUG_FLAGS)
+test-runner: LDFLAGS =
 test-runner: $(TESTOBJS) $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -Wall -Werror $^ -o $@ $(LDLIBS)
 

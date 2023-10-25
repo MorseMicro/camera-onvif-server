@@ -101,11 +101,11 @@ std::string Camera::getStreamUri() {
 
 
 void Camera::initialiseRtspServer() {
-	rtsp_server->initialise(getCurrentVideoEncoderConfiguration(), getCurrentImagingSettings());
+	rtsp_server->initialise(getCurrentVideoEncoderConfiguration(), getCurrentImagingSettings(), getCurrentVideoSourceConfiguration());
 }
 
 
-bool Camera::setVideoEncoderConfiguration(tt__VideoEncoderConfiguration *new_vec) {
+bool Camera::setVideoEncoderConfiguration(const tt__VideoEncoderConfiguration *new_vec) {
 	auto &vecs = config->MediaService->VideoEncoderConfiguration;
 	auto vecs_it = std::find_if(vecs.begin(), vecs.end(),
 		[new_vec] (tt__VideoEncoderConfiguration *vec) { return vec->token == new_vec->token; });
@@ -124,7 +124,7 @@ bool Camera::setVideoEncoderConfiguration(tt__VideoEncoderConfiguration *new_vec
 }
 
 
-bool Camera::setImagingSettings(std::string &vs_token, tt__ImagingSettings20 *new_imaging_settings) {
+bool Camera::setImagingSettings(const std::string &vs_token, const tt__ImagingSettings20 *new_imaging_settings) {
 	auto &sources = config->ImagingService->ImagingVideoSource;
 	auto sources_it = std::find_if(sources.begin(), sources.end(),
 		[vs_token] (tt__ImagingVideoSource *ivs) { return ivs->VideoSourceToken == vs_token; });
@@ -141,5 +141,46 @@ bool Camera::setImagingSettings(std::string &vs_token, tt__ImagingSettings20 *ne
 	if (vs_token == getCurrentVideoSourceConfiguration()->SourceToken) {
 		rtsp_server->setImagingSettings(new_imaging_settings);
 	}
+	return true;
+}
+
+
+bool Camera::setVideoSourceConfiguration(const tt__VideoSourceConfiguration *new_vsc) {
+	auto &vscs = config->MediaService->VideoSourceConfiguration;
+	auto vsc_it = std::find_if(vscs.begin(), vscs.end(),
+		[new_vsc] (tt__VideoSourceConfiguration *vsc) { return vsc->token == new_vsc->token; });
+	if (vsc_it == vscs.end()) {
+		return false;
+	}
+
+	auto *existing_vsc = *vsc_it;
+
+	if (existing_vsc->SourceToken != new_vsc->SourceToken) {
+		// Refuse to allow physical input changes on a configuration.
+		// At the moment, none of our servers support more than one physical input,
+		// and it would be cleaner to create a new VideoSourceConfiguration for another
+		// physical input anyway.
+		return false;
+	}
+
+	// We copy only the mutable fields across to the existing object.
+
+	existing_vsc->Name = new_vsc->Name;
+	existing_vsc->Bounds->soap_del();
+	existing_vsc->Bounds = new_vsc->Bounds->soap_dup();
+
+	if (existing_vsc->Extension != nullptr) {
+		existing_vsc->Extension->soap_del();
+	}
+	if (new_vsc->Extension) {
+		existing_vsc->Extension = new_vsc->Extension->soap_dup();
+	}
+
+	saveConfiguration();
+
+	if (new_vsc->token == getCurrentVideoSourceConfiguration()->token) {
+		rtsp_server->setVideoSourceConfiguration(new_vsc);
+	}
+
 	return true;
 }

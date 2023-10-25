@@ -46,6 +46,17 @@ int __trt__GetVideoSourceConfigurations(struct soap *soap, _trt__GetVideoSourceC
 	return SOAP_OK;
 }
 
+int __trt__SetVideoSourceConfiguration(struct soap *soap, _trt__SetVideoSourceConfiguration *request, _trt__SetVideoSourceConfigurationResponse &response) {
+	Camera *camera = static_cast<Camera *>(soap->user);
+	return camera->setVideoSourceConfiguration(request->Configuration) ? SOAP_OK : SOAP_ERR;
+}
+
+int __trt__GetVideoSourceConfigurationOptions(struct soap *soap, _trt__GetVideoSourceConfigurationOptions *request, _trt__GetVideoSourceConfigurationOptionsResponse &response) {
+	Camera *camera = static_cast<Camera *>(soap->user);
+	response.Options = camera->getVideoSourceConfigurationOptions(request->ConfigurationToken, request->ProfileToken);
+	return SOAP_OK;
+}
+
 int __trt__GetProfiles(struct soap *soap, _trt__GetProfiles *request, _trt__GetProfilesResponse &response) {
 	Camera *camera = static_cast<Camera *>(soap->user);
 	auto min_profiles = camera->getMinimumProfiles();

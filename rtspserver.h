@@ -11,11 +11,13 @@
 class RtspServer {
 	public:
 		/* Make sure the stream exists at the appropriate path. */
-		virtual void initialise(const tt__VideoEncoderConfiguration *, const tt__ImagingSettings20 *) = 0;
+		virtual void initialise(const tt__VideoEncoderConfiguration *, const tt__ImagingSettings20 *, const tt__VideoSourceConfiguration *) = 0;
 
 		virtual void setVideoEncoderConfiguration(const tt__VideoEncoderConfiguration *) = 0;
 
 		virtual void setImagingSettings(const tt__ImagingSettings20 *) = 0;
+
+		virtual void setVideoSourceConfiguration(const tt__VideoSourceConfiguration *) = 0;
 };
 
 
@@ -23,7 +25,7 @@ class RtspServerDummy : public RtspServer {
 	public:
 		RtspServerDummy() {}
 
-		virtual void initialise(const tt__VideoEncoderConfiguration *, const tt__ImagingSettings20 *) {
+		virtual void initialise(const tt__VideoEncoderConfiguration *, const tt__ImagingSettings20 *, const tt__VideoSourceConfiguration *) {
 			std::cout << "Initialising the rtsp server!" << std::endl;
 		}
 
@@ -32,6 +34,10 @@ class RtspServerDummy : public RtspServer {
 		}
 
 		virtual void setImagingSettings(const tt__ImagingSettings20 *) {
-			std::cout << "Setting the imaging settings config!" << std::endl;
+			std::cout << "Setting the imaging settings!" << std::endl;
+		}
+
+		virtual void setVideoSourceConfiguration(const tt__VideoSourceConfiguration *) {
+			std::cout << "Setting the video source config!" << std::endl;
 		}
 };

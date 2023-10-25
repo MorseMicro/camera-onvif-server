@@ -32,4 +32,3 @@ int __timg__SetImagingSettings(struct soap *soap, _timg__SetImagingSettings *req
 	}
 	return SOAP_OK;
 }
-

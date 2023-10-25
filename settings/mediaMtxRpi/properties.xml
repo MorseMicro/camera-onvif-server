@@ -27,23 +27,29 @@
       <BoundsRange>
         <XRange>
           <Min>0</Min>
-          <Max>1</Max>
+          <Max>0</Max>
         </XRange>
         <YRange>
           <Min>0</Min>
           <Max>0</Max>
         </YRange>
         <WidthRange>
-          <Min>0</Min>
-          <Max>0</Max>
+          <Min>1920</Min>
+          <Max>1920</Max>
         </WidthRange>
         <HeightRange>
-          <Min>0</Min>
-          <Max>0</Max>
+          <Min>1080</Min>
+          <Max>1080</Max>
         </HeightRange>
       </BoundsRange>
       <VideoSourceTokensAvailable>video_source_token</VideoSourceTokensAvailable>
       <MaximumNumberOfProfiles>1</MaximumNumberOfProfiles>
+      <Extension>
+        <Rotate>
+          <Mode>ON</Mode>
+          <Mode>OFF</Mode>
+        </Rotate>
+      </Extension>
     </VideoSourceConfigurationOptions>
     <VideoEncoderConfigurationOptions>
       <QualityRange>

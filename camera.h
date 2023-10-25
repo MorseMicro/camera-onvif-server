@@ -79,7 +79,7 @@ class Camera {
 			return vec_it == vecs.end() ? nullptr : *vec_it;
 		}
 
-		bool setVideoEncoderConfiguration(tt__VideoEncoderConfiguration *new_vec);
+		bool setVideoEncoderConfiguration(const tt__VideoEncoderConfiguration *new_vec);
 
 		const tt__VideoEncoderConfiguration *getCurrentVideoEncoderConfiguration() {
 			auto *vec = getVideoEncoderConfiguration(*(getCurrentMinimumProfile()->VideoEncoderConfigurationToken));
@@ -112,6 +112,13 @@ class Camera {
 			return vsc;
 		}
 
+		bool setVideoSourceConfiguration(const tt__VideoSourceConfiguration *vsc);
+
+		tt__VideoSourceConfigurationOptions *getVideoSourceConfigurationOptions(std::string *vsc_token, std::string *profile_token) {
+			// WARNING: we only support one set of options, so we ignore vsc_token/profile_token for now.
+			return properties->MediaService->VideoSourceConfigurationOptions;
+		}
+
 		tt__ImagingSettings20 *getImagingSettings(const std::string &vs_token) {
 			auto &sources = config->ImagingService->ImagingVideoSource;
 			auto sources_it = std::find_if(sources.begin(), sources.end(),
@@ -125,7 +132,7 @@ class Camera {
 			return imaging_settings;
 		}
 
-		bool setImagingSettings(std::string &vsc_token, tt__ImagingSettings20 *new_imaging_settings);
+		bool setImagingSettings(const std::string &vsc_token, const tt__ImagingSettings20 *new_imaging_settings);
 
 		tt__ImagingOptions20 *getImagingOptions(std::string &vs_token) {
 			auto &sources = properties->ImagingService->ImagingVideoSourceOptions;

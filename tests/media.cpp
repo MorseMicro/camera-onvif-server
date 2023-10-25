@@ -113,6 +113,23 @@ TEST_CASE( "GetVideoSourceConfigurations returns correct info", "[media]" ) {
 	soap_free(soap);
 }
 
+TEST_CASE( "GetVideoSourceConfigurationOptions returns correct info", "[media]" ) {
+	fakeit::Mock<RtspServer> rtspServerMock;
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
+
+	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
+	soap->user = &c;
+	auto *req = soap_new__trt__GetVideoSourceConfigurationOptions(soap);
+	auto *resp = soap_new__trt__GetVideoSourceConfigurationOptionsResponse(soap);
+
+	REQUIRE(__trt__GetVideoSourceConfigurationOptions(soap, req, *resp) == SOAP_OK);
+	REQUIRE(resp->Options->BoundsRange->XRange->Max == 1.0);
+
+	soap_destroy(soap);
+	soap_end(soap);
+	soap_free(soap);
+}
+
 TEST_CASE( "GetProfiles returns correct info", "[media]" ) {
 	fakeit::Mock<RtspServer> rtspServerMock;
 	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
@@ -200,6 +217,50 @@ TEST_CASE( "SetVideoEncoderConfiguration correctly mutates config", "[media]" ) 
 	}
 
 	vce->soap_del();
+	soap_destroy(soap);
+	soap_end(soap);
+	soap_free(soap);
+}
+
+TEST_CASE( "SetVideoSourceConfiguration correctly mutates config", "[media]" ) {
+	fakeit::Mock<RtspServer> rtspServerMock;
+	fakeit::Fake(Method(rtspServerMock, setVideoSourceConfiguration));
+	Camera c("localhost", "localhost", "tests/camera_properties.xml", "tests/camera_configuration.xml", &(rtspServerMock.get()));
+
+	auto soap = soap_new1(SOAP_XML_STRICT|SOAP_XML_INDENT);
+	soap->user = &c;
+	auto *vsc = c.getVideoSourceConfiguration("video_source_configuration_token")->soap_dup();
+
+	auto *req = soap_new__trt__SetVideoSourceConfiguration(soap);
+	auto *resp = soap_new__trt__SetVideoSourceConfigurationResponse(soap);
+
+	SECTION( "can mutate video source config" ) {
+		req->Configuration = vsc;
+		vsc->Bounds->x = 1;
+		REQUIRE(__trt__SetVideoSourceConfiguration(soap, req, *resp) == SOAP_OK);
+		auto *new_vsc = c.getVideoSourceConfiguration("video_source_configuration_token");
+		REQUIRE(new_vsc->Bounds->x == 1);
+		REQUIRE(new_vsc->Bounds->y == vsc->Bounds->y);
+	}
+
+
+	SECTION( "fails if token doesn't exist" ) {
+		req->Configuration = vsc;
+		vsc->Bounds->x = 1;
+		vsc->token = "foo";
+		REQUIRE(__trt__SetVideoSourceConfiguration(soap, req, *resp) == SOAP_ERR);
+		auto *new_vsc = c.getVideoSourceConfiguration("video_source_configuration_token");
+		REQUIRE(new_vsc->Bounds->x != 1);
+	}
+
+	SECTION( "calls out to RtspServer" ) {
+		req->Configuration = vsc;
+		vsc->Bounds->x = 1;
+		REQUIRE(__trt__SetVideoSourceConfiguration(soap, req, *resp) == SOAP_OK);
+		fakeit::Verify(Method(rtspServerMock, setVideoSourceConfiguration).Using(vsc)).Once();
+	}
+
+	vsc->soap_del();
 	soap_destroy(soap);
 	soap_end(soap);
 	soap_free(soap);

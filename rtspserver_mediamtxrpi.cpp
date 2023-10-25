@@ -68,7 +68,15 @@ static void imagingSettingsToJson(json::value *v, const tt__ImagingSettings20 *i
 }
 
 
-void RtspServerMediaMtxRpi::initialise(const tt__VideoEncoderConfiguration *vec, const tt__ImagingSettings20 *imaging_settings) {
+static void videoSourceConfigurationToJson(json::value *v, const tt__VideoSourceConfiguration *vsc) {
+	if (vsc->Extension != nullptr && vsc->Extension->Rotate != nullptr) {
+		// We only support 180 degree rotation, which is the default behaviour if 'degree' isn't specified...
+		(*v)["rpiCameraHFlip"] = (*v)["rpiCameraVFlip"] = (vsc->Extension->Rotate->Mode == tt__RotateMode::ON);
+	}
+}
+
+
+void RtspServerMediaMtxRpi::initialise(const tt__VideoEncoderConfiguration *vec, const tt__ImagingSettings20 *imaging_settings, const tt__VideoSourceConfiguration *vsc) {
 	// The MediaMTX API is very 'RPC-y', and confusingly use http verbs AND the path to
 	// indicate the actions. There's also nothing even close to an idempotent PUT, so we
 	// first add the configuration, and if that fails, PATCH it.
@@ -79,6 +87,7 @@ void RtspServerMediaMtxRpi::initialise(const tt__VideoEncoderConfiguration *vec,
 	request["source"] = "rpiCamera";
 	videoEncoderConfigurationToJson(&request, vec);
 	imagingSettingsToJson(&request, imaging_settings);
+	videoSourceConfigurationToJson(&request, vsc);
 
 	// WARNING: this will fail (400) if the RPI camera is already configured on a different
 	// path, and will end up aborting (see SoapError below).
@@ -123,7 +132,25 @@ void RtspServerMediaMtxRpi::setImagingSettings(const tt__ImagingSettings20 *imag
 	const std::string endpoint = url + "/v3/config/paths/patch/" + streamPath;
 
 	if (json_call_method(soap, endpoint.c_str(), SOAP_PATCH, &request, nullptr)) {
-		std::cerr << "Error when updating imaging settings configuration via " << endpoint << ":" << std::endl;
+		std::cerr << "Error when updating imaging settings via " << endpoint << ":" << std::endl;
+		soap_print_fault(soap, stderr);
+	}
+
+	soap_destroy(soap);
+	soap_end(soap);
+	soap_free(soap);
+}
+
+
+void RtspServerMediaMtxRpi::setVideoSourceConfiguration(const tt__VideoSourceConfiguration *vsc) {
+	soap *soap = soap_new1(SOAP_C_UTFSTRING);
+	json::value request(soap);
+	videoSourceConfigurationToJson(&request, vsc);
+
+	const std::string endpoint = url + "/v3/config/paths/patch/" + streamPath;
+
+	if (json_call_method(soap, endpoint.c_str(), SOAP_PATCH, &request, nullptr)) {
+		std::cerr << "Error when updating video source configuration via " << endpoint << ":" << std::endl;
 		soap_print_fault(soap, stderr);
 	}
 

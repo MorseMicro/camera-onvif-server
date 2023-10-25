@@ -6,6 +6,11 @@
 			<UseCount>1</UseCount>
 			<SourceToken>video_source_token</SourceToken>
 			<Bounds xsi:type="IntRectangle" x="0" y="0" width="1280" height="720"></Bounds>
+			<Extension>
+				<Rotate>
+					<Mode>ON</Mode>
+				</Rotate>
+			</Extension>
 		</VideoSourceConfiguration>
 		<VideoEncoderConfiguration token="video_encoder_configuration_token">
 			<Name>Default</Name>
