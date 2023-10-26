@@ -25,6 +25,20 @@ class RtspServerProcess : public RtspServer {
 	public:
 		explicit RtspServerProcess(const std::string executable_path, const std::string port, const std::string stream_path)
 			: rtsp_server_pid(0), executable_path(executable_path), port(port), stream_path(stream_path) {}
+		~RtspServerProcess() {
+			if (this->video_encoder_configuration) {
+				this->video_encoder_configuration->soap_del();
+				delete this->video_encoder_configuration;
+			}
+			if (this->imaging_settings) {
+				this->imaging_settings->soap_del();
+				delete this->imaging_settings;
+			}
+			if (this->video_source_configuration) {
+				this->video_source_configuration->soap_del();
+				delete this->video_source_configuration;
+			}
+		}
 
 		/* Make sure the stream exists at the appropriate path. */
 		virtual void initialise(const tt__VideoEncoderConfiguration *, const tt__ImagingSettings20 *, const tt__VideoSourceConfiguration *);

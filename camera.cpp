@@ -68,7 +68,9 @@ Camera::Camera(std::string onvif_url, std::string ip, std::string properties_fil
 
 Camera::~Camera() {
 	properties->soap_del();
+	delete properties;
 	config->soap_del();
+	delete config;
 }
 
 
@@ -113,6 +115,7 @@ bool Camera::setVideoEncoderConfiguration(const tt__VideoEncoderConfiguration *n
 		return false;
 	}
 	(*vecs_it)->soap_del();
+	delete *vecs_it;
 	*vecs_it = new_vec->soap_dup();
 
 	saveConfiguration();
@@ -132,6 +135,7 @@ bool Camera::setImagingSettings(const std::string &vs_token, const tt__ImagingSe
 		return false;
 	}
 	(*sources_it)->ImagingSettings->soap_del();
+	delete (*sources_it)->ImagingSettings;
 	(*sources_it)->ImagingSettings = new_imaging_settings->soap_dup();
 
 	saveConfiguration();
@@ -167,10 +171,12 @@ bool Camera::setVideoSourceConfiguration(const tt__VideoSourceConfiguration *new
 
 	existing_vsc->Name = new_vsc->Name;
 	existing_vsc->Bounds->soap_del();
+	delete existing_vsc->Bounds;
 	existing_vsc->Bounds = new_vsc->Bounds->soap_dup();
 
 	if (existing_vsc->Extension != nullptr) {
 		existing_vsc->Extension->soap_del();
+		delete existing_vsc->Extension;
 	}
 	if (new_vsc->Extension) {
 		existing_vsc->Extension = new_vsc->Extension->soap_dup();

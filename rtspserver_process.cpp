@@ -31,6 +31,7 @@ void RtspServerProcess::start() {
 
 void RtspServerProcess::setVideoEncoderConfiguration(const tt__VideoEncoderConfiguration *vec) {
 	this->video_encoder_configuration->soap_del();
+	delete this->video_encoder_configuration;
 	this->video_encoder_configuration = vec->soap_dup();
 	start();
 }
@@ -38,6 +39,7 @@ void RtspServerProcess::setVideoEncoderConfiguration(const tt__VideoEncoderConfi
 
 void RtspServerProcess::setImagingSettings(const tt__ImagingSettings20 *imaging_settings) {
 	this->imaging_settings->soap_del();
+	delete this->imaging_settings;
 	this->imaging_settings = imaging_settings->soap_dup();
 	start();
 }
@@ -45,6 +47,7 @@ void RtspServerProcess::setImagingSettings(const tt__ImagingSettings20 *imaging_
 
 void RtspServerProcess::setVideoSourceConfiguration(const tt__VideoSourceConfiguration *vsc) {
 	this->video_source_configuration->soap_del();
+	delete this->video_source_configuration;
 	this->video_source_configuration = vsc->soap_dup();
 	start();
 }
@@ -53,6 +56,7 @@ void RtspServerProcess::setVideoSourceConfiguration(const tt__VideoSourceConfigu
 void RtspServerProcess::initialise(const tt__VideoEncoderConfiguration *vec, const tt__ImagingSettings20 *imaging_settings, const tt__VideoSourceConfiguration *vsc) {
 	this->video_encoder_configuration = vec->soap_dup();
 	this->imaging_settings = imaging_settings->soap_dup();
+	this->video_source_configuration = vsc->soap_dup();
 	start();
 }
 
