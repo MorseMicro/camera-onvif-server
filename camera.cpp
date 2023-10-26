@@ -1,6 +1,3 @@
-// Hack to let us use to_string (some weird gcc 5.x issue; thanks Ingenic).
-#define _GLIBCXX_USE_C99 1
-
 #include "soaplib/soapH.h"
 
 #include "camera.h"

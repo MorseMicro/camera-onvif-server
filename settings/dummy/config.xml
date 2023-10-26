@@ -46,7 +46,9 @@
   <ImagingService>
     <ImagingVideoSource>
       <VideoSourceToken>video_source_token</VideoSourceToken>
-      <ImagingSettings/>
+      <ImagingSettings>
+        <Brightness>50</Brightness>
+      </ImagingSettings>
     </ImagingVideoSource>
   </ImagingService>
 </CameraConfiguration>

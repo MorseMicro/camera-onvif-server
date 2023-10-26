@@ -25,7 +25,7 @@ CUSTOM_XSDS = onvif-config.xsd
 LIBRARY_SOURCEFILES = stdsoap2.cpp stdsoap2.h # dom.cpp
 #PLUGIN_SOURCEFILES = smdevp.c mecevp.c wsaapi.c wsseapi.c wsddapi.c threads.c \
 #                     smdevp.h mecevp.h wsaapi.h wsseapi.h wsddapi.h threads.h
-PLUGIN_SOURCEFILES = wsaapi.c wsaapi.h wsddapi.c wsddapi.h threads.c threads.h
+PLUGIN_SOURCEFILES = wsaapi.c wsaapi.h wsddapi.c wsddapi.h threads.c threads.h httpget.c httpget.h
 # CUSTOM_SOURCEFILES = struct_timeval.c struct_timeval.h
 XML_RPC_JSON_SOURCEFILES = json.cpp json.h xml-rpc.cpp xml-rpc.h xml-rpc-iters.h
 

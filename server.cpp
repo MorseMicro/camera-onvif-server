@@ -1,6 +1,8 @@
 #include <iostream>
 
-#include "camera.h"
+#include "soaplib/soapH.h"
+#include "soaplib/httpget.h"
+#include "httpgethandler.h"
 
 
 static int fignore(struct soap *, const char *tag) {
@@ -16,9 +18,11 @@ static int fignore(struct soap *, const char *tag) {
 	return SOAP_TAG_MISMATCH;
 }
 
+
 void start_server(void *soap_user)
 {
 	struct soap *soap = soap_new();
+	soap_register_plugin_arg(soap, http_get, (void *)http_get_handler);
 
 	soap->user = soap_user;
 	soap->bind_flags |= SO_REUSEADDR;

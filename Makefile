@@ -8,6 +8,7 @@ SOAPOBJS = soaplib/stdsoap2.o \
            soaplib/xml-rpc.o \
            soaplib/json.o \
            soaplib/jsonC.o \
+           soaplib/httpget.o \
            soaplib/soapC_001.o \
            soaplib/soapC_002.o \
            soaplib/soapC_003.o \
@@ -28,6 +29,7 @@ LDLIBS += -lpthread
 MAINOBJ = main.o
 MYOBJS = discovery.o \
 	server.o stubs.o devicemgmt.o media.o imaging.o \
+	httpgethandler.o \
 	camera.o rtspserver_process.o rtspserver_mediamtxrpi.o \
 	utils.o
 OBJECTS = $(MYOBJS) $(SOAPOBJS)

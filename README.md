@@ -73,7 +73,7 @@ Start with main() in main.cpp. It will kick off three things:
   to use), and also loads and when necessary mutates the config.xml file.
 - the WS-Discovery server (which listens to UDP broadcasts and responds to them);
   see discovery.cpp/h.
-- the actual ONVIF API, which listens to SOAP ONVIF commands and communicates
+- the actual ONVIF API server, which listens to SOAP ONVIF commands and communicates
   them to the `Camera` class and is started from server.cpp. The heavy lifting here
   is done almost entirely by gsoap autogeneration; our work is a separate file corresponding to
   each actual wsdl file (i.e. imaging.cpp, media.cpp, devicemgmt.cpp).
@@ -82,6 +82,9 @@ Start with main() in main.cpp. It will kick off three things:
   (which are required to compile - remember, this is all generated...).
   If you want to add a function, move it from stubs.cpp to the appropriate
   other file.
+
+We also use the ONVIF API server to deliver an HTML index page by adding an http_get_handler.
+See httpgethandler.c/h.
 
 
 ## Adding support for a new RTSP server

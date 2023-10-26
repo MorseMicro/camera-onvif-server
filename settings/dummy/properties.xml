@@ -74,11 +74,10 @@
   <ImagingService>
     <ImagingVideoSourceOptions>
       <VideoSourceToken>video_source_token</VideoSourceToken>
-      <ImagingOptions/>
       <ImagingOptions>
         <Brightness>
           <Min>0</Min>
-          <Max>0</Max>
+          <Max>100</Max>
         </Brightness>
       </ImagingOptions>
     </ImagingVideoSourceOptions>
