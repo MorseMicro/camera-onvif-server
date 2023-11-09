@@ -18,7 +18,9 @@ SOAPOBJS = soaplib/stdsoap2.o \
 # soaplib/wsseapi.o soaplib/mecevp.o soaplib/smdevp.o soaplib/struct_timeval.o \
 
 DEBUG_FLAGS = -DDEBUG -g -O1 -fno-omit-frame-pointer # -fsanitize=address,undefined,leak
-CPPFLAGS += -DJSON_NAMESPACE -DWITH_NOIDREF -DWITH_SOCKET_CLOSE_ON_EXIT -I.
+# Defining SOAP_NOTHROW here actually enables throws (badallocs) so we don't have to check
+# for null everywhere (by default, it's set to (std::nothrow)).
+CPPFLAGS += -DSOAP_NOTHROW='' -DJSON_NAMESPACE -DWITH_NOIDREF -DWITH_SOCKET_CLOSE_ON_EXIT -I.
 CXXFLAGS_LENIENT := $(CXXFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
 CFLAGS_LENIENT := $(CFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
 CFLAGS = $(CFLAGS_LENIENT) -MMD -Wall -Werror
