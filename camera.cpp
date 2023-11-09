@@ -45,12 +45,15 @@ Camera::Camera(std::string onvif_url, std::string ip, std::string properties_fil
 	if (!rtsp_server) {
 		switch (properties->RTSPStream->Type) {
 			case tt__RTSPServerType::mediaMtxRpi:
+				if (properties->RTSPStream->API == nullptr) throw InvalidConfigError("mediaMtxRpi requires <RTSPStream><API> section in properties file");
 				this->rtsp_server = new RtspServerMediaMtxRpi(std::string("http://localhost:") + properties->RTSPStream->API->Port, properties->RTSPStream->Path);
 				break;
 			case tt__RTSPServerType::nvtrtspd:
+				if (properties->RTSPStream->Executable == nullptr) throw InvalidConfigError("nvtrtsped requires <RTSPStream><Executable> section in properties file");
 				this->rtsp_server = new RtspServerNvtrtspd(properties->RTSPStream->Executable->Path, properties->RTSPStream->Port, properties->RTSPStream->Path);
 				break;
 			case tt__RTSPServerType::t31rtspd:
+				if (properties->RTSPStream->Executable == nullptr) throw InvalidConfigError("t31rtspd requires <RTSPStream><Executable> section in properties file");
 				this->rtsp_server = new RtspServerT31rtspd(properties->RTSPStream->Executable->Path, properties->RTSPStream->Port, properties->RTSPStream->Path);
 				break;
 			case tt__RTSPServerType::dummy:

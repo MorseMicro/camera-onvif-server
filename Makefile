@@ -35,7 +35,7 @@ MYOBJS = discovery.o \
 	camera.o rtspserver_process.o rtspserver_mediamtxrpi.o \
 	utils.o
 OBJECTS = $(MYOBJS) $(SOAPOBJS)
-TESTOBJS = tests/main.o tests/devicemgmt.o tests/media.o tests/imaging.o
+TESTOBJS = tests/main.o tests/devicemgmt.o tests/media.o tests/imaging.o tests/camera.o
 ALL_OBJECTS = $(MAINOBJ) $(OBJECTS) $(TESTOBJS)
 ALL_MY_OBJECTS = $(TESTOBJS) $(MAINOBJ) $(MYOBJS)
 

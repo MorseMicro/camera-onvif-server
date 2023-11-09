@@ -85,7 +85,7 @@ pid_t spawn_wsdd_server(const char *listen_ip, const char *service_url) {
 	pid_t pid = fork();
 
 	if (pid == -1) {
-		throw new std::runtime_error("Unable to fork to start WS-Discovery server");
+		throw std::runtime_error("Unable to fork to start WS-Discovery server");
 	} else if (pid == 0) {
 		if (-1 == prctl(PR_SET_PDEATHSIG, SIGTERM)) {
 			std::cerr << "Failed to prctl(PR_SET_PDEATHSIG) for rtsp server: " << strerror(errno) << std::endl;

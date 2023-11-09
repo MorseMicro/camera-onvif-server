@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CameraProperties xmlns="http://www.onvif.org/ver10/schema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <RTSPStream>
-    <Path>/</Path>
-    <Port>554</Port>
-    <Executable><Path>/bin/nvtrtspd</Path></Executable>
-    <Type>nvtrtspd</Type>
+    <Path>stream</Path>
+    <Port>8554</Port>
+	<Type>mediaMtxRpi</Type>
   </RTSPStream>
   <DeviceManagementService>
     <DeviceInformation>
-      <Manufacturer>Chicony</Manufacturer>
+      <Manufacturer>Raspberry Pi</Manufacturer>
       <Model>Camera</Model>
       <FirmwareVersion>1</FirmwareVersion>
       <SerialNumber>1</SerialNumber>
-      <HardwareId>abcdefgh</HardwareId>
+      <HardwareId>Unknown</HardwareId>
     </DeviceInformation>
   </DeviceManagementService>
   <MediaService>
@@ -27,27 +26,33 @@
       <BoundsRange>
         <XRange>
           <Min>0</Min>
-          <Max>1</Max>
+          <Max>0</Max>
         </XRange>
         <YRange>
           <Min>0</Min>
           <Max>0</Max>
         </YRange>
         <WidthRange>
-          <Min>0</Min>
-          <Max>0</Max>
+          <Min>1920</Min>
+          <Max>1920</Max>
         </WidthRange>
         <HeightRange>
-          <Min>0</Min>
-          <Max>0</Max>
+          <Min>1080</Min>
+          <Max>1080</Max>
         </HeightRange>
       </BoundsRange>
       <VideoSourceTokensAvailable>video_source_token</VideoSourceTokensAvailable>
       <MaximumNumberOfProfiles>1</MaximumNumberOfProfiles>
+      <Extension>
+        <Rotate>
+          <Mode>ON</Mode>
+          <Mode>OFF</Mode>
+        </Rotate>
+      </Extension>
     </VideoSourceConfigurationOptions>
     <VideoEncoderConfigurationOptions>
       <QualityRange>
-        <Min>0</Min>
+        <Min>1</Min>
         <Max>1</Max>
       </QualityRange>
       <H264>
@@ -55,12 +60,20 @@
           <Width>1920</Width>
           <Height>1080</Height>
         </ResolutionsAvailable>
+        <ResolutionsAvailable>
+          <Width>1280</Width>
+          <Height>720</Height>
+        </ResolutionsAvailable>
+        <ResolutionsAvailable>
+          <Width>640</Width>
+          <Height>480</Height>
+        </ResolutionsAvailable>
         <GovLengthRange>
-          <Min>60</Min>
-          <Max>60</Max>
+          <Min>1</Min>
+          <Max>120</Max>
         </GovLengthRange>
         <FrameRateRange>
-          <Min>30</Min>
+          <Min>2</Min>
           <Max>30</Max>
         </FrameRateRange>
         <EncodingIntervalRange>
@@ -68,6 +81,9 @@
           <Max>1</Max>
         </EncodingIntervalRange>
         <H264ProfilesSupported>High</H264ProfilesSupported>
+        <H264ProfilesSupported>Main</H264ProfilesSupported>
+        <H264ProfilesSupported>Baseline</H264ProfilesSupported>
+        <H264ProfilesSupported>Extended</H264ProfilesSupported>
       </H264>
     </VideoEncoderConfigurationOptions>
   </MediaService>
@@ -76,9 +92,25 @@
       <VideoSourceToken>video_source_token</VideoSourceToken>
       <ImagingOptions>
         <Brightness>
+          <Min>-1</Min>
+          <Max>1</Max>
+        </Brightness>
+        <ColorSaturation>
           <Min>0</Min>
-          <Max>0</Max>
-        </Brightness> 
+          <Max>3</Max>
+        </ColorSaturation>
+        <Contrast>
+          <Min>-3</Min>
+          <Max>3</Max>
+        </Contrast>
+        <Sharpness>
+          <Min>-1</Min>
+          <Max>1</Max>
+        </Sharpness>
+        <Focus>
+          <AutoFocusModes>AUTO</AutoFocusModes>
+          <AutoFocusModes>MANUAL</AutoFocusModes>
+		</Focus>
       </ImagingOptions>
     </ImagingVideoSourceOptions>
   </ImagingService>

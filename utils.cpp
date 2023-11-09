@@ -27,7 +27,7 @@ pid_t start_child_process(std::string path, std::vector<std::string> arguments) 
 	pid_t pid = fork();
 
 	if (pid == -1) {
-		throw new std::runtime_error("Unable to fork to start RTSP server");
+		throw std::runtime_error("Unable to fork to start RTSP server");
 	} else if (pid == 0) {
 		if (-1 == prctl(PR_SET_PDEATHSIG, SIGTERM)) {
 			std::cerr << "Failed to prctl(PR_SET_PDEATHSIG) for rtsp server: " << strerror(errno) << std::endl;
@@ -54,7 +54,7 @@ void stop_child_process(pid_t pid) {
 		if (errno == ESRCH) {
 			return;
 		} else {
-			throw new std::runtime_error("Unable to SIGTERM RTSP server");
+			throw std::runtime_error("Unable to SIGTERM RTSP server");
 		}
 	}
 	sleep(1);

@@ -3,7 +3,6 @@
   <RTSPStream>
     <Path>/</Path>
     <Port>554</Port>
-    <Executable><Path>/bin/nvtrtspd</Path></Executable>
     <Type>nvtrtspd</Type>
   </RTSPStream>
   <DeviceManagementService>

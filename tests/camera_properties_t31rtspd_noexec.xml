@@ -2,8 +2,8 @@
 <CameraProperties xmlns="http://www.onvif.org/ver10/schema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <RTSPStream>
     <Path>stream</Path>
-    <Port>8554</Port>
-    <Type>dummy</Type>
+    <Port>554</Port>
+    <Type>t31rtspd</Type>
   </RTSPStream>
   <DeviceManagementService>
     <DeviceInformation>
@@ -18,8 +18,8 @@
     <VideoSource token="video_source_token">
       <Framerate>30</Framerate>
       <Resolution>
-        <Width>1280</Width>
-        <Height>720</Height>
+        <Width>1920</Width>
+        <Height>1080</Height>
       </Resolution>
     </VideoSource>
     <VideoSourceConfigurationOptions>
@@ -51,15 +51,23 @@
       </QualityRange>
       <H264>
         <ResolutionsAvailable>
+          <Width>1920</Width>
+          <Height>1080</Height>
+        </ResolutionsAvailable>
+        <ResolutionsAvailable>
           <Width>1280</Width>
           <Height>720</Height>
         </ResolutionsAvailable>
+        <ResolutionsAvailable>
+          <Width>640</Width>
+          <Height>360</Height>
+        </ResolutionsAvailable>
         <GovLengthRange>
-          <Min>60</Min>
-          <Max>60</Max>
+          <Min>1</Min>
+          <Max>300</Max>
         </GovLengthRange>
         <FrameRateRange>
-          <Min>30</Min>
+          <Min>5</Min>
           <Max>30</Max>
         </FrameRateRange>
         <EncodingIntervalRange>
@@ -67,6 +75,8 @@
           <Max>1</Max>
         </EncodingIntervalRange>
         <H264ProfilesSupported>High</H264ProfilesSupported>
+        <H264ProfilesSupported>Main</H264ProfilesSupported>
+        <H264ProfilesSupported>Baseline</H264ProfilesSupported>
       </H264>
     </VideoEncoderConfigurationOptions>
   </MediaService>
@@ -83,7 +93,7 @@
         </BacklightCompensation>
         <Brightness>
           <Min>0</Min>
-          <Max>1</Max>
+          <Max>0</Max>
         </Brightness>
         <ColorSaturation>
           <Min>0</Min>

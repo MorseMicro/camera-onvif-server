@@ -40,8 +40,13 @@ class SoapError: public std::runtime_error {
 			soap_destroy(soap);
 			soap_end(soap);
 			soap_free(soap);
-			throw new SoapError(ss.str());
+			throw SoapError(ss.str());
 			return status;  // Keep the compiler happy.
 		}
 };
 
+
+class InvalidConfigError: public std::runtime_error {
+	public:
+		explicit InvalidConfigError(const std::string &what_arg) : std::runtime_error(what_arg) {}
+};

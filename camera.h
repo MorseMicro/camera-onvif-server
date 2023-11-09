@@ -14,7 +14,6 @@
 #include <algorithm>
 #include <iostream>
 #include <cassert>
-#include <optional>
 
 
 class Camera {
