@@ -1,4 +1,8 @@
-// Hack to let us use to_string (some weird gcc 5.x issue; thanks Ingenic). 
+// Copyright 2023 Morse Micro
+// SPDX-License-Identifier: GPL-2.0-or-later
+
+// Hack to let us use to_string
+// (some weird gcc 5.x issue using default T31 toolchain)
 #define _GLIBCXX_USE_C99 1
 
 #include <map>

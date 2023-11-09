@@ -1,3 +1,6 @@
+// Copyright 2023 Morse Micro
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #include "soaplib/soapH.h"
 
 #include "camera.h"

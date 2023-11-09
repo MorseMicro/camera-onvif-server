@@ -1,0 +1,12 @@
+image:
+  # This is the 20.04 version I'm using for development.
+  # The T31 toolchain has gcc:5, but unfortunately the fakeit test library isn't compatible with that.
+  name: gcc:9
+
+pipelines:
+  default:
+  - step:
+      name: Checks
+      script:
+      - curl -sL "https://github.com/google/addlicense/releases/download/v1.1.1/addlicense_1.1.1_Linux_$(uname -m).tar.gz" | tar xz -C /usr/bin addlicense
+      - make check

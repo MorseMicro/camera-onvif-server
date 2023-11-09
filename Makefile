@@ -55,11 +55,20 @@ debug: LDFLAGS =
 debug: camera-onvif-server
 
 .PHONY: check
-check: test lint
+check: licence-check test  # lint - disabled due to issues (see below)
 
 .PHONY: lint
 lint:
-	cppcheck .
+	cppcheck .  # takes way too long
+	clang-tidy *.cpp  # clang can't deal with soaplib/json.h
+
+.PHONY: licence-check
+licence-check:
+	addlicense -c 'Morse Micro' -l GPL-2.0-or-later -s -check *.h *.cpp tests/*.cpp
+
+.PHONY: licence-fix
+licence-fix:
+	addlicense -v -c 'Morse Micro' -l GPL-2.0-or-later -s *.h *.cpp tests/*.cpp
 
 .PHONY: test
 test: test-runner
