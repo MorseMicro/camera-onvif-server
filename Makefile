@@ -1,4 +1,3 @@
-CC = $(CXX)
 SOAPOBJS = soaplib/stdsoap2.o \
            soaplib/soapClient.o \
            soaplib/soapServer.o \
@@ -22,8 +21,6 @@ DEBUG_FLAGS = -DDEBUG -g -O1 -fno-omit-frame-pointer # -fsanitize=address,undefi
 # for null everywhere (by default, it's set to (std::nothrow)).
 CPPFLAGS += -DSOAP_NOTHROW='' -DJSON_NAMESPACE -DWITH_NOIDREF -DWITH_SOCKET_CLOSE_ON_EXIT -I.
 CXXFLAGS_LENIENT := $(CXXFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
-CFLAGS_LENIENT := $(CFLAGS) --std=c++17 -Os -fdata-sections -ffunction-sections
-CFLAGS = $(CFLAGS_LENIENT) -MMD -Wall -Werror
 CXXFLAGS = $(CXXFLAGS_LENIENT) -MMD -Wall -Werror
 LDFLAGS += -s -Wl,--gc-sections
 LDLIBS += -lpthread
@@ -43,14 +40,12 @@ camera-onvif-server: $(MAINOBJ) $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -Wall -Werror $^ -o $@ $(LDLIBS)
 
 test-runner: CXXFLAGS_LENIENT += $(DEBUG_FLAGS)
-test-runner: CFLAGS_LENIENT += $(DEBUG_FLAGS)
 test-runner: LDFLAGS =
 test-runner: $(TESTOBJS) $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -Wall -Werror $^ -o $@ $(LDLIBS)
 
 .PHONY: debug
 debug: CXXFLAGS_LENIENT += $(DEBUG_FLAGS)
-debug: CFLAGS_LENIENT += $(DEBUG_FLAGS)
 debug: LDFLAGS =
 debug: camera-onvif-server
 
@@ -86,6 +81,8 @@ clean:
 soaplib/%.o: soaplib/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS_LENIENT) -c $^ -o $@
 
+# Force usage of C++ compiler, since gsoap has .c files that end up including
+# C++ headers.
 soaplib/%.o: soaplib/%.c
-	$(CC) $(CPPFLAGS) $(CFLAGS_LENIENT) -c $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CFLAGS_LENIENT) -c $^ -o $@
 
