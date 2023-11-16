@@ -73,6 +73,16 @@ static const std::map<tt__H264Profile, std::string> t31rtspdProfileMap = {
 };
 
 
+// C++17 includes std::clamp, but we don't have it in the Ingenic toolchain.
+// We have this clamp because we don't properly validate our config, so it's
+// possible for 'bad' values to be there. See APP-2135
+static int clamp(int v, int min, int max) {
+	if (v < min) return min;
+	if (v > max) return max;
+	return v;
+}
+
+
 std::vector<std::string> RtspServerT31rtspd::buildArguments() {
 	auto *vec = this->video_encoder_configuration;
 
@@ -86,11 +96,11 @@ std::vector<std::string> RtspServerT31rtspd::buildArguments() {
 		// here is to choose between CBR and VBR (since there's no proper ONVIF
 		// way to do this).
 		"-m", vec->Quality < 0.6 ? "cbr" : "vbr",
-		"-h", std::to_string(vec->Resolution->Height),
-		"-w", std::to_string(vec->Resolution->Width),
-		"-f", vec->RateControl != nullptr ? std::to_string(vec->RateControl->FrameRateLimit) : "30",
-		"-b", vec->RateControl != nullptr ? std::to_string(vec->RateControl->BitrateLimit) : "1000",
-		"-g", vec->H264 != nullptr ? std::to_string(vec->H264->GovLength) : "60",
+		"-h", std::to_string(clamp(vec->Resolution->Height, 180, 1080)),
+		"-w", std::to_string(clamp(vec->Resolution->Width, 320, 1920)),
+		"-f", vec->RateControl != nullptr ? std::to_string(clamp(vec->RateControl->FrameRateLimit, 5, 30)) : "30",
+		"-b", vec->RateControl != nullptr ? std::to_string(clamp(vec->RateControl->BitrateLimit, 200, 10000)) : "1000",
+		"-g", vec->H264 != nullptr ? std::to_string(clamp(vec->H264->GovLength, 1, 300)) : "60",
 	};
 }
 
