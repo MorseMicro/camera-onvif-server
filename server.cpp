@@ -22,7 +22,7 @@ static int fignore(struct soap *, const char *tag) {
 }
 
 
-void start_server(void *soap_user)
+void start_server(int port, void *soap_user)
 {
 	struct soap *soap = soap_new();
 	soap_register_plugin_arg(soap, http_get, (void *)http_get_handler);
@@ -32,7 +32,7 @@ void start_server(void *soap_user)
 
 	soap->fignore = fignore;
 
-	if (!soap_valid_socket(soap_bind(soap, NULL, 8080, 100)))
+	if (!soap_valid_socket(soap_bind(soap, NULL, port, 100)))
 	{
 		soap_print_fault(soap, stderr);
 		soap_destroy(soap);

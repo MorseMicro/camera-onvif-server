@@ -5,4 +5,4 @@
 
 #pragma once
 
-extern void start_server(void *soap_user);
+extern void start_server(int port, void *soap_user);
