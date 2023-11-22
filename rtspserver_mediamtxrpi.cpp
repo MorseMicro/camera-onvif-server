@@ -88,6 +88,7 @@ void RtspServerMediaMtxRpi::initialise(const tt__VideoEncoderConfiguration *vec,
 
 	// Build the request JSON.
 	request["source"] = "rpiCamera";
+	request["sourceOnDemand"] = true;
 	videoEncoderConfigurationToJson(&request, vec);
 	imagingSettingsToJson(&request, imaging_settings);
 	videoSourceConfigurationToJson(&request, vsc);
