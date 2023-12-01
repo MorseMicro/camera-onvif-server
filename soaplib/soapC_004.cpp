@@ -18,8 +18,172 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-10-20 00:49:00 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-11-30 23:29:18 GMT")
 
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_trt__GetSnapshotUri(struct soap *soap, _trt__GetSnapshotUri *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__trt__GetSnapshotUri))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_trt__GetSnapshotUri(struct soap *soap, const char *tag, int id, _trt__GetSnapshotUri *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__trt__GetSnapshotUri, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__trt__GetSnapshotUri ? type : NULL);
+}
+
+SOAP_FMAC3 _trt__GetSnapshotUri ** SOAP_FMAC4 soap_in_PointerTo_trt__GetSnapshotUri(struct soap *soap, const char *tag, _trt__GetSnapshotUri **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_trt__GetSnapshotUri **)soap_malloc(soap, sizeof(_trt__GetSnapshotUri *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_trt__GetSnapshotUri *)soap_instantiate__trt__GetSnapshotUri(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_trt__GetSnapshotUri **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__trt__GetSnapshotUri, sizeof(_trt__GetSnapshotUri), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _trt__GetSnapshotUri * * SOAP_FMAC2 soap_dup_PointerTo_trt__GetSnapshotUri(struct soap *soap, _trt__GetSnapshotUri * *d, _trt__GetSnapshotUri *const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = (_trt__GetSnapshotUri **)soap_malloc(soap, sizeof(_trt__GetSnapshotUri *))))
+		return NULL; /* ERROR */
+	if (*a)
+		*d = (*a)->soap_dup(soap);
+	else
+		*d = NULL;
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerTo_trt__GetSnapshotUri(_trt__GetSnapshotUri *const*a)
+{
+	if (!a)
+		return;
+	if (*a)
+	{	(*a)->soap_del();
+		SOAP_DELETE(NULL, *a, _trt__GetSnapshotUri);
+	}
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_trt__GetSnapshotUri(struct soap *soap, _trt__GetSnapshotUri *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_trt__GetSnapshotUri(soap, tag ? tag : "trt:GetSnapshotUri", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _trt__GetSnapshotUri ** SOAP_FMAC4 soap_get_PointerTo_trt__GetSnapshotUri(struct soap *soap, _trt__GetSnapshotUri **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_trt__GetSnapshotUri(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_trt__SetSynchronizationPoint(struct soap *soap, _trt__SetSynchronizationPoint *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__trt__SetSynchronizationPoint))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_trt__SetSynchronizationPoint(struct soap *soap, const char *tag, int id, _trt__SetSynchronizationPoint *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__trt__SetSynchronizationPoint, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__trt__SetSynchronizationPoint ? type : NULL);
+}
+
+SOAP_FMAC3 _trt__SetSynchronizationPoint ** SOAP_FMAC4 soap_in_PointerTo_trt__SetSynchronizationPoint(struct soap *soap, const char *tag, _trt__SetSynchronizationPoint **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_trt__SetSynchronizationPoint **)soap_malloc(soap, sizeof(_trt__SetSynchronizationPoint *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_trt__SetSynchronizationPoint *)soap_instantiate__trt__SetSynchronizationPoint(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_trt__SetSynchronizationPoint **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__trt__SetSynchronizationPoint, sizeof(_trt__SetSynchronizationPoint), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _trt__SetSynchronizationPoint * * SOAP_FMAC2 soap_dup_PointerTo_trt__SetSynchronizationPoint(struct soap *soap, _trt__SetSynchronizationPoint * *d, _trt__SetSynchronizationPoint *const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = (_trt__SetSynchronizationPoint **)soap_malloc(soap, sizeof(_trt__SetSynchronizationPoint *))))
+		return NULL; /* ERROR */
+	if (*a)
+		*d = (*a)->soap_dup(soap);
+	else
+		*d = NULL;
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerTo_trt__SetSynchronizationPoint(_trt__SetSynchronizationPoint *const*a)
+{
+	if (!a)
+		return;
+	if (*a)
+	{	(*a)->soap_del();
+		SOAP_DELETE(NULL, *a, _trt__SetSynchronizationPoint);
+	}
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_trt__SetSynchronizationPoint(struct soap *soap, _trt__SetSynchronizationPoint *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_trt__SetSynchronizationPoint(soap, tag ? tag : "trt:SetSynchronizationPoint", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _trt__SetSynchronizationPoint ** SOAP_FMAC4 soap_get_PointerTo_trt__SetSynchronizationPoint(struct soap *soap, _trt__SetSynchronizationPoint **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_trt__SetSynchronizationPoint(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_trt__StopMulticastStreaming(struct soap *soap, _trt__StopMulticastStreaming *const*a)
 {
@@ -20306,6 +20470,88 @@ SOAP_FMAC3 tt__MediaServiceConfiguration ** SOAP_FMAC4 soap_get_PointerTott__Med
 	return p;
 }
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTott__HTMLWebServer(struct soap *soap, tt__HTMLWebServer *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE_tt__HTMLWebServer))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTott__HTMLWebServer(struct soap *soap, const char *tag, int id, tt__HTMLWebServer *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_tt__HTMLWebServer, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_tt__HTMLWebServer ? type : NULL);
+}
+
+SOAP_FMAC3 tt__HTMLWebServer ** SOAP_FMAC4 soap_in_PointerTott__HTMLWebServer(struct soap *soap, const char *tag, tt__HTMLWebServer **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (tt__HTMLWebServer **)soap_malloc(soap, sizeof(tt__HTMLWebServer *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (tt__HTMLWebServer *)soap_instantiate_tt__HTMLWebServer(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (tt__HTMLWebServer **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_tt__HTMLWebServer, sizeof(tt__HTMLWebServer), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 tt__HTMLWebServer * * SOAP_FMAC2 soap_dup_PointerTott__HTMLWebServer(struct soap *soap, tt__HTMLWebServer * *d, tt__HTMLWebServer *const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = (tt__HTMLWebServer **)soap_malloc(soap, sizeof(tt__HTMLWebServer *))))
+		return NULL; /* ERROR */
+	if (*a)
+		*d = (*a)->soap_dup(soap);
+	else
+		*d = NULL;
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerTott__HTMLWebServer(tt__HTMLWebServer *const*a)
+{
+	if (!a)
+		return;
+	if (*a)
+	{	(*a)->soap_del();
+		SOAP_DELETE(NULL, *a, tt__HTMLWebServer);
+	}
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTott__HTMLWebServer(struct soap *soap, tt__HTMLWebServer *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTott__HTMLWebServer(soap, tag ? tag : "tt:HTMLWebServer", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 tt__HTMLWebServer ** SOAP_FMAC4 soap_get_PointerTott__HTMLWebServer(struct soap *soap, tt__HTMLWebServer **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTott__HTMLWebServer(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTott__ImagingServiceProperties(struct soap *soap, tt__ImagingServiceProperties *const*a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -20949,6 +21195,163 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTott__ImagingVideoSource(struct soap *
 SOAP_FMAC3 tt__ImagingVideoSource ** SOAP_FMAC4 soap_get_PointerTott__ImagingVideoSource(struct soap *soap, tt__ImagingVideoSource **p, const char *tag, const char *type)
 {
 	if ((p = soap_in_PointerTott__ImagingVideoSource(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTott__DeviceHomePage(struct soap *soap, tt__DeviceHomePage *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE_tt__DeviceHomePage))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTott__DeviceHomePage(struct soap *soap, const char *tag, int id, tt__DeviceHomePage *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_tt__DeviceHomePage, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_tt__DeviceHomePage ? type : NULL);
+}
+
+SOAP_FMAC3 tt__DeviceHomePage ** SOAP_FMAC4 soap_in_PointerTott__DeviceHomePage(struct soap *soap, const char *tag, tt__DeviceHomePage **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (tt__DeviceHomePage **)soap_malloc(soap, sizeof(tt__DeviceHomePage *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (tt__DeviceHomePage *)soap_instantiate_tt__DeviceHomePage(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (tt__DeviceHomePage **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_tt__DeviceHomePage, sizeof(tt__DeviceHomePage), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 tt__DeviceHomePage * * SOAP_FMAC2 soap_dup_PointerTott__DeviceHomePage(struct soap *soap, tt__DeviceHomePage * *d, tt__DeviceHomePage *const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = (tt__DeviceHomePage **)soap_malloc(soap, sizeof(tt__DeviceHomePage *))))
+		return NULL; /* ERROR */
+	if (*a)
+		*d = (*a)->soap_dup(soap);
+	else
+		*d = NULL;
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerTott__DeviceHomePage(tt__DeviceHomePage *const*a)
+{
+	if (!a)
+		return;
+	if (*a)
+	{	(*a)->soap_del();
+		SOAP_DELETE(NULL, *a, tt__DeviceHomePage);
+	}
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTott__DeviceHomePage(struct soap *soap, tt__DeviceHomePage *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTott__DeviceHomePage(soap, tag ? tag : "tt:DeviceHomePage", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 tt__DeviceHomePage ** SOAP_FMAC4 soap_get_PointerTott__DeviceHomePage(struct soap *soap, tt__DeviceHomePage **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTott__DeviceHomePage(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerToxsd__integer(struct soap *soap, std::string *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE_xsd__integer))
+		soap_serialize_xsd__integer(soap, *a);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerToxsd__integer(struct soap *soap, const char *tag, int id, std::string *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_xsd__integer, NULL);
+	if (id < 0)
+		return soap->error;
+	return soap_out_xsd__integer(soap, tag, id, *a, type);
+}
+
+SOAP_FMAC3 std::string ** SOAP_FMAC4 soap_in_PointerToxsd__integer(struct soap *soap, const char *tag, std::string **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (std::string **)soap_malloc(soap, sizeof(std::string *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = soap_in_xsd__integer(soap, tag, *a, type)))
+			return NULL;
+	}
+	else
+	{	a = (std::string **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_xsd__integer, sizeof(std::string), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 std::string * * SOAP_FMAC2 soap_dup_PointerToxsd__integer(struct soap *soap, std::string * *d, std::string *const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = (std::string **)soap_malloc(soap, sizeof(std::string *))))
+		return NULL; /* ERROR */
+	if (*a && (*d = soap_new_xsd__integer(soap)))
+		**d = **a;
+	else
+		*d = NULL;
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerToxsd__integer(std::string *const*a)
+{
+	if (!a)
+		return;
+	if (*a)
+		SOAP_DELETE(NULL, *a, std::string);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerToxsd__integer(struct soap *soap, std::string *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerToxsd__integer(soap, tag ? tag : "xsd:integer", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 std::string ** SOAP_FMAC4 soap_get_PointerToxsd__integer(struct soap *soap, std::string **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerToxsd__integer(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -32299,416 +32702,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTott__RecordingCapabilities(struct soa
 SOAP_FMAC3 tt__RecordingCapabilities ** SOAP_FMAC4 soap_get_PointerTott__RecordingCapabilities(struct soap *soap, tt__RecordingCapabilities **p, const char *tag, const char *type)
 {
 	if ((p = soap_in_PointerTott__RecordingCapabilities(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTott__DisplayCapabilities(struct soap *soap, tt__DisplayCapabilities *const*a)
-{
-	(void)soap; (void)a; /* appease -Wall -Werror */
-#ifndef WITH_NOIDREF
-	if (!soap_reference(soap, *a, SOAP_TYPE_tt__DisplayCapabilities))
-		(*a)->soap_serialize(soap);
-#endif
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTott__DisplayCapabilities(struct soap *soap, const char *tag, int id, tt__DisplayCapabilities *const*a, const char *type)
-{
-	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_tt__DisplayCapabilities, NULL);
-	if (id < 0)
-		return soap->error;
-	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_tt__DisplayCapabilities ? type : NULL);
-}
-
-SOAP_FMAC3 tt__DisplayCapabilities ** SOAP_FMAC4 soap_in_PointerTott__DisplayCapabilities(struct soap *soap, const char *tag, tt__DisplayCapabilities **a, const char *type)
-{
-	(void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_in(soap, tag, 1, NULL))
-		return NULL;
-	if (!a)
-		if (!(a = (tt__DisplayCapabilities **)soap_malloc(soap, sizeof(tt__DisplayCapabilities *))))
-			return NULL;
-	*a = NULL;
-	if (!soap->null && *soap->href != '#')
-	{	soap_revert(soap);
-		if (!(*a = (tt__DisplayCapabilities *)soap_instantiate_tt__DisplayCapabilities(soap, -1, soap->type, soap->arrayType, NULL)))
-			return NULL;
-		(*a)->soap_default(soap);
-		if (!(*a)->soap_in(soap, tag, NULL))
-		{	*a = NULL;
-			return NULL;
-		}
-	}
-	else
-	{	a = (tt__DisplayCapabilities **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_tt__DisplayCapabilities, sizeof(tt__DisplayCapabilities), 0, soap_fbase);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC1 tt__DisplayCapabilities * * SOAP_FMAC2 soap_dup_PointerTott__DisplayCapabilities(struct soap *soap, tt__DisplayCapabilities * *d, tt__DisplayCapabilities *const*a)
-{
-	if (!a)
-		return NULL;
-	if (!d && !(d = (tt__DisplayCapabilities **)soap_malloc(soap, sizeof(tt__DisplayCapabilities *))))
-		return NULL; /* ERROR */
-	if (*a)
-		*d = (*a)->soap_dup(soap);
-	else
-		*d = NULL;
-	return d;
-}
-
-SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerTott__DisplayCapabilities(tt__DisplayCapabilities *const*a)
-{
-	if (!a)
-		return;
-	if (*a)
-	{	(*a)->soap_del();
-		SOAP_DELETE(NULL, *a, tt__DisplayCapabilities);
-	}
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTott__DisplayCapabilities(struct soap *soap, tt__DisplayCapabilities *const*a, const char *tag, const char *type)
-{
-	if (soap_out_PointerTott__DisplayCapabilities(soap, tag ? tag : "tt:DisplayCapabilities", -2, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-SOAP_FMAC3 tt__DisplayCapabilities ** SOAP_FMAC4 soap_get_PointerTott__DisplayCapabilities(struct soap *soap, tt__DisplayCapabilities **p, const char *tag, const char *type)
-{
-	if ((p = soap_in_PointerTott__DisplayCapabilities(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTott__DeviceIOCapabilities(struct soap *soap, tt__DeviceIOCapabilities *const*a)
-{
-	(void)soap; (void)a; /* appease -Wall -Werror */
-#ifndef WITH_NOIDREF
-	if (!soap_reference(soap, *a, SOAP_TYPE_tt__DeviceIOCapabilities))
-		(*a)->soap_serialize(soap);
-#endif
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTott__DeviceIOCapabilities(struct soap *soap, const char *tag, int id, tt__DeviceIOCapabilities *const*a, const char *type)
-{
-	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_tt__DeviceIOCapabilities, NULL);
-	if (id < 0)
-		return soap->error;
-	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_tt__DeviceIOCapabilities ? type : NULL);
-}
-
-SOAP_FMAC3 tt__DeviceIOCapabilities ** SOAP_FMAC4 soap_in_PointerTott__DeviceIOCapabilities(struct soap *soap, const char *tag, tt__DeviceIOCapabilities **a, const char *type)
-{
-	(void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_in(soap, tag, 1, NULL))
-		return NULL;
-	if (!a)
-		if (!(a = (tt__DeviceIOCapabilities **)soap_malloc(soap, sizeof(tt__DeviceIOCapabilities *))))
-			return NULL;
-	*a = NULL;
-	if (!soap->null && *soap->href != '#')
-	{	soap_revert(soap);
-		if (!(*a = (tt__DeviceIOCapabilities *)soap_instantiate_tt__DeviceIOCapabilities(soap, -1, soap->type, soap->arrayType, NULL)))
-			return NULL;
-		(*a)->soap_default(soap);
-		if (!(*a)->soap_in(soap, tag, NULL))
-		{	*a = NULL;
-			return NULL;
-		}
-	}
-	else
-	{	a = (tt__DeviceIOCapabilities **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_tt__DeviceIOCapabilities, sizeof(tt__DeviceIOCapabilities), 0, soap_fbase);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC1 tt__DeviceIOCapabilities * * SOAP_FMAC2 soap_dup_PointerTott__DeviceIOCapabilities(struct soap *soap, tt__DeviceIOCapabilities * *d, tt__DeviceIOCapabilities *const*a)
-{
-	if (!a)
-		return NULL;
-	if (!d && !(d = (tt__DeviceIOCapabilities **)soap_malloc(soap, sizeof(tt__DeviceIOCapabilities *))))
-		return NULL; /* ERROR */
-	if (*a)
-		*d = (*a)->soap_dup(soap);
-	else
-		*d = NULL;
-	return d;
-}
-
-SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerTott__DeviceIOCapabilities(tt__DeviceIOCapabilities *const*a)
-{
-	if (!a)
-		return;
-	if (*a)
-	{	(*a)->soap_del();
-		SOAP_DELETE(NULL, *a, tt__DeviceIOCapabilities);
-	}
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTott__DeviceIOCapabilities(struct soap *soap, tt__DeviceIOCapabilities *const*a, const char *tag, const char *type)
-{
-	if (soap_out_PointerTott__DeviceIOCapabilities(soap, tag ? tag : "tt:DeviceIOCapabilities", -2, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-SOAP_FMAC3 tt__DeviceIOCapabilities ** SOAP_FMAC4 soap_get_PointerTott__DeviceIOCapabilities(struct soap *soap, tt__DeviceIOCapabilities **p, const char *tag, const char *type)
-{
-	if ((p = soap_in_PointerTott__DeviceIOCapabilities(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTott__CapabilitiesExtension(struct soap *soap, tt__CapabilitiesExtension *const*a)
-{
-	(void)soap; (void)a; /* appease -Wall -Werror */
-#ifndef WITH_NOIDREF
-	if (!soap_reference(soap, *a, SOAP_TYPE_tt__CapabilitiesExtension))
-		(*a)->soap_serialize(soap);
-#endif
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTott__CapabilitiesExtension(struct soap *soap, const char *tag, int id, tt__CapabilitiesExtension *const*a, const char *type)
-{
-	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_tt__CapabilitiesExtension, NULL);
-	if (id < 0)
-		return soap->error;
-	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_tt__CapabilitiesExtension ? type : NULL);
-}
-
-SOAP_FMAC3 tt__CapabilitiesExtension ** SOAP_FMAC4 soap_in_PointerTott__CapabilitiesExtension(struct soap *soap, const char *tag, tt__CapabilitiesExtension **a, const char *type)
-{
-	(void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_in(soap, tag, 1, NULL))
-		return NULL;
-	if (!a)
-		if (!(a = (tt__CapabilitiesExtension **)soap_malloc(soap, sizeof(tt__CapabilitiesExtension *))))
-			return NULL;
-	*a = NULL;
-	if (!soap->null && *soap->href != '#')
-	{	soap_revert(soap);
-		if (!(*a = (tt__CapabilitiesExtension *)soap_instantiate_tt__CapabilitiesExtension(soap, -1, soap->type, soap->arrayType, NULL)))
-			return NULL;
-		(*a)->soap_default(soap);
-		if (!(*a)->soap_in(soap, tag, NULL))
-		{	*a = NULL;
-			return NULL;
-		}
-	}
-	else
-	{	a = (tt__CapabilitiesExtension **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_tt__CapabilitiesExtension, sizeof(tt__CapabilitiesExtension), 0, soap_fbase);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC1 tt__CapabilitiesExtension * * SOAP_FMAC2 soap_dup_PointerTott__CapabilitiesExtension(struct soap *soap, tt__CapabilitiesExtension * *d, tt__CapabilitiesExtension *const*a)
-{
-	if (!a)
-		return NULL;
-	if (!d && !(d = (tt__CapabilitiesExtension **)soap_malloc(soap, sizeof(tt__CapabilitiesExtension *))))
-		return NULL; /* ERROR */
-	if (*a)
-		*d = (*a)->soap_dup(soap);
-	else
-		*d = NULL;
-	return d;
-}
-
-SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerTott__CapabilitiesExtension(tt__CapabilitiesExtension *const*a)
-{
-	if (!a)
-		return;
-	if (*a)
-	{	(*a)->soap_del();
-		SOAP_DELETE(NULL, *a, tt__CapabilitiesExtension);
-	}
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTott__CapabilitiesExtension(struct soap *soap, tt__CapabilitiesExtension *const*a, const char *tag, const char *type)
-{
-	if (soap_out_PointerTott__CapabilitiesExtension(soap, tag ? tag : "tt:CapabilitiesExtension", -2, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-SOAP_FMAC3 tt__CapabilitiesExtension ** SOAP_FMAC4 soap_get_PointerTott__CapabilitiesExtension(struct soap *soap, tt__CapabilitiesExtension **p, const char *tag, const char *type)
-{
-	if ((p = soap_in_PointerTott__CapabilitiesExtension(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTott__PTZCapabilities(struct soap *soap, tt__PTZCapabilities *const*a)
-{
-	(void)soap; (void)a; /* appease -Wall -Werror */
-#ifndef WITH_NOIDREF
-	if (!soap_reference(soap, *a, SOAP_TYPE_tt__PTZCapabilities))
-		(*a)->soap_serialize(soap);
-#endif
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTott__PTZCapabilities(struct soap *soap, const char *tag, int id, tt__PTZCapabilities *const*a, const char *type)
-{
-	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_tt__PTZCapabilities, NULL);
-	if (id < 0)
-		return soap->error;
-	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_tt__PTZCapabilities ? type : NULL);
-}
-
-SOAP_FMAC3 tt__PTZCapabilities ** SOAP_FMAC4 soap_in_PointerTott__PTZCapabilities(struct soap *soap, const char *tag, tt__PTZCapabilities **a, const char *type)
-{
-	(void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_in(soap, tag, 1, NULL))
-		return NULL;
-	if (!a)
-		if (!(a = (tt__PTZCapabilities **)soap_malloc(soap, sizeof(tt__PTZCapabilities *))))
-			return NULL;
-	*a = NULL;
-	if (!soap->null && *soap->href != '#')
-	{	soap_revert(soap);
-		if (!(*a = (tt__PTZCapabilities *)soap_instantiate_tt__PTZCapabilities(soap, -1, soap->type, soap->arrayType, NULL)))
-			return NULL;
-		(*a)->soap_default(soap);
-		if (!(*a)->soap_in(soap, tag, NULL))
-		{	*a = NULL;
-			return NULL;
-		}
-	}
-	else
-	{	a = (tt__PTZCapabilities **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_tt__PTZCapabilities, sizeof(tt__PTZCapabilities), 0, soap_fbase);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC1 tt__PTZCapabilities * * SOAP_FMAC2 soap_dup_PointerTott__PTZCapabilities(struct soap *soap, tt__PTZCapabilities * *d, tt__PTZCapabilities *const*a)
-{
-	if (!a)
-		return NULL;
-	if (!d && !(d = (tt__PTZCapabilities **)soap_malloc(soap, sizeof(tt__PTZCapabilities *))))
-		return NULL; /* ERROR */
-	if (*a)
-		*d = (*a)->soap_dup(soap);
-	else
-		*d = NULL;
-	return d;
-}
-
-SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerTott__PTZCapabilities(tt__PTZCapabilities *const*a)
-{
-	if (!a)
-		return;
-	if (*a)
-	{	(*a)->soap_del();
-		SOAP_DELETE(NULL, *a, tt__PTZCapabilities);
-	}
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTott__PTZCapabilities(struct soap *soap, tt__PTZCapabilities *const*a, const char *tag, const char *type)
-{
-	if (soap_out_PointerTott__PTZCapabilities(soap, tag ? tag : "tt:PTZCapabilities", -2, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-SOAP_FMAC3 tt__PTZCapabilities ** SOAP_FMAC4 soap_get_PointerTott__PTZCapabilities(struct soap *soap, tt__PTZCapabilities **p, const char *tag, const char *type)
-{
-	if ((p = soap_in_PointerTott__PTZCapabilities(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTott__MediaCapabilities(struct soap *soap, tt__MediaCapabilities *const*a)
-{
-	(void)soap; (void)a; /* appease -Wall -Werror */
-#ifndef WITH_NOIDREF
-	if (!soap_reference(soap, *a, SOAP_TYPE_tt__MediaCapabilities))
-		(*a)->soap_serialize(soap);
-#endif
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTott__MediaCapabilities(struct soap *soap, const char *tag, int id, tt__MediaCapabilities *const*a, const char *type)
-{
-	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_tt__MediaCapabilities, NULL);
-	if (id < 0)
-		return soap->error;
-	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_tt__MediaCapabilities ? type : NULL);
-}
-
-SOAP_FMAC3 tt__MediaCapabilities ** SOAP_FMAC4 soap_in_PointerTott__MediaCapabilities(struct soap *soap, const char *tag, tt__MediaCapabilities **a, const char *type)
-{
-	(void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_in(soap, tag, 1, NULL))
-		return NULL;
-	if (!a)
-		if (!(a = (tt__MediaCapabilities **)soap_malloc(soap, sizeof(tt__MediaCapabilities *))))
-			return NULL;
-	*a = NULL;
-	if (!soap->null && *soap->href != '#')
-	{	soap_revert(soap);
-		if (!(*a = (tt__MediaCapabilities *)soap_instantiate_tt__MediaCapabilities(soap, -1, soap->type, soap->arrayType, NULL)))
-			return NULL;
-		(*a)->soap_default(soap);
-		if (!(*a)->soap_in(soap, tag, NULL))
-		{	*a = NULL;
-			return NULL;
-		}
-	}
-	else
-	{	a = (tt__MediaCapabilities **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_tt__MediaCapabilities, sizeof(tt__MediaCapabilities), 0, soap_fbase);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC1 tt__MediaCapabilities * * SOAP_FMAC2 soap_dup_PointerTott__MediaCapabilities(struct soap *soap, tt__MediaCapabilities * *d, tt__MediaCapabilities *const*a)
-{
-	if (!a)
-		return NULL;
-	if (!d && !(d = (tt__MediaCapabilities **)soap_malloc(soap, sizeof(tt__MediaCapabilities *))))
-		return NULL; /* ERROR */
-	if (*a)
-		*d = (*a)->soap_dup(soap);
-	else
-		*d = NULL;
-	return d;
-}
-
-SOAP_FMAC1 void SOAP_FMAC2 soap_del_PointerTott__MediaCapabilities(tt__MediaCapabilities *const*a)
-{
-	if (!a)
-		return;
-	if (*a)
-	{	(*a)->soap_del();
-		SOAP_DELETE(NULL, *a, tt__MediaCapabilities);
-	}
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTott__MediaCapabilities(struct soap *soap, tt__MediaCapabilities *const*a, const char *tag, const char *type)
-{
-	if (soap_out_PointerTott__MediaCapabilities(soap, tag ? tag : "tt:MediaCapabilities", -2, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-SOAP_FMAC3 tt__MediaCapabilities ** SOAP_FMAC4 soap_get_PointerTott__MediaCapabilities(struct soap *soap, tt__MediaCapabilities **p, const char *tag, const char *type)
-{
-	if ((p = soap_in_PointerTott__MediaCapabilities(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;

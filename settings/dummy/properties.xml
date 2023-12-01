@@ -14,6 +14,9 @@
       <HardwareId>abcdefgh</HardwareId>
     </DeviceInformation>
   </DeviceManagementService>
+  <HTMLWebServer>
+    <DeviceHomePage><Host>example.com</Host><Path>/foo</Path><Redirect>false</Redirect></DeviceHomePage>
+  </HTMLWebServer>
   <MediaService>
     <VideoSource token="video_source_token">
       <Framerate>30</Framerate>

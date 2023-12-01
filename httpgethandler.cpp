@@ -40,6 +40,60 @@ static const std::map<tt__AutoFocusMode, std::string> AutoFocusModeMap = {
 #define TROWNUMOPT(a, b) if (b != nullptr) { S("<tr><td>"); S(a); S("</td><td>"); S(std::to_string(*b)); S("</tr>"); }
 
 
+// URL to redirect/link to.
+std::string determine_device_url(struct soap *soap) {
+	auto *camera = static_cast<Camera *>(soap->user);
+	auto *html_server_settings = camera->getHTMLWebServerSettings();
+
+	// This is usually used when we're a client, but appears to be the only
+	// way to force it gsoap to parse the URL for us.
+	// We have to dupe soap->endpoint to pass in because soap->endpoint
+	// is a char array that soap_set_endpoint immediately mutates.
+	soap_set_endpoint(soap, std::string(soap->endpoint).c_str());
+	int port = soap->port;
+	std::string protocol = soap_tag_cmp(soap->endpoint, "https:*") == 0 ? "https" : "http";
+	std::string host = soap->host;
+	std::string path = "/";
+
+	// Now we overlay our redirect overrides on this.
+	// The idea is that we can optionally mutate appropriate fields
+	// (most commonly setting the port to 80).
+	if (html_server_settings && html_server_settings->DeviceHomePage) {
+		auto *new_page = html_server_settings->DeviceHomePage;
+		if (new_page->Host) {
+			host = *(new_page->Host);
+			// If we specify a new host, we probably don't care
+			// about the existing port/protocol and should default
+			// to, err, the defaults.
+			port = 80;
+			protocol = "http";
+		}
+		if (new_page->Protocol) {
+			protocol = *(new_page->Protocol);
+			// If we've changed the protocol, we don't care about
+			// our existing port.
+			port = protocol == "https" ? 443 : 80;
+		}
+		if (new_page->Port) {
+			port = std::atoi(new_page->Port->c_str());
+		}
+		if (new_page->Path) {
+			if (new_page->Path->length() > 0 && new_page->Path->at(0) == '/') {
+				path = *(new_page->Path);
+			} else {
+				path = std::string("/") + *(new_page->Path);
+			}
+		}
+	}
+
+	if (!(port == 443 && protocol == "https") && !(port == 80 && protocol == "http")) {
+		host += ":" + std::to_string(port);
+	}
+
+	return protocol + "://" + host + path;
+}
+
+
 // Dump some of the current settings as the index page.
 static int http_route_index(struct soap *soap) {
 	int soap_code = soap_response(soap, SOAP_HTML);
@@ -53,6 +107,15 @@ static int http_route_index(struct soap *soap) {
 	S("<h1>Camera ONVIF Server</h1>");
 
 	auto *camera = static_cast<Camera *>(soap->user);
+
+	auto *html_server_settings = camera->getHTMLWebServerSettings();
+	if (html_server_settings && html_server_settings->DeviceHomePage) {
+		S("<h2>");
+		S("<a href=\""); S(determine_device_url(soap)); S("\">Go to device settings</a>");
+		S("</h2>");
+	}
+
+	S("<h1>ONVIF information</h1>");
 
 	auto *device_info = camera->getDeviceInformation();
 	S("<h2>Device information</h2>");
@@ -133,6 +196,19 @@ static const std::map<std::string, int (*)(struct soap *)> http_routes = {
 
 
 int http_get_handler(struct soap *soap) {
+	auto *camera = static_cast<Camera *>(soap->user);
+
+	// 303 everything if redirect is on.
+	auto *html_server_settings = camera->getHTMLWebServerSettings();
+	if (html_server_settings && html_server_settings->DeviceHomePage && html_server_settings->DeviceHomePage->Redirect) {
+		// We can't use http_extra_header, because gsoap has special handling if we return 303 here
+		// which uses endpoint (not entirely clear what the usual purpose of this is).
+		// soap->endpoint is a char array into which we copy the URL
+		// (so no need to worry about allocations here).
+		soap_set_endpoint(soap, determine_device_url(soap).c_str());
+		return 303;
+	}
+
 	if (http_routes.count(soap->path) == 0) {
 		return 404;
 	}

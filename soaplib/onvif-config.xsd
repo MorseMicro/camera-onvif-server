@@ -75,6 +75,22 @@ There's probably something deeply wrong with doing this, but it works for now.
 		</sequence>
 	</complexType>
 
+	<complexType name="DeviceHomePage">
+		<sequence>
+			<element name="Protocol" type="string" minOccurs=0 />
+			<element name="Host" type="string" minOccurs=0 />
+			<element name="Path" type="string" minOccurs=0 />
+			<element name="Port" type="integer" minOccurs=0 />
+			<element name="Redirect" type="boolean" />
+		</sequence>
+	</complexType>
+
+	<complexType name="HTMLWebServer">
+		<sequence>
+			<element name="DeviceHomePage" type="tt:DeviceHomePage" minOccurs=0 />
+		</sequence>
+	</complexType>
+
 	<!-- These are our mostly fixed settings, and do not change at runtime. -->
 	<element name="CameraProperties">
 		<complexType>
@@ -83,6 +99,7 @@ There's probably something deeply wrong with doing this, but it works for now.
 				<element name="RTSPStream" type="tt:RTSPStream" />
 				<element name="MediaService" type="tt:MediaServiceProperties" />
 				<element name="ImagingService" type="tt:ImagingServiceProperties" />
+				<element name="HTMLWebServer" type="tt:HTMLWebServer" minOccurs="0" />
 			</sequence>
 		</complexType>
 	</element>

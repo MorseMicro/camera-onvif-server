@@ -18,8 +18,404 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-10-20 00:49:00 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-11-30 23:29:18 GMT")
 
+
+void tt__RTSPStream::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->xsd__anyType::soap_default(soap);
+	soap_default_tt__RTSPServerType(soap, &this->tt__RTSPStream::Type);
+	soap_default_std__string(soap, &this->tt__RTSPStream::Path);
+	soap_default_xsd__integer(soap, &this->tt__RTSPStream::Port);
+	this->tt__RTSPStream::Executable = NULL;
+	this->tt__RTSPStream::API = NULL;
+}
+
+void tt__RTSPStream::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_embedded(soap, &this->tt__RTSPStream::Path, SOAP_TYPE_std__string);
+	soap_serialize_std__string(soap, &this->tt__RTSPStream::Path);
+	soap_embedded(soap, &this->tt__RTSPStream::Port, SOAP_TYPE_xsd__integer);
+	soap_serialize_xsd__integer(soap, &this->tt__RTSPStream::Port);
+	soap_serialize_PointerTott__RTSPServerExecutable(soap, &this->tt__RTSPStream::Executable);
+	soap_serialize_PointerTott__RTSPServerAPI(soap, &this->tt__RTSPStream::API);
+	this->xsd__anyType::soap_serialize(soap);
+#endif
+}
+
+int tt__RTSPStream::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_tt__RTSPStream(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_tt__RTSPStream(struct soap *soap, const char *tag, int id, const tt__RTSPStream *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_tt__RTSPStream), type ? type : "tt:RTSPStream"))
+		return soap->error;
+	if (soap_out_tt__RTSPServerType(soap, "tt:Type", -1, &a->tt__RTSPStream::Type, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "tt:Path", -1, &a->tt__RTSPStream::Path, ""))
+		return soap->error;
+	if (soap_out_xsd__integer(soap, "tt:Port", -1, &a->tt__RTSPStream::Port, ""))
+		return soap->error;
+	if (soap_out_PointerTott__RTSPServerExecutable(soap, "tt:Executable", -1, &a->tt__RTSPStream::Executable, ""))
+		return soap->error;
+	if (soap_out_PointerTott__RTSPServerAPI(soap, "tt:API", -1, &a->tt__RTSPStream::API, ""))
+		return soap->error;
+	if (soap_outliteral(soap, "-item", (char*const*)&a->xsd__anyType::__item, NULL))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *tt__RTSPStream::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in_tt__RTSPStream(soap, tag, this, type);
+}
+
+SOAP_FMAC3 tt__RTSPStream * SOAP_FMAC4 soap_in_tt__RTSPStream(struct soap *soap, const char *tag, tt__RTSPStream *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (tt__RTSPStream*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_tt__RTSPStream, sizeof(tt__RTSPStream), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE_tt__RTSPStream)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (tt__RTSPStream *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag___item2 = 1;
+	size_t soap_flag_Type1 = 1;
+	size_t soap_flag_Path1 = 1;
+	size_t soap_flag_Port1 = 1;
+	size_t soap_flag_Executable1 = 1;
+	size_t soap_flag_API1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_Type1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_tt__RTSPServerType(soap, "tt:Type", &a->tt__RTSPStream::Type, "tt:RTSPServerType"))
+				{	soap_flag_Type1--;
+					continue;
+				}
+			}
+			if (soap_flag_Path1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_std__string(soap, "tt:Path", &a->tt__RTSPStream::Path, "xsd:string"))
+				{	soap_flag_Path1--;
+					continue;
+				}
+			}
+			if (soap_flag_Port1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__integer(soap, "tt:Port", &a->tt__RTSPStream::Port, "xsd:integer"))
+				{	soap_flag_Port1--;
+					continue;
+				}
+			}
+			if (soap_flag_Executable1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTott__RTSPServerExecutable(soap, "tt:Executable", &a->tt__RTSPStream::Executable, "tt:RTSPServerExecutable"))
+				{	soap_flag_Executable1--;
+					continue;
+				}
+			}
+			if (soap_flag_API1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTott__RTSPServerAPI(soap, "tt:API", &a->tt__RTSPStream::API, "tt:RTSPServerAPI"))
+				{	soap_flag_API1--;
+					continue;
+				}
+			}
+			if (soap_flag___item2 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_inliteral(soap, "-item", (char**)&a->xsd__anyType::__item))
+				{	soap_flag___item2--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap_flag_Type1 > 0 || soap_flag_Path1 > 0 || soap_flag_Port1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if (*soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (tt__RTSPStream *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_tt__RTSPStream, SOAP_TYPE_tt__RTSPStream, sizeof(tt__RTSPStream), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 tt__RTSPStream * SOAP_FMAC2 soap_dup_tt__RTSPStream(struct soap *soap, tt__RTSPStream *d, tt__RTSPStream const*a)
+{
+	struct soap_plist *pp = NULL;
+	if (!a)
+		return NULL;
+	if (!d && (d = (tt__RTSPStream*)soap_mark_lookup(soap, (const void*)a, SOAP_TYPE_tt__RTSPStream, &pp, NULL)))
+		return d;
+	if (!d && !(d = soap_new_tt__RTSPStream(soap)))
+		return NULL; /* ERROR */
+	soap_mark_dup(soap, (void*)d, pp);
+	soap_dup_xsd__anyType(soap, d, a);
+	d->tt__RTSPStream::Type = a->tt__RTSPStream::Type;
+	soap_dup_std__string(soap, &d->tt__RTSPStream::Path, &a->tt__RTSPStream::Path);
+	soap_dup_xsd__integer(soap, &d->tt__RTSPStream::Port, &a->tt__RTSPStream::Port);
+	soap_dup_PointerTott__RTSPServerExecutable(soap, &d->tt__RTSPStream::Executable, &a->tt__RTSPStream::Executable);
+	soap_dup_PointerTott__RTSPServerAPI(soap, &d->tt__RTSPStream::API, &a->tt__RTSPStream::API);
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_tt__RTSPStream(tt__RTSPStream const*a)
+{
+	if (!a)
+		return;
+	soap_del_xsd__anyType(a);
+	/* Type skipped */
+	soap_del_std__string(&a->tt__RTSPStream::Path);
+	soap_del_xsd__integer(&a->tt__RTSPStream::Port);
+	soap_del_PointerTott__RTSPServerExecutable(&a->tt__RTSPStream::Executable);
+	soap_del_PointerTott__RTSPServerAPI(&a->tt__RTSPStream::API);
+}
+
+SOAP_FMAC1 tt__RTSPStream * SOAP_FMAC2 soap_instantiate_tt__RTSPStream(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_tt__RTSPStream(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	tt__RTSPStream *p;
+	size_t k = sizeof(tt__RTSPStream);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_tt__RTSPStream, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, tt__RTSPStream);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, tt__RTSPStream, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated tt__RTSPStream location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int tt__RTSPStream::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out_tt__RTSPStream(soap, tag ? tag : "tt:RTSPStream", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *tt__RTSPStream::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_tt__RTSPStream(soap, this, tag, type);
+}
+
+SOAP_FMAC3 tt__RTSPStream * SOAP_FMAC4 soap_get_tt__RTSPStream(struct soap *soap, tt__RTSPStream *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_tt__RTSPStream(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void tt__RTSPServerAPI::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->xsd__anyType::soap_default(soap);
+	soap_default_xsd__integer(soap, &this->tt__RTSPServerAPI::Port);
+}
+
+void tt__RTSPServerAPI::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_embedded(soap, &this->tt__RTSPServerAPI::Port, SOAP_TYPE_xsd__integer);
+	soap_serialize_xsd__integer(soap, &this->tt__RTSPServerAPI::Port);
+	this->xsd__anyType::soap_serialize(soap);
+#endif
+}
+
+int tt__RTSPServerAPI::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_tt__RTSPServerAPI(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_tt__RTSPServerAPI(struct soap *soap, const char *tag, int id, const tt__RTSPServerAPI *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_tt__RTSPServerAPI), type ? type : "tt:RTSPServerAPI"))
+		return soap->error;
+	if (soap_out_xsd__integer(soap, "tt:Port", -1, &a->tt__RTSPServerAPI::Port, ""))
+		return soap->error;
+	if (soap_outliteral(soap, "-item", (char*const*)&a->xsd__anyType::__item, NULL))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *tt__RTSPServerAPI::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in_tt__RTSPServerAPI(soap, tag, this, type);
+}
+
+SOAP_FMAC3 tt__RTSPServerAPI * SOAP_FMAC4 soap_in_tt__RTSPServerAPI(struct soap *soap, const char *tag, tt__RTSPServerAPI *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (tt__RTSPServerAPI*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_tt__RTSPServerAPI, sizeof(tt__RTSPServerAPI), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE_tt__RTSPServerAPI)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (tt__RTSPServerAPI *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag___item2 = 1;
+	size_t soap_flag_Port1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_Port1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__integer(soap, "tt:Port", &a->tt__RTSPServerAPI::Port, "xsd:integer"))
+				{	soap_flag_Port1--;
+					continue;
+				}
+			}
+			if (soap_flag___item2 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_inliteral(soap, "-item", (char**)&a->xsd__anyType::__item))
+				{	soap_flag___item2--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap_flag_Port1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if (*soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (tt__RTSPServerAPI *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_tt__RTSPServerAPI, SOAP_TYPE_tt__RTSPServerAPI, sizeof(tt__RTSPServerAPI), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 tt__RTSPServerAPI * SOAP_FMAC2 soap_dup_tt__RTSPServerAPI(struct soap *soap, tt__RTSPServerAPI *d, tt__RTSPServerAPI const*a)
+{
+	struct soap_plist *pp = NULL;
+	if (!a)
+		return NULL;
+	if (!d && (d = (tt__RTSPServerAPI*)soap_mark_lookup(soap, (const void*)a, SOAP_TYPE_tt__RTSPServerAPI, &pp, NULL)))
+		return d;
+	if (!d && !(d = soap_new_tt__RTSPServerAPI(soap)))
+		return NULL; /* ERROR */
+	soap_mark_dup(soap, (void*)d, pp);
+	soap_dup_xsd__anyType(soap, d, a);
+	soap_dup_xsd__integer(soap, &d->tt__RTSPServerAPI::Port, &a->tt__RTSPServerAPI::Port);
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_tt__RTSPServerAPI(tt__RTSPServerAPI const*a)
+{
+	if (!a)
+		return;
+	soap_del_xsd__anyType(a);
+	soap_del_xsd__integer(&a->tt__RTSPServerAPI::Port);
+}
+
+SOAP_FMAC1 tt__RTSPServerAPI * SOAP_FMAC2 soap_instantiate_tt__RTSPServerAPI(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_tt__RTSPServerAPI(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	tt__RTSPServerAPI *p;
+	size_t k = sizeof(tt__RTSPServerAPI);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_tt__RTSPServerAPI, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, tt__RTSPServerAPI);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, tt__RTSPServerAPI, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated tt__RTSPServerAPI location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int tt__RTSPServerAPI::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out_tt__RTSPServerAPI(soap, tag ? tag : "tt:RTSPServerAPI", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *tt__RTSPServerAPI::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_tt__RTSPServerAPI(soap, this, tag, type);
+}
+
+SOAP_FMAC3 tt__RTSPServerAPI * SOAP_FMAC4 soap_get_tt__RTSPServerAPI(struct soap *soap, tt__RTSPServerAPI *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_tt__RTSPServerAPI(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
 
 void tt__RTSPServerExecutable::soap_default(struct soap *soap)
 {
@@ -70208,300 +70604,6 @@ void *_tds__GetNetworkDefaultGateway::soap_get(struct soap *soap, const char *ta
 SOAP_FMAC3 _tds__GetNetworkDefaultGateway * SOAP_FMAC4 soap_get__tds__GetNetworkDefaultGateway(struct soap *soap, _tds__GetNetworkDefaultGateway *p, const char *tag, const char *type)
 {
 	if ((p = soap_in__tds__GetNetworkDefaultGateway(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-void _tds__SetNetworkProtocolsResponse::soap_default(struct soap *soap)
-{
-	this->soap = soap;
-}
-
-void _tds__SetNetworkProtocolsResponse::soap_serialize(struct soap *soap) const
-{
-	(void)soap; /* appease -Wall -Werror */
-#ifndef WITH_NOIDREF
-#endif
-}
-
-int _tds__SetNetworkProtocolsResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
-{
-	return soap_out__tds__SetNetworkProtocolsResponse(soap, tag, id, this, type);
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out__tds__SetNetworkProtocolsResponse(struct soap *soap, const char *tag, int id, const _tds__SetNetworkProtocolsResponse *a, const char *type)
-{
-	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__tds__SetNetworkProtocolsResponse), type))
-		return soap->error;
-	return soap_element_end_out(soap, tag);
-}
-
-void *_tds__SetNetworkProtocolsResponse::soap_in(struct soap *soap, const char *tag, const char *type)
-{
-	return soap_in__tds__SetNetworkProtocolsResponse(soap, tag, this, type);
-}
-
-SOAP_FMAC3 _tds__SetNetworkProtocolsResponse * SOAP_FMAC4 soap_in__tds__SetNetworkProtocolsResponse(struct soap *soap, const char *tag, _tds__SetNetworkProtocolsResponse *a, const char *type)
-{
-	(void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_in(soap, tag, 0, NULL))
-		return NULL;
-	a = (_tds__SetNetworkProtocolsResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__tds__SetNetworkProtocolsResponse, sizeof(_tds__SetNetworkProtocolsResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
-	if (!a)
-		return NULL;
-	if (soap->alloced && soap->alloced != SOAP_TYPE__tds__SetNetworkProtocolsResponse)
-	{	soap_revert(soap);
-		*soap->id = '\0';
-		return (_tds__SetNetworkProtocolsResponse *)a->soap_in(soap, tag, type);
-	}
-	if (soap->alloced)
-		a->soap_default(soap);
-	if (soap->body && *soap->href != '#')
-	{
-		for (;;)
-		{	soap->error = SOAP_TAG_MISMATCH;
-			if (soap->error == SOAP_TAG_MISMATCH)
-				soap->error = soap_ignore_element(soap);
-			if (soap->error == SOAP_NO_TAG)
-				break;
-			if (soap->error)
-				return NULL;
-		}
-		if (soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	else
-	{	a = (_tds__SetNetworkProtocolsResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__tds__SetNetworkProtocolsResponse, SOAP_TYPE__tds__SetNetworkProtocolsResponse, sizeof(_tds__SetNetworkProtocolsResponse), 0, soap_finsert, soap_fbase);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC1 _tds__SetNetworkProtocolsResponse * SOAP_FMAC2 soap_dup__tds__SetNetworkProtocolsResponse(struct soap *soap, _tds__SetNetworkProtocolsResponse *d, _tds__SetNetworkProtocolsResponse const*a)
-{
-	struct soap_plist *pp = NULL;
-	if (!a)
-		return NULL;
-	if (!d && (d = (_tds__SetNetworkProtocolsResponse*)soap_mark_lookup(soap, (const void*)a, SOAP_TYPE__tds__SetNetworkProtocolsResponse, &pp, NULL)))
-		return d;
-	if (!d && !(d = soap_new__tds__SetNetworkProtocolsResponse(soap)))
-		return NULL; /* ERROR */
-	soap_mark_dup(soap, (void*)d, pp);
-	d->_tds__SetNetworkProtocolsResponse::soap = soap;
-	return d;
-}
-
-SOAP_FMAC1 void SOAP_FMAC2 soap_del__tds__SetNetworkProtocolsResponse(_tds__SetNetworkProtocolsResponse const*a)
-{
-	if (!a)
-		return;
-}
-
-SOAP_FMAC1 _tds__SetNetworkProtocolsResponse * SOAP_FMAC2 soap_instantiate__tds__SetNetworkProtocolsResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__tds__SetNetworkProtocolsResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
-	(void)type; (void)arrayType; /* appease -Wall -Werror */
-	_tds__SetNetworkProtocolsResponse *p;
-	size_t k = sizeof(_tds__SetNetworkProtocolsResponse);
-	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__tds__SetNetworkProtocolsResponse, n, soap_fdelete);
-	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
-		return NULL;
-	if (n < 0)
-	{	p = SOAP_NEW(soap, _tds__SetNetworkProtocolsResponse);
-		if (p)
-			p->soap = soap;
-	}
-	else
-	{	p = SOAP_NEW_ARRAY(soap, _tds__SetNetworkProtocolsResponse, n);
-		k *= n;
-		if (p)
-			for (int i = 0; i < n; i++)
-				p[i].soap = soap;
-	}
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _tds__SetNetworkProtocolsResponse location=%p n=%d\n", (void*)p, n));
-	if (size)
-		*size = k;
-	if (!p)
-		soap->error = SOAP_EOM;
-	else if (cp)
-		cp->ptr = (void*)p;
-	return p;
-}
-
-int _tds__SetNetworkProtocolsResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
-{
-	if (soap_out__tds__SetNetworkProtocolsResponse(soap, tag ? tag : "tds:SetNetworkProtocolsResponse", -2, this, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-void *_tds__SetNetworkProtocolsResponse::soap_get(struct soap *soap, const char *tag, const char *type)
-{
-	return soap_get__tds__SetNetworkProtocolsResponse(soap, this, tag, type);
-}
-
-SOAP_FMAC3 _tds__SetNetworkProtocolsResponse * SOAP_FMAC4 soap_get__tds__SetNetworkProtocolsResponse(struct soap *soap, _tds__SetNetworkProtocolsResponse *p, const char *tag, const char *type)
-{
-	if ((p = soap_in__tds__SetNetworkProtocolsResponse(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-void _tds__SetNetworkProtocols::soap_default(struct soap *soap)
-{
-	this->soap = soap;
-	soap_default_std__vectorTemplateOfPointerTott__NetworkProtocol(soap, &this->_tds__SetNetworkProtocols::NetworkProtocols);
-}
-
-void _tds__SetNetworkProtocols::soap_serialize(struct soap *soap) const
-{
-	(void)soap; /* appease -Wall -Werror */
-#ifndef WITH_NOIDREF
-	soap_serialize_std__vectorTemplateOfPointerTott__NetworkProtocol(soap, &this->_tds__SetNetworkProtocols::NetworkProtocols);
-#endif
-}
-
-int _tds__SetNetworkProtocols::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
-{
-	return soap_out__tds__SetNetworkProtocols(soap, tag, id, this, type);
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out__tds__SetNetworkProtocols(struct soap *soap, const char *tag, int id, const _tds__SetNetworkProtocols *a, const char *type)
-{
-	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__tds__SetNetworkProtocols), type))
-		return soap->error;
-	if (soap_out_std__vectorTemplateOfPointerTott__NetworkProtocol(soap, "tds:NetworkProtocols", -1, &a->_tds__SetNetworkProtocols::NetworkProtocols, ""))
-		return soap->error;
-	return soap_element_end_out(soap, tag);
-}
-
-void *_tds__SetNetworkProtocols::soap_in(struct soap *soap, const char *tag, const char *type)
-{
-	return soap_in__tds__SetNetworkProtocols(soap, tag, this, type);
-}
-
-SOAP_FMAC3 _tds__SetNetworkProtocols * SOAP_FMAC4 soap_in__tds__SetNetworkProtocols(struct soap *soap, const char *tag, _tds__SetNetworkProtocols *a, const char *type)
-{
-	(void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_in(soap, tag, 0, NULL))
-		return NULL;
-	a = (_tds__SetNetworkProtocols*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__tds__SetNetworkProtocols, sizeof(_tds__SetNetworkProtocols), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
-	if (!a)
-		return NULL;
-	if (soap->alloced && soap->alloced != SOAP_TYPE__tds__SetNetworkProtocols)
-	{	soap_revert(soap);
-		*soap->id = '\0';
-		return (_tds__SetNetworkProtocols *)a->soap_in(soap, tag, type);
-	}
-	if (soap->alloced)
-		a->soap_default(soap);
-	if (soap->body && *soap->href != '#')
-	{
-		for (;;)
-		{	soap->error = SOAP_TAG_MISMATCH;
-			if (soap->error == SOAP_TAG_MISMATCH)
-			{	if (soap_in_std__vectorTemplateOfPointerTott__NetworkProtocol(soap, "tds:NetworkProtocols", &a->_tds__SetNetworkProtocols::NetworkProtocols, "tt:NetworkProtocol"))
-					continue;
-			}
-			if (soap->error == SOAP_TAG_MISMATCH)
-				soap->error = soap_ignore_element(soap);
-			if (soap->error == SOAP_NO_TAG)
-				break;
-			if (soap->error)
-				return NULL;
-		}
-		if (soap_element_end_in(soap, tag))
-			return NULL;
-		if ((a->_tds__SetNetworkProtocols::NetworkProtocols.size() < 1))
-		{	soap->error = SOAP_OCCURS;
-			return NULL;
-		}
-	}
-	else if (*soap->href != '#')
-	{	soap->error = SOAP_OCCURS;
-		return NULL;
-	}
-	else
-	{	a = (_tds__SetNetworkProtocols *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__tds__SetNetworkProtocols, SOAP_TYPE__tds__SetNetworkProtocols, sizeof(_tds__SetNetworkProtocols), 0, soap_finsert, soap_fbase);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC1 _tds__SetNetworkProtocols * SOAP_FMAC2 soap_dup__tds__SetNetworkProtocols(struct soap *soap, _tds__SetNetworkProtocols *d, _tds__SetNetworkProtocols const*a)
-{
-	struct soap_plist *pp = NULL;
-	if (!a)
-		return NULL;
-	if (!d && (d = (_tds__SetNetworkProtocols*)soap_mark_lookup(soap, (const void*)a, SOAP_TYPE__tds__SetNetworkProtocols, &pp, NULL)))
-		return d;
-	if (!d && !(d = soap_new__tds__SetNetworkProtocols(soap)))
-		return NULL; /* ERROR */
-	soap_mark_dup(soap, (void*)d, pp);
-	soap_dup_std__vectorTemplateOfPointerTott__NetworkProtocol(soap, &d->_tds__SetNetworkProtocols::NetworkProtocols, &a->_tds__SetNetworkProtocols::NetworkProtocols);
-	d->_tds__SetNetworkProtocols::soap = soap;
-	return d;
-}
-
-SOAP_FMAC1 void SOAP_FMAC2 soap_del__tds__SetNetworkProtocols(_tds__SetNetworkProtocols const*a)
-{
-	if (!a)
-		return;
-	soap_del_std__vectorTemplateOfPointerTott__NetworkProtocol(&a->_tds__SetNetworkProtocols::NetworkProtocols);
-}
-
-SOAP_FMAC1 _tds__SetNetworkProtocols * SOAP_FMAC2 soap_instantiate__tds__SetNetworkProtocols(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__tds__SetNetworkProtocols(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
-	(void)type; (void)arrayType; /* appease -Wall -Werror */
-	_tds__SetNetworkProtocols *p;
-	size_t k = sizeof(_tds__SetNetworkProtocols);
-	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__tds__SetNetworkProtocols, n, soap_fdelete);
-	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
-		return NULL;
-	if (n < 0)
-	{	p = SOAP_NEW(soap, _tds__SetNetworkProtocols);
-		if (p)
-			p->soap = soap;
-	}
-	else
-	{	p = SOAP_NEW_ARRAY(soap, _tds__SetNetworkProtocols, n);
-		k *= n;
-		if (p)
-			for (int i = 0; i < n; i++)
-				p[i].soap = soap;
-	}
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _tds__SetNetworkProtocols location=%p n=%d\n", (void*)p, n));
-	if (size)
-		*size = k;
-	if (!p)
-		soap->error = SOAP_EOM;
-	else if (cp)
-		cp->ptr = (void*)p;
-	return p;
-}
-
-int _tds__SetNetworkProtocols::soap_put(struct soap *soap, const char *tag, const  char *type) const
-{
-	if (soap_out__tds__SetNetworkProtocols(soap, tag ? tag : "tds:SetNetworkProtocols", -2, this, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-void *_tds__SetNetworkProtocols::soap_get(struct soap *soap, const char *tag, const char *type)
-{
-	return soap_get__tds__SetNetworkProtocols(soap, this, tag, type);
-}
-
-SOAP_FMAC3 _tds__SetNetworkProtocols * SOAP_FMAC4 soap_get__tds__SetNetworkProtocols(struct soap *soap, _tds__SetNetworkProtocols *p, const char *tag, const char *type)
-{
-	if ((p = soap_in__tds__SetNetworkProtocols(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;

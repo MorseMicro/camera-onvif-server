@@ -42,7 +42,9 @@ void start_server(int port, void *soap_user)
 	}
 
 	while (soap_valid_socket(soap_accept(soap))) {
-		if (soap_serve(soap) != SOAP_OK) {
+		int result = soap_serve(soap);
+		// result is overloaded - either a SOAP code (<100) or an HTTP code.
+		if (result != SOAP_OK && (result <= SOAP_ERR || result >= 400)) {
 			soap_print_fault(soap, stderr);
 			soap_print_fault_location(soap, stderr);
 		}

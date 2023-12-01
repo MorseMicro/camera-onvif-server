@@ -46,6 +46,10 @@ class Camera {
 			return properties->DeviceManagementService->DeviceInformation;
 		}
 
+		tt__HTMLWebServer *getHTMLWebServerSettings() {
+			return properties->HTMLWebServer;
+		}
+
 		const std::vector<tt__MinimumProfile *> getMinimumProfiles() {
 			return config->MediaService->Profile;
 		}

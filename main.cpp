@@ -86,7 +86,7 @@ int main(int argc, char * const argv[])
 		std::cout << "Starting WS-Discovery server: " << ip << ":3702" << std::endl;
 		spawn_wsdd_server(ip, onvif_url.c_str());
 		std::cout << "Starting ONVIF server: " << onvif_url << std::endl;
-		start_server(std::stoi(port), &camera);  // should block here
+		start_server(std::atoi(port), &camera);  // should block here
 	} catch (std::exception *e) {
 		std::cerr << e->what() << std::endl;
 	}

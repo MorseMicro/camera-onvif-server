@@ -18,8 +18,578 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-10-20 00:49:00 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC_nnn.cpp ver 2.8.127 2023-11-30 23:29:18 GMT")
 
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTott__Profile(struct soap *soap, std::vector<tt__Profile *> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTott__Profile(struct soap *soap, const std::vector<tt__Profile *> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<tt__Profile *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTott__Profile(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTott__Profile(struct soap *soap, const char *tag, int id, const std::vector<tt__Profile *> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<tt__Profile *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTott__Profile(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<tt__Profile *> * SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTott__Profile(struct soap *soap, const char *tag, std::vector<tt__Profile *> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfPointerTott__Profile(soap)))
+			return NULL;
+		a->emplace_back();
+		tt__Profile * *n = &a->back();
+		*n = NULL;
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size() - 1, SOAP_TYPE_tt__Profile, SOAP_TYPE_std__vectorTemplateOfPointerTott__Profile, sizeof(tt__Profile), 1, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_PointerTott__Profile(soap, tag, NULL, "tt:Profile"))
+				break;
+		}
+		else
+		{	if (!soap_in_PointerTott__Profile(soap, tag, n, "tt:Profile"))
+			{	a->pop_back();
+				break;
+			}
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<tt__Profile *>  * SOAP_FMAC2 soap_dup_std__vectorTemplateOfPointerTott__Profile(struct soap *soap, std::vector<tt__Profile *>  *d, std::vector<tt__Profile *> const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = soap_new_std__vectorTemplateOfPointerTott__Profile(soap)))
+		return NULL; /* ERROR */
+	d->resize(a->size());
+	std::vector<tt__Profile *> ::iterator j = d->begin();
+	for (std::vector<tt__Profile *> ::const_iterator i = a->begin(); i != a->end(); ++i, ++j)
+	{	soap_dup_PointerTott__Profile(soap, &*j, &*i);
+	}
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_std__vectorTemplateOfPointerTott__Profile(std::vector<tt__Profile *> const*a)
+{
+	if (!a)
+		return;
+	for (std::vector<tt__Profile *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_del_PointerTott__Profile(&*i);
+}
+
+SOAP_FMAC1 std::vector<tt__Profile *>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPointerTott__Profile(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTott__Profile(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<tt__Profile *> *p;
+	size_t k = sizeof(std::vector<tt__Profile *> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfPointerTott__Profile, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<tt__Profile *> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<tt__Profile *> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<tt__Profile *>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTott__AudioOutput(struct soap *soap, std::vector<tt__AudioOutput *> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTott__AudioOutput(struct soap *soap, const std::vector<tt__AudioOutput *> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<tt__AudioOutput *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTott__AudioOutput(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTott__AudioOutput(struct soap *soap, const char *tag, int id, const std::vector<tt__AudioOutput *> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<tt__AudioOutput *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTott__AudioOutput(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<tt__AudioOutput *> * SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTott__AudioOutput(struct soap *soap, const char *tag, std::vector<tt__AudioOutput *> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfPointerTott__AudioOutput(soap)))
+			return NULL;
+		a->emplace_back();
+		tt__AudioOutput * *n = &a->back();
+		*n = NULL;
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size() - 1, SOAP_TYPE_tt__AudioOutput, SOAP_TYPE_std__vectorTemplateOfPointerTott__AudioOutput, sizeof(tt__AudioOutput), 1, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_PointerTott__AudioOutput(soap, tag, NULL, "tt:AudioOutput"))
+				break;
+		}
+		else
+		{	if (!soap_in_PointerTott__AudioOutput(soap, tag, n, "tt:AudioOutput"))
+			{	a->pop_back();
+				break;
+			}
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<tt__AudioOutput *>  * SOAP_FMAC2 soap_dup_std__vectorTemplateOfPointerTott__AudioOutput(struct soap *soap, std::vector<tt__AudioOutput *>  *d, std::vector<tt__AudioOutput *> const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = soap_new_std__vectorTemplateOfPointerTott__AudioOutput(soap)))
+		return NULL; /* ERROR */
+	d->resize(a->size());
+	std::vector<tt__AudioOutput *> ::iterator j = d->begin();
+	for (std::vector<tt__AudioOutput *> ::const_iterator i = a->begin(); i != a->end(); ++i, ++j)
+	{	soap_dup_PointerTott__AudioOutput(soap, &*j, &*i);
+	}
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_std__vectorTemplateOfPointerTott__AudioOutput(std::vector<tt__AudioOutput *> const*a)
+{
+	if (!a)
+		return;
+	for (std::vector<tt__AudioOutput *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_del_PointerTott__AudioOutput(&*i);
+}
+
+SOAP_FMAC1 std::vector<tt__AudioOutput *>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPointerTott__AudioOutput(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTott__AudioOutput(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<tt__AudioOutput *> *p;
+	size_t k = sizeof(std::vector<tt__AudioOutput *> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfPointerTott__AudioOutput, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<tt__AudioOutput *> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<tt__AudioOutput *> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<tt__AudioOutput *>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTott__AudioSource(struct soap *soap, std::vector<tt__AudioSource *> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTott__AudioSource(struct soap *soap, const std::vector<tt__AudioSource *> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<tt__AudioSource *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTott__AudioSource(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTott__AudioSource(struct soap *soap, const char *tag, int id, const std::vector<tt__AudioSource *> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<tt__AudioSource *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTott__AudioSource(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<tt__AudioSource *> * SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTott__AudioSource(struct soap *soap, const char *tag, std::vector<tt__AudioSource *> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfPointerTott__AudioSource(soap)))
+			return NULL;
+		a->emplace_back();
+		tt__AudioSource * *n = &a->back();
+		*n = NULL;
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size() - 1, SOAP_TYPE_tt__AudioSource, SOAP_TYPE_std__vectorTemplateOfPointerTott__AudioSource, sizeof(tt__AudioSource), 1, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_PointerTott__AudioSource(soap, tag, NULL, "tt:AudioSource"))
+				break;
+		}
+		else
+		{	if (!soap_in_PointerTott__AudioSource(soap, tag, n, "tt:AudioSource"))
+			{	a->pop_back();
+				break;
+			}
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<tt__AudioSource *>  * SOAP_FMAC2 soap_dup_std__vectorTemplateOfPointerTott__AudioSource(struct soap *soap, std::vector<tt__AudioSource *>  *d, std::vector<tt__AudioSource *> const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = soap_new_std__vectorTemplateOfPointerTott__AudioSource(soap)))
+		return NULL; /* ERROR */
+	d->resize(a->size());
+	std::vector<tt__AudioSource *> ::iterator j = d->begin();
+	for (std::vector<tt__AudioSource *> ::const_iterator i = a->begin(); i != a->end(); ++i, ++j)
+	{	soap_dup_PointerTott__AudioSource(soap, &*j, &*i);
+	}
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_std__vectorTemplateOfPointerTott__AudioSource(std::vector<tt__AudioSource *> const*a)
+{
+	if (!a)
+		return;
+	for (std::vector<tt__AudioSource *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_del_PointerTott__AudioSource(&*i);
+}
+
+SOAP_FMAC1 std::vector<tt__AudioSource *>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPointerTott__AudioSource(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTott__AudioSource(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<tt__AudioSource *> *p;
+	size_t k = sizeof(std::vector<tt__AudioSource *> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfPointerTott__AudioSource, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<tt__AudioSource *> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<tt__AudioSource *> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<tt__AudioSource *>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTotimg__ImagingPreset(struct soap *soap, std::vector<timg__ImagingPreset *> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTotimg__ImagingPreset(struct soap *soap, const std::vector<timg__ImagingPreset *> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<timg__ImagingPreset *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTotimg__ImagingPreset(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTotimg__ImagingPreset(struct soap *soap, const char *tag, int id, const std::vector<timg__ImagingPreset *> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<timg__ImagingPreset *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTotimg__ImagingPreset(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<timg__ImagingPreset *> * SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTotimg__ImagingPreset(struct soap *soap, const char *tag, std::vector<timg__ImagingPreset *> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfPointerTotimg__ImagingPreset(soap)))
+			return NULL;
+		a->emplace_back();
+		timg__ImagingPreset * *n = &a->back();
+		*n = NULL;
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size() - 1, SOAP_TYPE_timg__ImagingPreset, SOAP_TYPE_std__vectorTemplateOfPointerTotimg__ImagingPreset, sizeof(timg__ImagingPreset), 1, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_PointerTotimg__ImagingPreset(soap, tag, NULL, "timg:ImagingPreset"))
+				break;
+		}
+		else
+		{	if (!soap_in_PointerTotimg__ImagingPreset(soap, tag, n, "timg:ImagingPreset"))
+			{	a->pop_back();
+				break;
+			}
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<timg__ImagingPreset *>  * SOAP_FMAC2 soap_dup_std__vectorTemplateOfPointerTotimg__ImagingPreset(struct soap *soap, std::vector<timg__ImagingPreset *>  *d, std::vector<timg__ImagingPreset *> const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = soap_new_std__vectorTemplateOfPointerTotimg__ImagingPreset(soap)))
+		return NULL; /* ERROR */
+	d->resize(a->size());
+	std::vector<timg__ImagingPreset *> ::iterator j = d->begin();
+	for (std::vector<timg__ImagingPreset *> ::const_iterator i = a->begin(); i != a->end(); ++i, ++j)
+	{	soap_dup_PointerTotimg__ImagingPreset(soap, &*j, &*i);
+	}
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_std__vectorTemplateOfPointerTotimg__ImagingPreset(std::vector<timg__ImagingPreset *> const*a)
+{
+	if (!a)
+		return;
+	for (std::vector<timg__ImagingPreset *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_del_PointerTotimg__ImagingPreset(&*i);
+}
+
+SOAP_FMAC1 std::vector<timg__ImagingPreset *>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPointerTotimg__ImagingPreset(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTotimg__ImagingPreset(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<timg__ImagingPreset *> *p;
+	size_t k = sizeof(std::vector<timg__ImagingPreset *> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfPointerTotimg__ImagingPreset, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<timg__ImagingPreset *> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<timg__ImagingPreset *> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<timg__ImagingPreset *>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(struct soap *soap, std::vector<_wsrfbf__BaseFaultType_Description> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(struct soap *soap, const std::vector<_wsrfbf__BaseFaultType_Description> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<_wsrfbf__BaseFaultType_Description> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		(*i).soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(struct soap *soap, const char *tag, int id, const std::vector<_wsrfbf__BaseFaultType_Description> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<_wsrfbf__BaseFaultType_Description> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if ((*i).soap_out(soap, tag, id, ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<_wsrfbf__BaseFaultType_Description> * SOAP_FMAC4 soap_in_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(struct soap *soap, const char *tag, std::vector<_wsrfbf__BaseFaultType_Description> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(soap)))
+			return NULL;
+		if (!a->empty() && a->size() == a->capacity())
+		{	const void *p = &a->front();
+			a->emplace_back();
+			DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Vector capacity increased to %lu to fit %lu items: updating pointers\n", a->capacity(), a->size()));
+			soap_update_pointers(soap, (const char*)&a->front(), (const char*)p, (a->size() - 1) * sizeof(_wsrfbf__BaseFaultType_Description));
+		}
+		else
+		{	a->emplace_back();
+		}
+		_wsrfbf__BaseFaultType_Description *n = &a->back();
+		n->soap_default(soap);
+		short soap_shaky = soap_begin_shaky(soap);
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size() - 1, SOAP_TYPE__wsrfbf__BaseFaultType_Description, SOAP_TYPE_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description, sizeof(_wsrfbf__BaseFaultType_Description), 0, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in__wsrfbf__BaseFaultType_Description(soap, tag, NULL, ""))
+				break;
+		}
+		else
+		{	if (!soap_in__wsrfbf__BaseFaultType_Description(soap, tag, n, ""))
+			{	a->pop_back();
+				break;
+			}
+		}
+		soap_end_shaky(soap, soap_shaky);
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<_wsrfbf__BaseFaultType_Description>  * SOAP_FMAC2 soap_dup_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(struct soap *soap, std::vector<_wsrfbf__BaseFaultType_Description>  *d, std::vector<_wsrfbf__BaseFaultType_Description> const*a)
+{
+	if (!a)
+		return NULL;
+	if (!d && !(d = soap_new_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(soap)))
+		return NULL; /* ERROR */
+	d->resize(a->size());
+	std::vector<_wsrfbf__BaseFaultType_Description> ::iterator j = d->begin();
+	for (std::vector<_wsrfbf__BaseFaultType_Description> ::const_iterator i = a->begin(); i != a->end(); ++i, ++j)
+	{	soap_dup__wsrfbf__BaseFaultType_Description(soap, &*j, &*i);
+	}
+	return d;
+}
+
+SOAP_FMAC1 void SOAP_FMAC2 soap_del_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(std::vector<_wsrfbf__BaseFaultType_Description> const*a)
+{
+	if (!a)
+		return;
+	for (std::vector<_wsrfbf__BaseFaultType_Description> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_del__wsrfbf__BaseFaultType_Description(&*i);
+}
+
+SOAP_FMAC1 std::vector<_wsrfbf__BaseFaultType_Description>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<_wsrfbf__BaseFaultType_Description> *p;
+	size_t k = sizeof(std::vector<_wsrfbf__BaseFaultType_Description> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOf_wsrfbf__BaseFaultType_Description, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<_wsrfbf__BaseFaultType_Description> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<_wsrfbf__BaseFaultType_Description> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<_wsrfbf__BaseFaultType_Description>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTowsnt__NotificationMessageHolderType(struct soap *soap, std::vector<wsnt__NotificationMessageHolderType *> *p)
 {
